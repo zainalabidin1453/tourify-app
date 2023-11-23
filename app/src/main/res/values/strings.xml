@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">TourifyApp</string>
+    <string name="app_name">Tourify App</string>
+    <string name="menu_home">Menu Home</string>
+    <string name="menu_culinary">Menu Kuliner</string>
+    <string name="menu_scanobjek">Menu Scan Objek Wisata</string>
+    <string name="menu_profile">Menu Profil</string>
+    <string name="menu_mytickets">Menu Tiket Saya</string>
+    <string name="email_address">Alamat Email</string>
+    <string name="notif_security">Kami akan bertindak sebagai perisai yang tak kenal lelah untuk menjaga datamu dari ancaman keamanan.</string>
+    <string name="invalid_email">Email Tidak Valid</string>
+    <string name="loading">Loading...</string>
+    <string name="in_development">Dalam Tahap Pengembangan</string>
+    <string name="login_with_google">Login Dengan Google</string>
+    <string name="login_with_facebook">Login Dengan Facebook</string>
+    <string name="login_with_tiktok">Login Dengan Tiktok</string>
+    <string name="back">Kembali</string>
+    <string name="incorrect_otp_code">Kode OTP Salah</string>
+    <string name="invalid_password">Kata Sandi Tidak Valid</string>
+    <string name="incorrect_password">Kata Sandi Tidak Sama</string>
+    <string name="wrong_password">Kata Sandi Salah</string>
+    <string name="new_password">Kata Sandi</string>
+    <string name="confirm_password">Konfirmasi Kata Sandi</string>
+    <string name="notice_new_password">Kata sandi harus terdiri dari 8 karakter atau lebih, mengandung setidaknya satu huruf besar, satu huruf kecil, satu angka, dan satu simbol.</string>
 </resources>
