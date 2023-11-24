@@ -77,6 +77,7 @@ fun VerifCodeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(ColorWhite)
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.SpaceBetween
     ){
