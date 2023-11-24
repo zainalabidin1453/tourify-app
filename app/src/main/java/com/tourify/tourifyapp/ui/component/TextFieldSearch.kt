@@ -1,7 +1,9 @@
 package com.tourify.tourifyapp.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -13,11 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,21 +35,28 @@ import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
 
 @Composable
-fun TextFieldSecondary(
+fun TextFieldSearch(
     placeholder: String,
     icon: Int,
     iconDescription: Int,
     keyboardType: KeyboardType,
+    onClick: () -> Unit = {},
     onTextChanged: (String) -> Unit,
     isError: Boolean = false
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(45.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .clickable { onClick() },
         value = text,
         onValueChange = { newText ->
             text = newText
             onTextChanged(newText)
         },
+        enabled = false,
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = ColorWhite,
             unfocusedContainerColor = ColorWhite,
@@ -61,18 +70,8 @@ fun TextFieldSecondary(
         ),
         maxLines = 1,
         shape = Shapes.small,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(45.dp),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        textStyle = StyleText.copy(
-            fontFamily = fonts,
-            fontWeight = FontWeight.Normal,
-            fontSize = 12.sp,
-            lineHeight = 12.sp,
-            textAlign = TextAlign.Center
-        ),
         placeholder = {
             Text(
                 text = placeholder,
@@ -80,8 +79,7 @@ fun TextFieldSecondary(
                     fontFamily = fonts,
                     fontWeight = FontWeight.Normal,
                     fontSize = 12.sp,
-                    lineHeight = 12.sp,
-                    textAlign = TextAlign.Center
+                    lineHeight = 12.sp
                 )
             )
         },
@@ -98,15 +96,16 @@ fun TextFieldSecondary(
 
 @Preview(showBackground = true)
 @Composable
-fun TextFieldSecondaryPreview() {
+fun TextFieldSearchPreview() {
     var text by rememberSaveable { mutableStateOf("") }
     var isError by rememberSaveable { mutableStateOf(false) }
 
-    TextFieldSecondary(
+    TextFieldSearch(
         placeholder = stringResource(R.string.email_address),
         icon = R.drawable.ic_mail,
         iconDescription = R.string.email_address,
         keyboardType = KeyboardType.Email,
+        onClick = {},
         onTextChanged = { newText ->
             text = newText
         },

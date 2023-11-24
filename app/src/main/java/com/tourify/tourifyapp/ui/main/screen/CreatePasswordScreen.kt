@@ -83,6 +83,7 @@ fun CreatePasswordScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(ColorWhite)
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.SpaceBetween
     ){

@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tourify.tourifyapp.data.sources.NavigationItem
@@ -25,7 +26,8 @@ import com.tourify.tourifyapp.ui.theme.ColorWhite
 
 @Composable
 fun BottomNavigationBar(
-    navController: NavController
+    navBackStackEntry: NavBackStackEntry?,
+    onNavigationSelected: (route: String) -> Unit
 ) {
     val items = listOf(
         NavigationItem.Home,
@@ -34,7 +36,7 @@ fun BottomNavigationBar(
         NavigationItem.MyTickets,
         NavigationItem.Profile
     )
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
     val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationBar(
@@ -50,15 +52,7 @@ fun BottomNavigationBar(
             NavigationBarItem(
                 selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    onNavigationSelected(item.route)
                 },
                 icon = {
                     Icon(

@@ -3,7 +3,6 @@ package com.tourify.tourifyapp.ui.main.screen
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,6 +46,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.component.ButtonPrimary
+import com.tourify.tourifyapp.ui.component.CircleButtonLarge
 import com.tourify.tourifyapp.ui.component.LoadingButtonPrimary
 import com.tourify.tourifyapp.ui.component.TextFieldPrimary
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
@@ -248,68 +248,32 @@ fun AuthSocialMedia() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             val context = LocalContext.current
-            Box(
-                modifier = Modifier
-                    .shadow(6.dp, RoundedCornerShape(percent = 100))
-                    .clip(RoundedCornerShape(percent = 100))
-                    .size(50.dp)
-                    .background(ColorWhite)
-                    .clickable {
-                        Toasty.show(context, R.string.in_development)
-                    }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_google),
-                    contentDescription = stringResource(id = R.string.login_with_google),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(28.dp)
-                        .align(Alignment.Center),
-                    contentScale = ContentScale.Crop,
-                )
-            }
+            CircleButtonLarge(
+                context = context,
+                title = R.string.login_with_google,
+                icon = R.drawable.ic_google,
+                onClick = {
+                    Toasty.show(context, R.string.in_development)
+                }
+            )
             Spacer(modifier = Modifier.width(10.dp))
-            Box(
-                modifier = Modifier
-                    .shadow(6.dp, RoundedCornerShape(percent = 100))
-                    .clip(RoundedCornerShape(percent = 100))
-                    .size(50.dp)
-                    .background(ColorWhite)
-                    .clickable {
-                        Toasty.show(context, R.string.in_development)
-                    }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_facebook),
-                    contentDescription = stringResource(id = R.string.login_with_facebook),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(28.dp)
-                        .align(Alignment.Center),
-                    contentScale = ContentScale.Crop,
-                )
-            }
+            CircleButtonLarge(
+                context = context,
+                title = R.string.login_with_facebook,
+                icon = R.drawable.ic_facebook,
+                onClick = {
+                    Toasty.show(context, R.string.in_development)
+                }
+            )
             Spacer(modifier = Modifier.width(10.dp))
-            Box(
-                modifier = Modifier
-                    .shadow(6.dp, RoundedCornerShape(percent = 100))
-                    .clip(RoundedCornerShape(percent = 100))
-                    .size(50.dp)
-                    .background(ColorWhite)
-                    .clickable {
-                        Toasty.show(context, R.string.in_development)
-                    }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_tiktok),
-                    contentDescription = stringResource(id = R.string.login_with_tiktok),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(28.dp)
-                        .align(Alignment.Center),
-                    contentScale = ContentScale.Crop,
-                )
-            }
+            CircleButtonLarge(
+                context = context,
+                title = R.string.login_with_tiktok,
+                icon = R.drawable.ic_tiktok,
+                onClick = {
+                    Toasty.show(context, R.string.in_development)
+                }
+            )
         }
     }
 }

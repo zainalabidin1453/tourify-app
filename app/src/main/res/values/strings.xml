@@ -21,4 +21,21 @@
     <string name="new_password">Kata Sandi</string>
     <string name="confirm_password">Konfirmasi Kata Sandi</string>
     <string name="notice_new_password">Kata sandi harus terdiri dari 8 karakter atau lebih, mengandung setidaknya satu huruf besar, satu huruf kecil, satu angka, dan satu simbol.</string>
+    <string name="choose_location">Pilih Lokasi</string>
+    <string name="photo_profile">Foto Profil</string>
+    <string name="notification">Notifikasi</string>
+    <string name="choosed_province">Provinsi Yang Dipilih</string>
+    <string name="search_wisata">Cari Tempat Wisata...</string>
+    <string name="banner_slider">Banner Slider</string>
+    <string name="category_beach">Pantai</string>
+    <string name="category_lake">Danau</string>
+    <string name="category_waterfall">Air Terjun</string>
+    <string name="category_natural">Alam</string>
+    <string name="category_museum">Museum</string>
+    <string name="category_historical">Sejarah</string>
+    <string name="category_landmark">Landmark</string>
+    <string name="popular_wisata">Wisata Populer 🔥</string>
+    <string name="nearby_wisata">Wisata Terdekat 🚀</string>
+    <string name="total_rating">Total Rating</string>
+    <string name="add_to_favorite">Tambahkan Ke Daftar Favorit</string>
 </resources>
