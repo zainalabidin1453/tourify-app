@@ -22,6 +22,7 @@ import com.tourify.tourifyapp.ui.theme.fonts
 
 @Composable
 fun ButtonPrimary(
+    modifier: Modifier = Modifier,
     text: String,
     background: Color,
     color: Color,
@@ -29,7 +30,7 @@ fun ButtonPrimary(
     onClick: () -> Unit
 ) {
     Button(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
             .shadow(10.dp, Shapes.medium, true),
@@ -51,11 +52,12 @@ fun ButtonPrimary(
 
 @Composable
 fun LoadingButtonPrimary(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     gridSize: Dp = 56.dp
 ) {
     Button(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
             .shadow(10.dp, Shapes.medium, true),

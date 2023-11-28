@@ -38,4 +38,14 @@
     <string name="nearby_wisata">Wisata Terdekat 🚀</string>
     <string name="total_rating">Total Rating</string>
     <string name="add_to_favorite">Tambahkan Ke Daftar Favorit</string>
+    <string name="photo_wisata">Foto Wisata</string>
+    <string name="maps">Maps</string>
+    <string name="distance">Jarak</string>
+    <string name="culinary">Kuliner</string>
+    <string name="rating">Rating</string>
+    <string name="time">Waktu</string>
+    <string name="verified">Terverifikasi</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="instagram">Instagram</string>
+    <string name="tiktok">Tiktok</string>
 </resources>
