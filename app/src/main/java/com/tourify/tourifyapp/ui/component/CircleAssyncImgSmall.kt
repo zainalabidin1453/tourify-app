@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -27,13 +28,14 @@ fun CircleAssyncImgSmall(
     context: Context,
     title: Int,
     img: String,
+    size: Dp = 35.dp,
     errorImg : Int = R.drawable.avatar,
     onClick: () -> Unit
 ){
     Box(
         modifier = Modifier
             .shadow(2.dp, RoundedCornerShape(percent = 100), true)
-            .size(35.dp)
+            .size(size)
             .background(ColorWhite)
             .border(width = 1.dp, color = ColorPrimary, CircleShape)
             .clickable {
@@ -50,7 +52,7 @@ fun CircleAssyncImgSmall(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clip(CircleShape)
-                .size(35.dp),
+                .size(size),
             alignment = Alignment.Center
         )
     }
