@@ -36,7 +36,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,6 +64,7 @@ fun ModalBottomSheetDetailWisata(
     context: Context,
     navController: NavController,
     onShowDetailWisata: (Boolean) -> Unit,
+    onShowMapsWisata: (String) -> Unit
 ) {
     var isFavorite by rememberSaveable { mutableStateOf(false) }
     val scrollModalDetailBottomState = rememberScrollState()
@@ -82,10 +85,7 @@ fun ModalBottomSheetDetailWisata(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(282.dp)
-                            .shadow(
-                                25.dp,
-                                RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp)
-                            )
+                            .shadow(25.dp, RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp), true, spotColor = TextPrimary)
                             .clip(RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
                     )
                 }
@@ -107,8 +107,8 @@ fun ModalBottomSheetDetailWisata(
                                     color = TextPrimary,
                                     fontFamily = fonts,
                                     fontWeight = FontWeight.Medium,
-                                    fontSize = 20.sp,
-                                    lineHeight = 20.sp
+                                    fontSize = 18.sp,
+                                    lineHeight = 18.sp
                                 )
                             )
                             Spacer(modifier = Modifier.height(2.dp))
@@ -146,8 +146,12 @@ fun ModalBottomSheetDetailWisata(
                                 title = R.string.maps,
                                 icon = R.drawable.ic_google_maps,
                                 size = 35.dp,
+                                shadow = 10.dp,
                                 isIcon = false,
-                                onClick = {}
+                                onClick = {
+                                    val lonLat = "100.3499316,-0.9295652"
+                                    onShowMapsWisata(lonLat)
+                                }
                             )
                             Spacer(modifier = Modifier.width(12.dp))
                             CircleButtonSmall(
@@ -155,6 +159,7 @@ fun ModalBottomSheetDetailWisata(
                                 title = R.string.add_to_favorite,
                                 icon = if (isFavorite) R.drawable.ic_heart_fill else R.drawable.ic_heart,
                                 size = 35.dp,
+                                shadow = 10.dp,
                                 isIcon = true,
                                 tint = if (isFavorite) ColorDanger else ColorSecondary,
                                 onClick = {}
@@ -171,12 +176,15 @@ fun ModalBottomSheetDetailWisata(
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     Row(
+                        verticalAlignment = Alignment.CenterVertically,
                         content = {
                             CircleButtonSmall(
                                 context = context,
                                 title = R.string.total_rating,
                                 icon = R.drawable.ic_rating,
                                 size = 35.dp,
+                                sizeIcon = 26.dp,
+                                shadow = 4.dp,
                                 isIcon = true,
                                 tint = ColorWarning,
                                 onClick = {}
@@ -211,12 +219,15 @@ fun ModalBottomSheetDetailWisata(
                         }
                     )
                     Row(
+                        verticalAlignment = Alignment.CenterVertically,
                         content = {
                             CircleButtonSmall(
                                 context = context,
                                 title = R.string.distance,
                                 icon = R.drawable.ic_distance,
                                 size = 35.dp,
+                                sizeIcon = 26.dp,
+                                shadow = 4.dp,
                                 isIcon = true,
                                 tint = ColorDanger,
                                 onClick = {}
@@ -251,12 +262,15 @@ fun ModalBottomSheetDetailWisata(
                         }
                     )
                     Row(
+                        verticalAlignment = Alignment.CenterVertically,
                         content = {
                             CircleButtonSmall(
                                 context = context,
                                 title = R.string.culinary,
-                                icon = R.drawable.ic_heart,
+                                icon = R.drawable.ic_culinary,
                                 size = 35.dp,
+                                sizeIcon = 20.dp,
+                                shadow = 4.dp,
                                 isIcon = true,
                                 tint = ColorInfo,
                                 onClick = {}
@@ -296,7 +310,7 @@ fun ModalBottomSheetDetailWisata(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(18.dp)
-                    .shadow(4.dp, Shapes.small, true)
+                    .shadow(4.dp, Shapes.small, true, spotColor = TextPrimary)
                     .clip(Shapes.small)
                     .background(ColorWhite),
                 content = {
@@ -367,7 +381,7 @@ fun ModalBottomSheetDetailWisata(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 18.dp, end = 18.dp, bottom = 18.dp)
-                    .shadow(4.dp, Shapes.small, true)
+                    .shadow(4.dp, Shapes.small, true, spotColor = TextPrimary)
                     .clip(Shapes.small)
                     .background(ColorWhite),
                 content = {
@@ -407,7 +421,7 @@ fun ModalBottomSheetDetailWisata(
 @Composable
 fun ExpandedText(modifier: Modifier = Modifier, text: String) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
-    val textLayoutResultState = remember { mutableStateOf<TextLayoutResult?>(null) }
+    val textLayoutResultState = rememberSaveable { mutableStateOf<TextLayoutResult?>(null) }
     var isClickable by rememberSaveable { mutableStateOf(false) }
     var finalText by rememberSaveable { mutableStateOf(text) }
 
@@ -432,8 +446,19 @@ fun ExpandedText(modifier: Modifier = Modifier, text: String) {
         }
     }
 
+    val annotatedString = buildAnnotatedString {
+        append(finalText)
+        if (finalText.endsWith("Sembunyikan") || finalText.endsWith("Selengkapnya")) {
+            addStyle(
+                style = SpanStyle(color = TextPrimary),
+                start = finalText.length - "Sembunyikan".length,
+                end = finalText.length
+            )
+        }
+    }
+
     Text(
-        text = finalText,
+        text = annotatedString,
         maxLines = if (isExpanded) Int.MAX_VALUE else 5,
         onTextLayout = { textLayoutResultState.value = it },
         style = StyleText.copy(
@@ -460,6 +485,7 @@ fun ModalBottomSheetDetailWisataPreview() {
     ModalBottomSheetDetailWisata(
         context = context,
         navController = NavController(context),
-        onShowDetailWisata = {}
+        onShowDetailWisata = {},
+        onShowMapsWisata = {}
     )
 }

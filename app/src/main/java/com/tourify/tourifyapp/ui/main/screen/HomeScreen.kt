@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.android.gms.maps.model.LatLng
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.data.sources.ItemProvince
 import com.tourify.tourifyapp.model.ItemProvinceModel
@@ -82,7 +83,8 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     context: Context,
     navController: NavController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navigateToMapsWisata: (String) -> Unit = {}
 ) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
@@ -249,6 +251,9 @@ fun HomeScreen(
                     navController = navController,
                     onShowDetailWisata = { showValue ->
                         showDetailWisata = showValue
+                    },
+                    onShowMapsWisata = { lonLat ->
+                        navigateToMapsWisata(lonLat)
                     }
                 )
             }

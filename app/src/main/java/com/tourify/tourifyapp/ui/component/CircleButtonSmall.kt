@@ -5,9 +5,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
+import com.tourify.tourifyapp.ui.theme.TextPrimary
 
 @Composable
 fun CircleButtonSmall(
@@ -29,6 +33,8 @@ fun CircleButtonSmall(
     title: Int,
     icon: Int,
     size: Dp = 30.dp,
+    sizeIcon: Dp = 22.dp,
+    shadow: Dp = 4.dp,
     isIcon: Boolean = false,
     tint: Color = ColorPrimary,
     color: Color = ColorWhite,
@@ -36,7 +42,7 @@ fun CircleButtonSmall(
 ){
     Box(
         modifier = modifier
-            .shadow(2.dp, RoundedCornerShape(percent = 100), true)
+            .shadow(shadow, RoundedCornerShape(percent = 100), true, spotColor = TextPrimary)
             .size(size)
             .background(color)
             .clickable {
@@ -49,7 +55,7 @@ fun CircleButtonSmall(
                 contentDescription = stringResource(id = title),
                 modifier = Modifier
                     .padding(3.dp)
-                    .size(22.dp)
+                    .size(sizeIcon)
                     .align(Alignment.Center),
                 tint = tint
             )
@@ -59,7 +65,7 @@ fun CircleButtonSmall(
                 contentDescription = stringResource(id = title),
                 modifier = Modifier
                     .padding(3.dp)
-                    .size(22.dp)
+                    .size(sizeIcon)
                     .align(Alignment.Center),
                 contentScale = ContentScale.Crop,
             )
