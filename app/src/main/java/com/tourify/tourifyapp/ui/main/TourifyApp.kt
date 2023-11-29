@@ -11,6 +11,7 @@ import com.tourify.tourifyapp.ui.main.screen.CheckEmailScreen
 import com.tourify.tourifyapp.ui.main.screen.CreatePasswordScreen
 import com.tourify.tourifyapp.ui.main.screen.DashboardScreen
 import com.tourify.tourifyapp.ui.main.screen.EnterPasswordScreen
+import com.tourify.tourifyapp.ui.main.screen.MapsScreen
 import com.tourify.tourifyapp.ui.main.screen.SplashScreen
 import com.tourify.tourifyapp.ui.main.screen.VerifCodeScreen
 
