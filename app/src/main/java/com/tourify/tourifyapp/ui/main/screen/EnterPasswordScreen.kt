@@ -65,7 +65,7 @@ fun EnterPasswordScreen(
 ) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
-        systemUiController.setSystemBarsColor(ColorBackground, darkIcons = true)
+        systemUiController.setSystemBarsColor(ColorWhite, darkIcons = true)
         onDispose {}
     }
     val scrollState = rememberScrollState()
@@ -89,7 +89,7 @@ fun EnterPasswordScreen(
             content = {
                 Box(
                     modifier = Modifier
-                        .shadow(4.dp, RoundedCornerShape(percent = 100))
+                        .shadow(4.dp, RoundedCornerShape(percent = 100), true, spotColor = TextPrimary)
                         .clip(RoundedCornerShape(percent = 100))
                         .size(40.dp)
                         .background(ColorWhite)

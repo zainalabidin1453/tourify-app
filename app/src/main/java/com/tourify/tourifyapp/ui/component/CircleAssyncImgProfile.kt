@@ -24,7 +24,7 @@ import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 
 @Composable
-fun CircleAssyncImgSmall(
+fun CircleAssyncImgProfile(
     context: Context,
     title: Int,
     img: String,
@@ -34,8 +34,8 @@ fun CircleAssyncImgSmall(
 ){
     Box(
         modifier = Modifier
-            .shadow(10.dp, RoundedCornerShape(percent = 100), true, spotColor = ColorPrimary)
             .size(size)
+            .clip(RoundedCornerShape(percent = 100))
             .background(ColorWhite)
             .border(width = 1.dp, color = ColorPrimary, CircleShape)
             .clickable {

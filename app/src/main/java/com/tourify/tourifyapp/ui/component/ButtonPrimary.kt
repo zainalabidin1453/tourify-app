@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.ui.theme.ButtonStylePrimary
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
@@ -35,7 +36,7 @@ fun ButtonPrimary(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
-            .shadow(15.dp, Shapes.medium, true, spotColor = ColorPrimary),
+            .shadow(10.dp, Shapes.medium, true, spotColor = ColorPrimary),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = background),
         shape = Shapes.medium,
@@ -45,7 +46,9 @@ fun ButtonPrimary(
                 text = text,
                 color = color,
                 style = ButtonStylePrimary.copy(
-                    fontFamily = fonts.also { FontWeight.Normal }
+                    fontFamily = fonts,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
                 )
             )
         }
@@ -62,7 +65,7 @@ fun LoadingButtonPrimary(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
-            .shadow(15.dp, Shapes.medium, true, spotColor = ColorPrimary),
+            .shadow(10.dp, Shapes.medium, true, spotColor = ColorPrimary),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = ColorPrimary),
         shape = Shapes.medium,

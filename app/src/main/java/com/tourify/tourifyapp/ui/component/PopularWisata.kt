@@ -1,7 +1,6 @@
 package com.tourify.tourifyapp.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,13 +36,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
-import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorWarning
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
+import com.tourify.tourifyapp.utils.modifyNumberFormat
 
 @Composable
 fun PopularWisata(
@@ -82,11 +81,10 @@ fun PopularWisata(
 fun PopularWisataCard(onClick: (Int) -> Unit) {
     Box(
         modifier = Modifier
-            .width(230.dp)
             .wrapContentHeight()
-            .shadow(6.dp, Shapes.small, true)
+            .shadow(8.dp, Shapes.small, true, spotColor = TextPrimary)
+            .width(230.dp)
             .background(ColorWhite)
-            .border(1.dp, ColorPrimary, Shapes.small)
             .clickable { onClick(1) },
         content = {
             Column(
@@ -96,7 +94,7 @@ fun PopularWisataCard(onClick: (Int) -> Unit) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(10.dp))
+                            .clip(RoundedCornerShape(12.dp))
                             .height(116.dp)
                             .padding(6.dp),
                         content = {
@@ -110,7 +108,7 @@ fun PopularWisataCard(onClick: (Int) -> Unit) {
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .clip(RoundedCornerShape(16.dp)),
+                                    .clip(RoundedCornerShape(12.dp)),
                                 alignment = Alignment.Center
                             )
                             CircleButtonSmallFavorite(
@@ -188,9 +186,10 @@ fun PopularWisataCard(onClick: (Int) -> Unit) {
                                                     .width(13.dp),
                                                 tint = ColorWarning
                                             )
-                                            Spacer(modifier = Modifier.width(4.dp))
+                                            Spacer(modifier = Modifier.width(2.dp))
+                                            val totalUserRating = modifyNumberFormat("100")
                                             Text(
-                                                text = "0.0 (0)",
+                                                text = "0.0 ($totalUserRating)",
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,

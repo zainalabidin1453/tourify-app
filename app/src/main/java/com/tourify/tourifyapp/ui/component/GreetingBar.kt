@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
+import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
@@ -61,7 +62,7 @@ fun GreetingBar(
                     Box(
                         modifier = Modifier
                             .wrapContentWidth()
-                            .shadow(2.dp, Shapes.medium, true)
+                            .shadow(4.dp, Shapes.medium, true, spotColor = TextPrimary)
                             .height(35.dp)
                             .background(ColorWhite)
                             .clickable {
@@ -104,8 +105,10 @@ fun GreetingBar(
                         title = R.string.notification,
                         icon = R.drawable.ic_bell,
                         size = 35.dp,
+                        sizeIcon = 22.dp,
+                        shadow = 4.dp,
                         isIcon = true,
-                        tint = TextPrimary,
+                        tint = ColorSecondary,
                         onClick = {}
                     )
                 }

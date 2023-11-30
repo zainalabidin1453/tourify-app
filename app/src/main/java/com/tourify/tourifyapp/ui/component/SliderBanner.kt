@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +28,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
+import com.tourify.tourifyapp.ui.theme.Shapes
+import com.tourify.tourifyapp.ui.theme.TextPrimary
 import kotlinx.coroutines.delay
 import java.lang.Thread.yield
 import kotlin.math.absoluteValue
@@ -62,11 +63,11 @@ fun SliderBanner(
             modifier = modifier
                 .height(110.dp)
                 .fillMaxWidth()
-                .shadow(4.dp, RoundedCornerShape(16.dp))
-                .clip(RoundedCornerShape(16.dp))
+                .shadow(4.dp, Shapes.small, true, spotColor = TextPrimary)
+                .clip(Shapes.small)
         ) { page ->
             Card(
-                shape = RoundedCornerShape(16.dp),
+                shape = Shapes.small,
                 modifier = Modifier
                     .graphicsLayer {
                         val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue

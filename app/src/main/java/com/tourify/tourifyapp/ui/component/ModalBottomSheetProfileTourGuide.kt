@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +36,8 @@ import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
+import com.tourify.tourifyapp.utils.modifyMoneyFormat
+import com.tourify.tourifyapp.utils.modifyNumberFormat
 
 @Composable
 fun ModalBottomSheetProfileTourGuide(
@@ -47,7 +49,7 @@ fun ModalBottomSheetProfileTourGuide(
             .clip(Shapes.small),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = {
-            CircleAssyncImgSmall(
+            CircleAssyncImgProfile(
                 context = context,
                 title = R.string.photo_profile,
                 img = R.drawable.avatar.toString(),
@@ -93,7 +95,7 @@ fun ModalBottomSheetProfileTourGuide(
                 }
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp),
@@ -117,8 +119,9 @@ fun ModalBottomSheetProfileTourGuide(
                                 verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 content = {
+                                    val totalUserRating = modifyNumberFormat("0")
                                     Text(
-                                        text = "0.0 (0)",
+                                        text = "0.0 ($totalUserRating)",
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -153,8 +156,9 @@ fun ModalBottomSheetProfileTourGuide(
                                 verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 content = {
+                                    val totalPerjalanan = modifyNumberFormat("0")
                                     Text(
-                                        text = "0",
+                                        text = totalPerjalanan,
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -189,8 +193,9 @@ fun ModalBottomSheetProfileTourGuide(
                                 verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 content = {
+                                    val serviceFee = modifyMoneyFormat(10000)
                                     Text(
-                                        text = "Rp9.000,-",
+                                        text = serviceFee,
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,

@@ -51,6 +51,7 @@ import com.tourify.tourifyapp.ui.component.LoadingButtonPrimary
 import com.tourify.tourifyapp.ui.component.TextFieldPrimary
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
+import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
@@ -149,7 +150,7 @@ fun CheckEmailScreen(
                         Card(
                             modifier = Modifier
                                 .size(25.dp)
-                                .shadow(4.dp, RoundedCornerShape(percent = 100))
+                                .shadow(2.dp, RoundedCornerShape(percent = 100), true, spotColor = TextPrimary)
                                 .clip(RoundedCornerShape(percent = 100)),
                             colors = CardDefaults.cardColors(containerColor = ColorWhite)
                         ) {
