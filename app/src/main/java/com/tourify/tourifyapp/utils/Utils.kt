@@ -8,6 +8,8 @@ import android.util.Patterns
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import java.text.NumberFormat
+import java.util.Locale
 
 fun isValidEmail(email: String): Boolean {
     return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -32,4 +34,21 @@ fun bitmapDescriptorFromVector(
     val canvas = Canvas(bm)
     drawable.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bm)
+}
+
+fun modifyNumberFormat(numberValue: String): String {
+    val number = numberValue.toDoubleOrNull() ?: return ""
+    return when {
+        number >= 1_000_000_000_000 -> String.format("%.0ft", number / 1_000_000_000_000)
+        number >= 1_000_000_000 -> String.format("%.0fb", number / 1_000_000_000)
+        number >= 1_000_000 -> String.format("%.0fm", number / 1_000_000)
+        number >= 1_000 -> String.format("%.0fk", number / 1_000)
+        else -> number.toInt().toString()
+    }
+}
+
+fun modifyMoneyFormat(total: Int): String {
+    val formatter = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+    formatter.maximumFractionDigits = 0
+    return "${formatter.format(total.toLong()).replace("IDR", "").trim()},-"
 }

@@ -2,6 +2,7 @@ package com.tourify.tourifyapp.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -54,10 +55,7 @@ fun TextFieldSecondary(
             disabledContainerColor = ColorWhite,
             cursorColor = ColorPrimary,
             focusedBorderColor = ColorPrimary,
-            focusedTextColor = TextPrimary,
             unfocusedBorderColor = ColorSecondary,
-            unfocusedPlaceholderColor = TextLight,
-            unfocusedTextColor = TextLight
         ),
         maxLines = 1,
         shape = Shapes.small,
@@ -67,15 +65,16 @@ fun TextFieldSecondary(
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         textStyle = StyleText.copy(
+            color = TextPrimary,
             fontFamily = fonts,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             lineHeight = 12.sp,
-            textAlign = TextAlign.Center
         ),
         placeholder = {
             Text(
                 text = placeholder,
+                color = TextLight,
                 style = StyleText.copy(
                     fontFamily = fonts,
                     fontWeight = FontWeight.Normal,
@@ -88,6 +87,8 @@ fun TextFieldSecondary(
         trailingIcon = {
             val iconText = painterResource(icon)
             Icon(
+                modifier = Modifier
+                    .size(22.dp),
                 painter = iconText,
                 contentDescription = stringResource(id = iconDescription),
                 tint = if (isError) ColorDanger else TextLight

@@ -91,8 +91,8 @@ fun ItemCategory(id: Int, clickId: Int, icon: Int, inLabel: Int, color: Color, o
     Box(
         modifier = Modifier
             .wrapContentWidth()
-            .shadow(2.dp, Shapes.medium, true)
             .height(35.dp)
+            .shadow(4.dp, Shapes.medium, true, spotColor = TextPrimary)
             .background(ColorWhite)
             .clickable {
                 onClick(id)
@@ -101,7 +101,7 @@ fun ItemCategory(id: Int, clickId: Int, icon: Int, inLabel: Int, color: Color, o
         content = {
             Row(
                 modifier = Modifier
-                    .padding(6.dp)
+                    .padding(8.dp)
                     .align(Alignment.Center),
                 verticalAlignment = Alignment.CenterVertically,
                 content = {

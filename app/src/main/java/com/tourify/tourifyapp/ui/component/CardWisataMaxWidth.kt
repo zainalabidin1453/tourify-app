@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
-import com.tourify.tourifyapp.ui.theme.ColorInfo
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWarning
 import com.tourify.tourifyapp.ui.theme.ColorWhite
@@ -46,28 +45,9 @@ import com.tourify.tourifyapp.ui.theme.fonts
 import com.tourify.tourifyapp.utils.modifyNumberFormat
 
 @Composable
-fun NearbyWisata(
-    modifier: Modifier = Modifier,
-    onDetail: (Int) -> Unit
+fun CardWisataMaxWidth(
+    onClick: (Int) -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth(),
-        content = {
-            repeat(10) {
-                Spacer(modifier = Modifier.height(10.dp))
-                NearbyWisataCard(
-                    onClick = { id ->
-                        onDetail(id)
-                    }
-                )
-            }
-        }
-    )
-}
-
-@Composable
-fun NearbyWisataCard(onClick: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -109,7 +89,7 @@ fun NearbyWisataCard(onClick: (Int) -> Unit) {
                             Row (
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(end = 6.dp),
+                                    .padding(start  = 1.dp, end = 6.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 content = {
                                     Column(
@@ -164,44 +144,29 @@ fun NearbyWisataCard(onClick: (Int) -> Unit) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(start  = 2.dp, end = 6.dp),
+                                    .padding(start  = 3.dp, end = 6.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
                                 content = {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
+                                    Box(
+                                        modifier = Modifier
+                                            .wrapContentWidth()
+                                            .wrapContentHeight()
+                                            .clip(Shapes.small)
+                                            .background(ColorSecondary),
                                         content = {
                                             Text(
-                                                text = "0 Km",
-                                                style = StyleText.copy(
-                                                    color = ColorInfo,
-                                                    fontFamily = fonts,
-                                                    fontWeight = FontWeight.Normal,
-                                                    fontSize = 10.sp,
-                                                    lineHeight = 10.sp
-                                                )
-                                            )
-                                            Spacer(modifier = Modifier.width(4.dp))
-                                            Box(
                                                 modifier = Modifier
-                                                    .wrapContentWidth()
-                                                    .wrapContentHeight()
-                                                    .clip(Shapes.small)
-                                                    .background(ColorSecondary),
-                                                content = {
-                                                    Text(
-                                                        modifier = Modifier
-                                                            .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
-                                                        text = "Pantai",
-                                                        style = StyleText.copy(
-                                                            color = TextPrimary,
-                                                            fontFamily = fonts,
-                                                            fontWeight = FontWeight.Light,
-                                                            fontSize = 8.sp,
-                                                            lineHeight = 8.sp,
-                                                            textAlign = TextAlign.Center
-                                                        )
-                                                    )
-                                                }
+                                                    .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
+                                                text = "Pantai",
+                                                style = StyleText.copy(
+                                                    color = TextPrimary,
+                                                    fontFamily = fonts,
+                                                    fontWeight = FontWeight.Light,
+                                                    fontSize = 8.sp,
+                                                    lineHeight = 8.sp,
+                                                    textAlign = TextAlign.Center
+                                                )
                                             )
                                         }
                                     )
@@ -243,8 +208,8 @@ fun NearbyWisataCard(onClick: (Int) -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun NearbyWisataPreview() {
-    NearbyWisata(
-        onDetail = {}
+fun CardWisataMaxWidthPreview() {
+    CardWisataMaxWidth(
+        onClick = {}
     )
 }

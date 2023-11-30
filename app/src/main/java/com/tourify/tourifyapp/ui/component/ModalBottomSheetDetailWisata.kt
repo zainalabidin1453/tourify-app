@@ -310,7 +310,7 @@ fun ModalBottomSheetDetailWisata(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(18.dp)
-                    .shadow(4.dp, Shapes.small, true, spotColor = TextPrimary)
+                    .shadow(3.dp, Shapes.small, true, spotColor = TextPrimary)
                     .clip(Shapes.small)
                     .background(ColorWhite),
                 content = {
@@ -381,7 +381,7 @@ fun ModalBottomSheetDetailWisata(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 18.dp, end = 18.dp, bottom = 18.dp)
-                    .shadow(4.dp, Shapes.small, true, spotColor = TextPrimary)
+                    .shadow(3.dp, Shapes.small, true, spotColor = TextPrimary)
                     .clip(Shapes.small)
                     .background(ColorWhite),
                 content = {
@@ -434,7 +434,7 @@ fun ExpandedText(modifier: Modifier = Modifier, text: String) {
             }
             !isExpanded && textLayoutResult.hasVisualOverflow -> {
                 val lastCharIndex = textLayoutResult.getLineEnd(5 - 1)
-                val showMoreString = "... Selengkapnya"
+                val showMoreString = "...Selengkapnya"
                 val adjustedText = text
                     .substring(startIndex = 0, endIndex = lastCharIndex)
                     .dropLast(showMoreString.length)
@@ -450,7 +450,7 @@ fun ExpandedText(modifier: Modifier = Modifier, text: String) {
         append(finalText)
         if (finalText.endsWith("Sembunyikan") || finalText.endsWith("Selengkapnya")) {
             addStyle(
-                style = SpanStyle(color = TextPrimary),
+                style = SpanStyle(fontWeight = FontWeight.Normal),
                 start = finalText.length - "Sembunyikan".length,
                 end = finalText.length
             )

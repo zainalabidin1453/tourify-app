@@ -1,8 +1,10 @@
 package com.tourify.tourifyapp.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -36,17 +38,19 @@ import com.tourify.tourifyapp.ui.theme.fonts
 
 @Composable
 fun TextFieldSearch(
+    modifier: Modifier = Modifier,
     placeholder: String,
     icon: Int,
     iconDescription: Int,
     keyboardType: KeyboardType,
     onClick: () -> Unit = {},
     onTextChanged: (String) -> Unit,
-    isError: Boolean = false
+    isError: Boolean = false,
+    isEnabled: Boolean = false
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     OutlinedTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(45.dp)
             .clip(RoundedCornerShape(16.dp))
@@ -56,40 +60,58 @@ fun TextFieldSearch(
             text = newText
             onTextChanged(newText)
         },
-        enabled = false,
+        enabled = isEnabled,
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = ColorWhite,
             unfocusedContainerColor = ColorWhite,
             disabledContainerColor = ColorWhite,
             cursorColor = ColorPrimary,
             focusedBorderColor = ColorPrimary,
-            focusedTextColor = TextPrimary,
             unfocusedBorderColor = ColorSecondary,
-            unfocusedPlaceholderColor = TextLight,
-            unfocusedTextColor = TextLight
         ),
         maxLines = 1,
         shape = Shapes.small,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        textStyle = StyleText.copy(
+            color = TextPrimary,
+            fontFamily = fonts,
+            fontWeight = FontWeight.Normal,
+            fontSize = 11.sp,
+            lineHeight = 11.sp,
+        ),
         placeholder = {
             Text(
                 text = placeholder,
+                color = TextLight,
                 style = StyleText.copy(
                     fontFamily = fonts,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
-                    lineHeight = 12.sp
+                    fontWeight = FontWeight.Light,
+                    fontSize = 11.sp,
+                    lineHeight = 11.sp
                 )
             )
         },
         trailingIcon = {
             val iconText = painterResource(icon)
-            Icon(
-                painter = iconText,
-                contentDescription = stringResource(id = iconDescription),
-                tint = if (isError) ColorDanger else TextLight
-            )
+            if (text.length > 1) {
+                Image(
+                    modifier = Modifier
+                        .size(22.dp)
+                        .clip(RoundedCornerShape(percent = 100))
+                        .clickable { text = ""  },
+                    painter = painterResource(R.drawable.ic_cross_circle),
+                    contentDescription = stringResource(id = iconDescription),
+                )
+            } else {
+                Icon(
+                    modifier = Modifier
+                        .size(22.dp),
+                    painter = iconText,
+                    contentDescription = stringResource(id = iconDescription),
+                    tint = if (isError) ColorDanger else TextLight
+                )
+            }
         }
     )
 }
@@ -98,13 +120,13 @@ fun TextFieldSearch(
 @Composable
 fun TextFieldSearchPreview() {
     var text by rememberSaveable { mutableStateOf("") }
-    var isError by rememberSaveable { mutableStateOf(false) }
+    val isError by rememberSaveable { mutableStateOf(false) }
 
     TextFieldSearch(
         placeholder = stringResource(R.string.email_address),
-        icon = R.drawable.ic_mail,
+        icon = R.drawable.ic_search,
         iconDescription = R.string.email_address,
-        keyboardType = KeyboardType.Email,
+        keyboardType = KeyboardType.Text,
         onClick = {},
         onTextChanged = { newText ->
             text = newText

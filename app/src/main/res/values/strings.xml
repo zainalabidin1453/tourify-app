@@ -48,4 +48,7 @@
     <string name="whatsapp">Whatsapp</string>
     <string name="instagram">Instagram</string>
     <string name="tiktok">Tiktok</string>
+    <string name="filters">Filter</string>
+    <string name="ascending">Urutkan dari A ke Z</string>
+    <string name="descending">Urutkan dari Z ke A</string>
 </resources>

@@ -52,6 +52,7 @@ import com.tourify.tourifyapp.ui.component.TextFieldPassword
 import com.tourify.tourifyapp.ui.theme.ColorBackground
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
+import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
@@ -68,7 +69,7 @@ fun CreatePasswordScreen(
 ) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
-        systemUiController.setSystemBarsColor(ColorBackground, darkIcons = true)
+        systemUiController.setSystemBarsColor(ColorWhite, darkIcons = true)
         onDispose {}
     }
     val scrollState = rememberScrollState()
@@ -93,7 +94,7 @@ fun CreatePasswordScreen(
             content = {
                 Box(
                     modifier = Modifier
-                        .shadow(4.dp, RoundedCornerShape(percent = 100))
+                        .shadow(4.dp, RoundedCornerShape(percent = 100), true, spotColor = TextPrimary)
                         .clip(RoundedCornerShape(percent = 100))
                         .size(40.dp)
                         .background(ColorWhite)

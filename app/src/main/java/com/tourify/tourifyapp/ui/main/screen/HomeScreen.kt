@@ -1,10 +1,9 @@
 package com.tourify.tourifyapp.ui.main.screen
 
 import android.content.Context
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,16 +13,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
@@ -35,48 +30,43 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.gms.maps.model.LatLng
 import com.tourify.tourifyapp.R
-import com.tourify.tourifyapp.data.sources.ItemProvince
-import com.tourify.tourifyapp.model.ItemProvinceModel
 import com.tourify.tourifyapp.ui.component.GreetingBar
+import com.tourify.tourifyapp.ui.component.ModalBottomSheetAllNearbyWisata
+import com.tourify.tourifyapp.ui.component.ModalBottomSheetAllPopularWisata
 import com.tourify.tourifyapp.ui.component.ModalBottomSheetDetailWisata
+import com.tourify.tourifyapp.ui.component.ModalBottomSheetFilters
 import com.tourify.tourifyapp.ui.component.ModalBottomSheetListProvince
 import com.tourify.tourifyapp.ui.component.NearbyWisata
 import com.tourify.tourifyapp.ui.component.PopularWisata
 import com.tourify.tourifyapp.ui.component.SliderBanner
 import com.tourify.tourifyapp.ui.component.TextFieldSearch
+import com.tourify.tourifyapp.ui.component.TopBarAllWisata
 import com.tourify.tourifyapp.ui.component.WisataCategory
 import com.tourify.tourifyapp.ui.theme.ColorBackground
-import com.tourify.tourifyapp.ui.theme.ColorDanger
-import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
-import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
@@ -93,15 +83,24 @@ fun HomeScreen(
     }
     val scrollState = rememberScrollState()
     val modalBottomState = rememberModalBottomSheetState()
-    val modalSearchBottomState = rememberModalBottomSheetState()
-    val scrollModalSearchBottomState = rememberScrollState()
-    val modalDetailBottomState = rememberModalBottomSheetState()
+    val modalSearchBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalAllPopularWisataBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalAllNearbyWisataBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalFiltersBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    val modalDetailBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showListProvince by rememberSaveable { mutableStateOf(false) }
     var showSearchWisata by rememberSaveable { mutableStateOf(false) }
+    var showAllPopularWisata by rememberSaveable { mutableStateOf(false) }
+    var showAllNearbyWisata by rememberSaveable { mutableStateOf(false) }
     var showDetailWisata by rememberSaveable { mutableStateOf(false) }
+    var showFilters by rememberSaveable { mutableStateOf(false) }
     var idDetailWisata by rememberSaveable { mutableIntStateOf(0) }
     var firstProvince by rememberSaveable { mutableStateOf("Sumatra Barat") }
+    var keywords by rememberSaveable { mutableStateOf("") }
     var categoryWisata by rememberSaveable { mutableStateOf("") }
+    var isAscending by rememberSaveable { mutableStateOf(false) }
+    var isFree by rememberSaveable { mutableStateOf(false) }
+    val interactionSource = remember { MutableInteractionSource() }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -128,11 +127,11 @@ fun HomeScreen(
                             color = TextSecondary,
                             fontFamily = fonts,
                             fontWeight = FontWeight.Normal,
-                            fontSize = 14.sp,
-                            lineHeight = 14.sp
+                            fontSize = 12.sp,
+                            lineHeight = 12.sp
                         )
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "Temukan Kebahagiaan Anda Bersama Kami!",
                         maxLines = 2,
@@ -187,6 +186,14 @@ fun HomeScreen(
                         )
                     )
                     Icon(
+                        modifier = Modifier
+                            .clickable(
+                                interactionSource = interactionSource,
+                                indication = null,
+                                onClick = {
+                                    showAllPopularWisata = true
+                                }
+                            ),
                         painter = painterResource(id = R.drawable.ic_chevron_small_right),
                         contentDescription = stringResource(id = R.string.popular_wisata),
                         tint = TextPrimary
@@ -218,6 +225,14 @@ fun HomeScreen(
                         )
                     )
                     Icon(
+                        modifier = Modifier
+                            .clickable(
+                                interactionSource = interactionSource,
+                                indication = null,
+                                onClick = {
+                                    showAllNearbyWisata = true
+                                }
+                            ),
                         painter = painterResource(id = R.drawable.ic_chevron_small_right),
                         contentDescription = stringResource(id = R.string.nearby_wisata),
                         tint = TextPrimary
@@ -259,6 +274,78 @@ fun HomeScreen(
             }
         )
     }
+    if (showAllPopularWisata) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .fillMaxSize(),
+            onDismissRequest = {
+                showAllPopularWisata = false
+            },
+            sheetState = modalAllPopularWisataBottomState,
+            containerColor = ColorWhite,
+            shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
+            dragHandle = {
+                BottomSheetDefaults.DragHandle(color = ColorSecondary)
+            },
+            content = {
+                Scaffold(
+                    containerColor = ColorWhite,
+                    topBar = {
+                        TopBarAllWisata(
+                            context = context,
+                            onKeywords = { keywords = it },
+                            onShowFilters = { showFilters = it }
+                        )
+                    }) { paddingValues ->
+                    ModalBottomSheetAllPopularWisata(
+                        modifier = Modifier
+                            .padding(top = paddingValues.calculateTopPadding())
+                            .background(ColorWhite),
+                        onDetail = {
+                            idDetailWisata = it
+                            showDetailWisata = true
+                        },
+                    )
+                }
+            }
+        )
+    }
+    if (showAllNearbyWisata) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .fillMaxSize(),
+            onDismissRequest = {
+                showAllNearbyWisata = false
+            },
+            sheetState = modalAllNearbyWisataBottomState,
+            containerColor = ColorWhite,
+            shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
+            dragHandle = {
+                BottomSheetDefaults.DragHandle(color = ColorSecondary)
+            },
+            content = {
+                Scaffold(
+                    containerColor = ColorWhite,
+                    topBar = {
+                        TopBarAllWisata(
+                            context = context,
+                            onKeywords = { keywords = it },
+                            onShowFilters = { showFilters = it }
+                        )
+                    }) { paddingValues ->
+                        ModalBottomSheetAllNearbyWisata(
+                        modifier = Modifier
+                            .padding(top = paddingValues.calculateTopPadding())
+                            .background(ColorWhite),
+                        onDetail = {
+                            idDetailWisata = it
+                            showDetailWisata = true
+                        },
+                    )
+                }
+            }
+        )
+    }
     if (showSearchWisata) {
         ModalBottomSheet(
             modifier = Modifier
@@ -290,23 +377,22 @@ fun HomeScreen(
             sheetState = modalBottomState,
             containerColor = ColorWhite,
             shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
-            dragHandle = {},
             content = {
                 Scaffold(
                     containerColor = ColorWhite,
                     topBar = {
                     Column(
                         modifier = Modifier
-                            .padding(start = 18.dp, end = 18.dp, top = 14.dp, bottom = 14.dp),
+                            .padding(start = 18.dp, end = 18.dp, bottom = 18.dp),
                         content = {
                             Text(
-                                text = "Pilih Provinsi",
+                                text = "Pilih Provinsi \uD83D\uDCCD",
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 16.sp,
-                                    lineHeight = 16.sp
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 14.sp,
+                                    lineHeight = 14.sp
                                 )
                             )
                         }
@@ -329,6 +415,58 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                 }
             },
+        )
+    }
+    if (showFilters) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .height(165.dp),
+            onDismissRequest = {
+                showFilters = false
+            },
+            sheetState = modalFiltersBottomState,
+            containerColor = ColorWhite,
+            shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
+            dragHandle = {},
+            content = {
+                Scaffold(
+                    containerColor = ColorWhite,
+                    topBar = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(18.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            content = {
+                                Text(
+                                    text = "Sortir & Filter \uD83D\uDD0D",
+                                    style = StyleText.copy(
+                                        color = TextPrimary,
+                                        fontFamily = fonts,
+                                        fontWeight = FontWeight.Medium,
+                                        fontSize = 14.sp,
+                                        lineHeight = 14.sp
+                                    )
+                                )
+                            }
+                        )
+                }) { paddingValues ->
+                    ModalBottomSheetFilters(
+                        modifier = Modifier
+                            .padding(top = paddingValues.calculateTopPadding())
+                            .background(ColorWhite),
+                        isAscending = isAscending,
+                        isFree = isFree,
+                        onAscending = {
+                            isAscending = it
+                        },
+                        onFree = {
+                            isFree = it
+                        }
+                    )
+                }
+            }
         )
     }
 }

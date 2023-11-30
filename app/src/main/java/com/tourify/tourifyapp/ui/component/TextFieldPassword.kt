@@ -55,10 +55,7 @@ fun TextFieldPassword(
             disabledContainerColor = ColorWhite,
             cursorColor = ColorPrimary,
             focusedBorderColor = ColorPrimary,
-            focusedTextColor = TextPrimary,
             unfocusedBorderColor = ColorSecondary,
-            unfocusedPlaceholderColor = TextLight,
-            unfocusedTextColor = TextLight
         ),
         maxLines = 1,
         shape = Shapes.medium,
@@ -68,9 +65,17 @@ fun TextFieldPassword(
         singleLine = true,
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        textStyle = StyleText.copy(
+            color = TextPrimary,
+            fontFamily = fonts,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            lineHeight = 14.sp,
+        ),
         placeholder = {
             Text(
                 text = placeholder,
+                color = TextLight,
                 style = StyleText.copy(
                     fontFamily = fonts,
                     fontWeight = FontWeight.Normal,

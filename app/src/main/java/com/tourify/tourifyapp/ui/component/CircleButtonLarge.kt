@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
+import com.tourify.tourifyapp.ui.theme.TextPrimary
 
 @Composable
 fun CircleButtonLarge(
@@ -33,7 +34,7 @@ fun CircleButtonLarge(
 ){
     Box(
         modifier = Modifier
-            .shadow(6.dp, RoundedCornerShape(percent = 100))
+            .shadow(6.dp, RoundedCornerShape(percent = 100), true, spotColor = TextPrimary)
             .clip(RoundedCornerShape(percent = 100))
             .size(50.dp)
             .background(ColorWhite)
