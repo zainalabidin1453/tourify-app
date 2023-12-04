@@ -3,6 +3,7 @@ package com.tourify.tourifyapp.constants
 object Constants {
     const val PATH_LOGIN = "checkEmail"
     const val PREFS_LOGIN = "loginPreference"
+    const val PREFS_ONBOARDING = "onBoardingPreference"
     const val CATEGORY_BEACH = "Beach"
     const val CATEGORY_LAKE = "Lake"
     const val CATEGORY_WATERFALL = "Waterfall"

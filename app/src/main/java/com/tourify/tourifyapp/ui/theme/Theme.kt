@@ -16,12 +16,14 @@ import androidx.compose.ui.platform.LocalView
 
 private val darkColorScheme = darkColorScheme(
     primary = ColorPrimary,
+    onPrimary = ColorBlue,
     secondary = ColorSecondary,
     background = ColorBackground
 )
 
 private val lightColorScheme = lightColorScheme(
     primary = ColorPrimary,
+    onPrimary = ColorBlue,
     secondary = ColorSecondary,
     background = ColorBackground
 )
@@ -46,7 +48,7 @@ fun TourifyAppTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.onPrimary.toArgb()
         }
     }
 

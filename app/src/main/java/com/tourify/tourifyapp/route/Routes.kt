@@ -2,6 +2,7 @@ package com.tourify.tourifyapp.route
 
 sealed class Routes(val routes: String) {
     data object SplashSreen : Routes("splashScreen")
+    data object OnBoarding : Routes("onboarding")
     data object CheckEmail : Routes("checkEmail")
     data object EnterPassword : Routes("enterPassword/{email}") {
         fun createRoute(email: String) = "enterPassword/$email"

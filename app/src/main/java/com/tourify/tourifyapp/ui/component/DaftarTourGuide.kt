@@ -95,7 +95,7 @@ fun ItemTourGuide(context: Context, id: Int, onClick: () -> Unit) {
             if (showProfile) {
                 ModalBottomSheet(
                     modifier = Modifier
-                        .height(350.dp),
+                        .height(341.dp),
                     onDismissRequest = {
                         showProfile = false
                     },
@@ -118,10 +118,10 @@ fun ItemTourGuide(context: Context, id: Int, onClick: () -> Unit) {
                                 )
                                 ButtonPrimary(
                                     modifier = Modifier
-                                        .padding(18.dp),
+                                        .padding(start = 18.dp, end = 18.dp, bottom = 18.dp, top = 14.dp),
                                     text = "Tutup",
                                     background = ColorSecondary,
-                                    color = TextPrimary,
+                                    contentColor = TextPrimary,
                                     enabled = true,
                                     onClick = { showProfile = false }
                                 )

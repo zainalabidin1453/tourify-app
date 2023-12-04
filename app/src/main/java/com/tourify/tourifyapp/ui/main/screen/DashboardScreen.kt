@@ -32,6 +32,7 @@ fun DashboardScreen(
     val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(bottomBar = {
         if (currentRoute != Routes.SplashSreen.routes &&
+            currentRoute != Routes.OnBoarding.routes &&
             currentRoute != Routes.CheckEmail.routes &&
             currentRoute != Routes.VerifCode.routes &&
             currentRoute != Routes.EnterPassword.routes &&

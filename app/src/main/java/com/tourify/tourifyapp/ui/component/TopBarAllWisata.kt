@@ -46,11 +46,11 @@ fun TopBarAllWisata(
                         isEnabled = true
                     )
                     Spacer(modifier = Modifier.width(12.dp))
-                    CircleButtonSmall(
+                    CircleButton(
                         context = context,
                         title = R.string.filters,
                         icon = R.drawable.ic_filters,
-                        size = 45.dp,
+                        sizeCircle = 45.dp,
                         sizeIcon = 26.dp,
                         shadow = 4.dp,
                         isIcon = true,

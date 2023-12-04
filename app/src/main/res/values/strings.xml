@@ -12,7 +12,7 @@
     <string name="in_development">Dalam Tahap Pengembangan</string>
     <string name="login_with_google">Login Dengan Google</string>
     <string name="login_with_facebook">Login Dengan Facebook</string>
-    <string name="login_with_tiktok">Login Dengan Tiktok</string>
+    <string name="login_with_appleid">Login Dengan Apple ID</string>
     <string name="back">Kembali</string>
     <string name="incorrect_otp_code">Kode OTP Salah</string>
     <string name="invalid_password">Kata Sandi Tidak Valid</string>
@@ -51,4 +51,6 @@
     <string name="filters">Filter</string>
     <string name="ascending">Urutkan dari A ke Z</string>
     <string name="descending">Urutkan dari Z ke A</string>
+    <string name="security_info">Info Keamanan</string>
+    <string name="favorite_daftar">Daftar Favorit</string>
 </resources>
