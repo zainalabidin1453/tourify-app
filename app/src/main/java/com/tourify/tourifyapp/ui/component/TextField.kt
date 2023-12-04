@@ -1,7 +1,10 @@
 package com.tourify.tourifyapp.ui.component
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -18,12 +21,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
-import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
@@ -32,10 +36,13 @@ import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
 
 @Composable
-fun TextFieldPrimary(
+fun TextField(
     placeholder: String,
     icon: Int,
     iconDescription: Int,
+    height: Dp = 50.dp,
+    fontSize: TextUnit = 14.sp,
+    iconSize: Dp = 22.dp,
     keyboardType: KeyboardType,
     onTextChanged: (String) -> Unit,
     isError: Boolean
@@ -49,25 +56,28 @@ fun TextFieldPrimary(
         },
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = ColorWhite,
+            focusedBorderColor = ColorPrimary,
             unfocusedContainerColor = ColorWhite,
+            unfocusedBorderColor = TextLight,
+            errorContainerColor = ColorWhite,
+            errorBorderColor = ColorDanger,
             disabledContainerColor = ColorWhite,
             cursorColor = ColorPrimary,
-            focusedBorderColor = ColorPrimary,
-            unfocusedBorderColor = ColorSecondary,
         ),
+        isError = isError,
         maxLines = 1,
         shape = Shapes.medium,
         modifier = Modifier
             .fillMaxWidth()
-            .height(58.dp),
+            .height(height),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         textStyle = StyleText.copy(
             color = TextPrimary,
             fontFamily = fonts,
             fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            lineHeight = 14.sp,
+            fontSize = fontSize,
+            lineHeight = fontSize,
         ),
         placeholder = {
             Text(
@@ -76,17 +86,18 @@ fun TextFieldPrimary(
                 style = StyleText.copy(
                     fontFamily = fonts,
                     fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp,
-                    lineHeight = 14.sp
+                    fontSize = fontSize,
+                    lineHeight = fontSize
                 )
             )
         },
         trailingIcon = {
-            val iconText = painterResource(icon)
             Icon(
-                painter = iconText,
+                modifier = Modifier
+                    .size(iconSize),
+                painter = painterResource(icon),
                 contentDescription = stringResource(id = iconDescription),
-                tint = if (isError) ColorDanger else TextLight
+                tint = TextLight
             )
         }
     )
@@ -94,11 +105,10 @@ fun TextFieldPrimary(
 
 @Preview(showBackground = true)
 @Composable
-fun TextFiledPrimaryPreview() {
+fun TextFiledPreview() {
     var text by rememberSaveable { mutableStateOf("") }
-    var isError by rememberSaveable { mutableStateOf(false) }
-
-    TextFieldPrimary(
+    val isError by rememberSaveable { mutableStateOf(false) }
+    TextField(
         placeholder = stringResource(R.string.email_address),
         icon = R.drawable.ic_mail,
         iconDescription = R.string.email_address,

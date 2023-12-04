@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -31,11 +30,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,7 +44,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.component.GreetingBar
@@ -54,9 +52,9 @@ import com.tourify.tourifyapp.ui.component.ModalBottomSheetAllPopularWisata
 import com.tourify.tourifyapp.ui.component.ModalBottomSheetDetailWisata
 import com.tourify.tourifyapp.ui.component.ModalBottomSheetFilters
 import com.tourify.tourifyapp.ui.component.ModalBottomSheetListProvince
+import com.tourify.tourifyapp.ui.component.ModalBottomSheetSearchWisata
 import com.tourify.tourifyapp.ui.component.NearbyWisata
 import com.tourify.tourifyapp.ui.component.PopularWisata
-import com.tourify.tourifyapp.ui.component.SliderBanner
 import com.tourify.tourifyapp.ui.component.TextFieldSearch
 import com.tourify.tourifyapp.ui.component.TopBarAllWisata
 import com.tourify.tourifyapp.ui.component.WisataCategory
@@ -67,8 +65,9 @@ import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     context: Context,
@@ -84,8 +83,10 @@ fun HomeScreen(
     val scrollState = rememberScrollState()
     val modalBottomState = rememberModalBottomSheetState()
     val modalSearchBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val modalAllPopularWisataBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val modalAllNearbyWisataBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalAllPopularWisataBottomState =
+        rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalAllNearbyWisataBottomState =
+        rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val modalFiltersBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val modalDetailBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showListProvince by rememberSaveable { mutableStateOf(false) }
@@ -101,6 +102,7 @@ fun HomeScreen(
     var isAscending by rememberSaveable { mutableStateOf(false) }
     var isFree by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
+    val scope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -113,6 +115,8 @@ fun HomeScreen(
                 onShowListProvince = { showValue ->
                     showListProvince = showValue
                 },
+                onShowNotice = { },
+                onShowFavorite = { },
                 firstProvince = firstProvince
             )
             Column(
@@ -134,7 +138,7 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "Temukan Kebahagiaan Anda Bersama Kami!",
-                        maxLines = 2,
+                        maxLines = 3,
                         style = StyleText.copy(
                             color = TextPrimary,
                             fontFamily = fonts,
@@ -152,13 +156,11 @@ fun HomeScreen(
                         onClick = { showSearchWisata = true },
                         onTextChanged = {}
                     )
-                    Spacer(modifier = Modifier.height(18.dp))
-                    SliderBanner()
                 }
             )
             Column(
                 modifier = Modifier
-                    .padding(top = 10.dp)
+                    .padding(top = 18.dp)
                     .fillMaxWidth(),
                 content = {
                     WisataCategory(
@@ -241,7 +243,11 @@ fun HomeScreen(
             )
             NearbyWisata(
                 modifier = Modifier
-                    .padding(start = 18.dp, end = 18.dp, bottom = paddingValues.calculateBottomPadding()),
+                    .padding(
+                        start = 18.dp,
+                        end = 18.dp,
+                        bottom = paddingValues.calculateBottomPadding()
+                    ),
                 onDetail = {
                     idDetailWisata = it
                     showDetailWisata = true
@@ -333,7 +339,7 @@ fun HomeScreen(
                             onShowFilters = { showFilters = it }
                         )
                     }) { paddingValues ->
-                        ModalBottomSheetAllNearbyWisata(
+                    ModalBottomSheetAllNearbyWisata(
                         modifier = Modifier
                             .padding(top = paddingValues.calculateTopPadding())
                             .background(ColorWhite),
@@ -357,13 +363,25 @@ fun HomeScreen(
             containerColor = ColorWhite,
             shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
             content = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    content = {
-
-                    }
-                )
+                Scaffold(
+                    containerColor = ColorWhite,
+                    topBar = {
+                        TopBarAllWisata(
+                            context = context,
+                            onKeywords = { keywords = it },
+                            onShowFilters = { showFilters = it }
+                        )
+                    }) { paddingValues ->
+                    ModalBottomSheetSearchWisata(
+                        modifier = Modifier
+                            .padding(top = paddingValues.calculateTopPadding())
+                            .background(ColorWhite),
+                        onDetail = {
+                            idDetailWisata = it
+                            showDetailWisata = true
+                        },
+                    )
+                }
             }
         )
     }
@@ -377,27 +395,28 @@ fun HomeScreen(
             sheetState = modalBottomState,
             containerColor = ColorWhite,
             shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
+            dragHandle = null,
             content = {
                 Scaffold(
                     containerColor = ColorWhite,
                     topBar = {
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 18.dp, end = 18.dp, bottom = 18.dp),
-                        content = {
-                            Text(
-                                text = "Pilih Provinsi \uD83D\uDCCD",
-                                style = StyleText.copy(
-                                    color = TextPrimary,
-                                    fontFamily = fonts,
-                                    fontWeight = FontWeight.Medium,
-                                    fontSize = 14.sp,
-                                    lineHeight = 14.sp
+                        Column(
+                            modifier = Modifier
+                                .padding(18.dp),
+                            content = {
+                                Text(
+                                    text = "Pilih Provinsi \uD83D\uDCCD",
+                                    style = StyleText.copy(
+                                        color = TextPrimary,
+                                        fontFamily = fonts,
+                                        fontWeight = FontWeight.Medium,
+                                        fontSize = 14.sp,
+                                        lineHeight = 14.sp
+                                    )
                                 )
-                            )
-                        }
-                    )
-                }) { paddingValues ->
+                            }
+                        )
+                    }) { paddingValues ->
                     ModalBottomSheetListProvince(
                         modifier = Modifier
                             .padding(top = paddingValues.calculateTopPadding())
@@ -405,7 +424,11 @@ fun HomeScreen(
                         context = context,
                         navController = navController,
                         onShowListProvince = { showValue ->
-                            showListProvince = showValue
+                            scope.launch { modalBottomState.hide() }.invokeOnCompletion {
+                                if (!modalBottomState.isVisible) {
+                                    showListProvince = showValue
+                                }
+                            }
                         },
                         onProvince = { province ->
                             firstProvince = province
@@ -451,7 +474,7 @@ fun HomeScreen(
                                 )
                             }
                         )
-                }) { paddingValues ->
+                    }) { paddingValues ->
                     ModalBottomSheetFilters(
                         modifier = Modifier
                             .padding(top = paddingValues.calculateTopPadding())

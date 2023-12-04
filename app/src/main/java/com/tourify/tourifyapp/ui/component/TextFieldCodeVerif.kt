@@ -29,9 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
-import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.StyleText
+import com.tourify.tourifyapp.ui.theme.TextLight
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
 
@@ -63,7 +63,7 @@ fun TextFieldCodeVerif(
                     val borderStroke = if (isBoxFilled) {
                         BorderStroke(1.dp, ColorPrimary)
                     } else {
-                        BorderStroke(1.dp, ColorSecondary)
+                        BorderStroke(1.dp, TextLight)
                     }
                     Box(
                         modifier = Modifier

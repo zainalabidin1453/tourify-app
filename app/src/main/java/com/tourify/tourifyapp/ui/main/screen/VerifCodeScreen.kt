@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,27 +13,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,6 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.component.ButtonPrimary
+import com.tourify.tourifyapp.ui.component.CircleButton
 import com.tourify.tourifyapp.ui.component.LoadingButtonPrimary
 import com.tourify.tourifyapp.ui.component.TextFieldCodeVerif
 import com.tourify.tourifyapp.ui.theme.ColorBackground
@@ -64,7 +60,7 @@ fun VerifCodeScreen(
 ) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
-        systemUiController.setSystemBarsColor(ColorWhite, darkIcons = true)
+        systemUiController.setSystemBarsColor(ColorBackground, darkIcons = true)
         onDispose {}
     }
     val scrollState = rememberScrollState()
@@ -73,36 +69,55 @@ fun VerifCodeScreen(
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val email = navBackStackEntry?.arguments?.getString("email")
+    val interactionSource = remember { MutableInteractionSource() }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(ColorWhite)
+            .background(ColorBackground)
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.SpaceBetween
     ){
-        Row(
+        Column(
             modifier = Modifier
-                .padding(start = 21.dp, top = 30.dp, end = 21.dp, bottom = 21.dp),
+                .padding(start = 18.dp, top = 21.dp, end = 18.dp, bottom = 18.dp),
             content = {
-                Box(
-                    modifier = Modifier
-                        .shadow(4.dp, RoundedCornerShape(percent = 100), true, spotColor = TextPrimary)
-                        .clip(RoundedCornerShape(percent = 100))
-                        .size(40.dp)
-                        .background(ColorWhite)
-                        .clickable {
-                            navigateToCheckEmail()
-                        },
+                CircleButton(
+                    context = context,
+                    title = R.string.back,
+                    icon = R.drawable.ic_arrow_back,
+                    sizeCircle = 40.dp,
+                    sizeIcon = 26.dp,
+                    shadow = 4.dp,
+                    isIcon = true,
+                    tint = TextPrimary,
+                    onClick = { navigateToCheckEmail() }
+                )
+                Spacer(modifier = Modifier.height(50.dp))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_back),
-                            contentDescription = stringResource(id = R.string.back),
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .size(26.dp)
-                                .align(Alignment.Center),
-                            tint = TextPrimary
+                        Text(
+                            text = "Kode Verifikasi",
+                            style = StyleText.copy(
+                                color = TextPrimary,
+                                fontFamily = fonts,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 22.sp,
+                                lineHeight = 22.sp
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "Masukkan kode verifikasi yang sudah dikirim melalui email Anda",
+                            style = StyleText.copy(
+                                color = TextPrimary,
+                                fontFamily = fonts,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                lineHeight = 22.sp,
+                                textAlign = TextAlign.Center
+                            )
                         )
                     }
                 )
@@ -110,54 +125,30 @@ fun VerifCodeScreen(
         )
         Column(
             modifier = Modifier
-                .padding(start = 21.dp, top = 21.dp, end = 21.dp, bottom = 21.dp),
+                .padding(18.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             content = {
-                Text(
-                    text = "Kode Verifikasi",
-                    style = StyleText.copy(
-                        color = TextPrimary,
-                        fontFamily = fonts,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 34.sp,
-                        lineHeight = 34.sp
-                    )
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Masukkan kode verifikasi yang sudah dikirim melalui email Anda",
-                    style = StyleText.copy(
-                        color = TextPrimary,
-                        fontFamily = fonts,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        lineHeight = 22.sp,
-                        textAlign = TextAlign.Center
-                    )
-                )
-                Spacer(modifier = Modifier.height(30.dp))
                 Image(
                     painter = painterResource(id = R.drawable.ic_codeotp),
-                    contentDescription = "",
+                    contentDescription = "Icon Verifikasi Kode",
                     modifier = Modifier
                         .fillMaxWidth(),
                     contentScale = ContentScale.Fit
                 )
-                Spacer(modifier = Modifier.height(30.dp))
+            }
+        )
+        Column(
+            modifier = Modifier
+                .padding(18.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            content = {
                 TextFieldCodeVerif(
                     otpTextChange = { newCode ->
                         codeOTP = newCode
                     }
                 )
-                Spacer(modifier = Modifier.height(30.dp))
-            }
-        )
-        Column(
-            modifier = Modifier
-                .padding(start = 21.dp, top = 21.dp, end = 21.dp, bottom = 30.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            content = {
+                Spacer(modifier = Modifier.height(77.dp))
                 Row(
                     content = {
                         Text(
@@ -173,7 +164,11 @@ fun VerifCodeScreen(
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             modifier = Modifier
-                                .clickable {  },
+                                .clickable (
+                                    interactionSource = interactionSource,
+                                    indication = null,
+                                    onClick = {}
+                                ),
                             text = "Kirim ulang",
                             style = StyleText.copy(
                                 color = TextPrimary,
@@ -200,7 +195,7 @@ fun VerifCodeScreen(
                     ButtonPrimary(
                         text = "Verifikasi kode",
                         background = ColorPrimary,
-                        color = ColorWhite,
+                        contentColor = ColorWhite,
                         enabled = true,
                         onClick = {
                             val codeValue = codeOTP

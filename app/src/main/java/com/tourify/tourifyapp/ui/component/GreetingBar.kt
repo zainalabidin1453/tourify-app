@@ -37,6 +37,7 @@ import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
+import com.tourify.tourifyapp.ui.theme.TextLight
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
 
@@ -45,6 +46,8 @@ fun GreetingBar(
     context: Context,
     navController: NavController,
     onShowListProvince: (Boolean) -> Unit,
+    onShowNotice: () -> Unit,
+    onShowFavorite: () -> Unit,
     firstProvince: String
 ){
     var showListProvince by rememberSaveable { mutableStateOf(false) }
@@ -80,7 +83,7 @@ fun GreetingBar(
                                         painter = painterResource(id = R.drawable.ic_location),
                                         contentDescription = stringResource(id = R.string.choose_location),
                                         modifier = Modifier
-                                            .size(20.dp),
+                                            .size(16.dp),
                                         tint = ColorDanger
                                     )
                                     Spacer(modifier = Modifier.width(1.dp))
@@ -94,22 +97,34 @@ fun GreetingBar(
                                             lineHeight = 12.sp
                                         )
                                     )
-                                    Spacer(modifier = Modifier.width(3.dp))
+                                    Spacer(modifier = Modifier.width(3.5.dp))
                                 }
                             )
                         }
                     )
                     Spacer(modifier = Modifier.width(10.dp))
-                    CircleButtonSmall(
+                    CircleButton(
+                        context = context,
+                        title = R.string.favorite_daftar,
+                        icon = R.drawable.ic_heart_fill,
+                        sizeCircle = 35.dp,
+                        sizeIcon = 20.dp,
+                        shadow = 4.dp,
+                        isIcon = true,
+                        tint = ColorDanger,
+                        onClick = { onShowFavorite() }
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    CircleButton(
                         context = context,
                         title = R.string.notification,
                         icon = R.drawable.ic_bell,
-                        size = 35.dp,
+                        sizeCircle = 35.dp,
                         sizeIcon = 22.dp,
                         shadow = 4.dp,
                         isIcon = true,
                         tint = ColorSecondary,
-                        onClick = {}
+                        onClick = { onShowNotice() }
                     )
                 }
             )
@@ -132,6 +147,8 @@ fun GreetingBarPreview() {
         context = context,
         navController = NavController(context),
         onShowListProvince = {},
+        onShowNotice = {},
+        onShowFavorite = {},
         firstProvince = "Sumatra Barat"
     )
 }

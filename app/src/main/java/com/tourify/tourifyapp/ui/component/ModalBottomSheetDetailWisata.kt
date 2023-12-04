@@ -141,11 +141,11 @@ fun ModalBottomSheetDetailWisata(
                         modifier = Modifier
                             .wrapContentWidth(),
                         content = {
-                            CircleButtonSmall(
+                            CircleButton(
                                 context = context,
                                 title = R.string.maps,
                                 icon = R.drawable.ic_google_maps,
-                                size = 35.dp,
+                                sizeCircle = 35.dp,
                                 shadow = 10.dp,
                                 isIcon = false,
                                 onClick = {
@@ -154,11 +154,11 @@ fun ModalBottomSheetDetailWisata(
                                 }
                             )
                             Spacer(modifier = Modifier.width(12.dp))
-                            CircleButtonSmall(
+                            CircleButton(
                                 context = context,
                                 title = R.string.add_to_favorite,
                                 icon = if (isFavorite) R.drawable.ic_heart_fill else R.drawable.ic_heart,
-                                size = 35.dp,
+                                sizeCircle = 35.dp,
                                 shadow = 10.dp,
                                 isIcon = true,
                                 tint = if (isFavorite) ColorDanger else ColorSecondary,
@@ -178,11 +178,11 @@ fun ModalBottomSheetDetailWisata(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         content = {
-                            CircleButtonSmall(
+                            CircleButton(
                                 context = context,
                                 title = R.string.total_rating,
                                 icon = R.drawable.ic_rating,
-                                size = 35.dp,
+                                sizeCircle = 35.dp,
                                 sizeIcon = 26.dp,
                                 shadow = 4.dp,
                                 isIcon = true,
@@ -199,8 +199,8 @@ fun ModalBottomSheetDetailWisata(
                                             color = TextSecondary,
                                             fontFamily = fonts,
                                             fontWeight = FontWeight.Light,
-                                            fontSize = 10.sp,
-                                            lineHeight = 10.sp
+                                            fontSize = 11.sp,
+                                            lineHeight = 11.sp
                                         )
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
@@ -221,11 +221,11 @@ fun ModalBottomSheetDetailWisata(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         content = {
-                            CircleButtonSmall(
+                            CircleButton(
                                 context = context,
                                 title = R.string.distance,
                                 icon = R.drawable.ic_distance,
-                                size = 35.dp,
+                                sizeCircle = 35.dp,
                                 sizeIcon = 26.dp,
                                 shadow = 4.dp,
                                 isIcon = true,
@@ -242,8 +242,8 @@ fun ModalBottomSheetDetailWisata(
                                             color = TextSecondary,
                                             fontFamily = fonts,
                                             fontWeight = FontWeight.Light,
-                                            fontSize = 10.sp,
-                                            lineHeight = 10.sp
+                                            fontSize = 11.sp,
+                                            lineHeight = 11.sp
                                         )
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
@@ -264,11 +264,11 @@ fun ModalBottomSheetDetailWisata(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         content = {
-                            CircleButtonSmall(
+                            CircleButton(
                                 context = context,
                                 title = R.string.culinary,
                                 icon = R.drawable.ic_culinary,
-                                size = 35.dp,
+                                sizeCircle = 35.dp,
                                 sizeIcon = 20.dp,
                                 shadow = 4.dp,
                                 isIcon = true,
@@ -285,8 +285,8 @@ fun ModalBottomSheetDetailWisata(
                                             color = TextSecondary,
                                             fontFamily = fonts,
                                             fontWeight = FontWeight.Light,
-                                            fontSize = 10.sp,
-                                            lineHeight = 10.sp
+                                            fontSize = 11.sp,
+                                            lineHeight = 11.sp
                                         )
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
@@ -410,7 +410,7 @@ fun ModalBottomSheetDetailWisata(
                     .padding(start = 18.dp, end = 18.dp, bottom = 18.dp),
                 text = "Pesan Perjalanan",
                 background = ColorPrimary,
-                color = ColorWhite,
+                contentColor = ColorWhite,
                 enabled = true,
                 onClick = {}
             )
@@ -434,7 +434,7 @@ fun ExpandedText(modifier: Modifier = Modifier, text: String) {
             }
             !isExpanded && textLayoutResult.hasVisualOverflow -> {
                 val lastCharIndex = textLayoutResult.getLineEnd(5 - 1)
-                val showMoreString = "...Selengkapnya"
+                val showMoreString = " Selengkapnya"
                 val adjustedText = text
                     .substring(startIndex = 0, endIndex = lastCharIndex)
                     .dropLast(showMoreString.length)
