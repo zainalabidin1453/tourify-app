@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,13 +20,19 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -58,16 +65,20 @@ import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalBottomSheetDetailWisata(
     context: Context,
     navController: NavController,
     onShowDetailWisata: (Boolean) -> Unit,
-    onShowMapsWisata: (String) -> Unit
 ) {
+    val modalMapsBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var showMapsWisata by rememberSaveable { mutableStateOf(false) }
     var isFavorite by rememberSaveable { mutableStateOf(false) }
     val scrollModalDetailBottomState = rememberScrollState()
+    val scope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .verticalScroll(scrollModalDetailBottomState),
@@ -148,10 +159,7 @@ fun ModalBottomSheetDetailWisata(
                                 sizeCircle = 35.dp,
                                 shadow = 10.dp,
                                 isIcon = false,
-                                onClick = {
-                                    val lonLat = "100.3499316,-0.9295652"
-                                    onShowMapsWisata(lonLat)
-                                }
+                                onClick = { showMapsWisata = true }
                             )
                             Spacer(modifier = Modifier.width(12.dp))
                             CircleButton(
@@ -416,6 +424,52 @@ fun ModalBottomSheetDetailWisata(
             )
         }
     )
+    if (showMapsWisata) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .fillMaxSize(),
+            onDismissRequest = {
+                showMapsWisata = false
+            },
+            sheetState = modalMapsBottomState,
+            containerColor = ColorWhite,
+            shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
+            dragHandle = {
+                BottomSheetDefaults.DragHandle(color = ColorSecondary)
+            },
+            content = {
+                Scaffold(
+                    containerColor = ColorWhite,
+                    topBar = {
+                        TopBarScreenModal(
+                            title = "Wisata Name",
+                            onBack = { showValue ->
+                                scope.launch { modalMapsBottomState.hide() }.invokeOnCompletion {
+                                    if (!modalMapsBottomState.isVisible) {
+                                        showMapsWisata = showValue
+                                    }
+                                }
+                            }
+                        )
+                    }) { paddingValues ->
+                    ModalBottomSheetMaps(
+                        modifier = Modifier
+                            .padding(top = paddingValues.calculateTopPadding())
+                            .background(ColorWhite),
+                        lon = 100.3499316,
+                        lat = -0.9295652,
+                        onBack = { showValue ->
+                            scope.launch { modalMapsBottomState.hide() }.invokeOnCompletion {
+                                if (!modalMapsBottomState.isVisible) {
+                                    showMapsWisata = showValue
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -485,7 +539,6 @@ fun ModalBottomSheetDetailWisataPreview() {
     ModalBottomSheetDetailWisata(
         context = context,
         navController = NavController(context),
-        onShowDetailWisata = {},
-        onShowMapsWisata = {}
+        onShowDetailWisata = {}
     )
 }

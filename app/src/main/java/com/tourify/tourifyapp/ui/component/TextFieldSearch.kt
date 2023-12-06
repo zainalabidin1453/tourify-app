@@ -1,5 +1,7 @@
 package com.tourify.tourifyapp.ui.component
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -14,8 +16,10 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -36,7 +40,11 @@ import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextLight
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun TextFieldSearch(
     modifier: Modifier = Modifier,
@@ -46,11 +54,18 @@ fun TextFieldSearch(
     keyboardType: KeyboardType,
     onClick: () -> Unit = {},
     onTextChanged: (String) -> Unit,
+    onAddToHistory: (Boolean) -> Unit = {},
     isError: Boolean = false,
-    isEnabled: Boolean = false
+    isEnabled: Boolean = false,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    keywords: String = ""
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf(keywords) }
     val interactionSource = remember { MutableInteractionSource() }
+    var lastChangeTime by rememberSaveable { mutableLongStateOf(0L) }
+    if (keywords.isNotEmpty() && text.isEmpty()) {
+        text = keywords
+    }
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
@@ -59,8 +74,18 @@ fun TextFieldSearch(
             .clickable { onClick() },
         value = text,
         onValueChange = { newText ->
+            lastChangeTime = System.currentTimeMillis()
             text = newText
             onTextChanged(newText)
+            coroutineScope.launch {
+                delay(6000L)
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastChangeTime >= 6000L) {
+                    onAddToHistory(true)
+                } else {
+                    onAddToHistory(false)
+                }
+            }
         },
         enabled = isEnabled,
         colors = OutlinedTextFieldDefaults.colors(
@@ -109,6 +134,7 @@ fun TextFieldSearch(
                             indication = null,
                             onClick = {
                                 text = ""
+                                onTextChanged(text)
                             }
                         ),
                     painter = painterResource(R.drawable.ic_cross_circle),

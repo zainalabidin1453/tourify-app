@@ -1,7 +1,6 @@
 package com.tourify.tourifyapp.ui.main.screen
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.material3.Scaffold
@@ -25,12 +24,13 @@ fun DashboardScreen(
 ) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
-        systemUiController.setSystemBarsColor(ColorWhite)
+        systemUiController.setSystemBarsColor(ColorWhite, darkIcons = true)
         onDispose {}
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    Scaffold(bottomBar = {
+    Scaffold(
+        bottomBar = {
         if (currentRoute != Routes.SplashSreen.routes &&
             currentRoute != Routes.OnBoarding.routes &&
             currentRoute != Routes.CheckEmail.routes &&
@@ -38,7 +38,8 @@ fun DashboardScreen(
             currentRoute != Routes.EnterPassword.routes &&
             currentRoute != Routes.CreatePassword.routes &&
             currentRoute != Routes.ScanObjek.routes &&
-            currentRoute != Routes.Maps.routes
+            currentRoute != Routes.FavoriteWisata.routes &&
+            currentRoute != Routes.Notice.routes
         ) {
             BottomNavigationBar(navBackStackEntry = navBackStackEntry) { route ->
                 navController.navigate(route) {
@@ -62,15 +63,18 @@ fun DashboardScreen(
                         context = context,
                         navController = navController,
                         paddingValues = paddingValues,
-                        navigateToMapsWisata = { lonLat ->
-                            val (lon, lat) = lonLat.split(",")
-                            val route = Routes.Maps.createRoute(lon, lat)
+                        navigateToFavorite = { usersId ->
+                            val route = Routes.FavoriteWisata.createRoute(usersId)
+                            navController.navigate(route)
+                        },
+                        navigateToNotice = { usersId ->
+                            val route = Routes.Notice.createRoute(usersId)
                             navController.navigate(route)
                         }
                     )
                 }
                 composable(
-                    route = Routes.Maps.routes,
+                    route = Routes.FavoriteWisata.routes,
                     enterTransition = {
                         slideIntoContainer(
                             AnimatedContentTransitionScope.SlideDirection.Down,
@@ -84,8 +88,40 @@ fun DashboardScreen(
                         )
                     },
                     content = {
-                        MapsScreen(
-                            navController = navController,
+                        FavoriteWisataScreen(
+                            onBack = {
+                                navController.navigate(Routes.Home.routes) {
+                                    popUpTo(Routes.FavoriteWisata.routes) { inclusive = false }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                        )
+                    }
+                )
+                composable(
+                    route = Routes.Notice.routes,
+                    enterTransition = {
+                        slideIntoContainer(
+                            AnimatedContentTransitionScope.SlideDirection.Down,
+                            animationSpec = tween(500)
+                        )
+                    },
+                    exitTransition = {
+                        slideOutOfContainer(
+                            AnimatedContentTransitionScope.SlideDirection.Up,
+                            animationSpec = tween(500)
+                        )
+                    },
+                    content = {
+                        NoticeScreen(
+                            onBack = {
+                                navController.navigate(Routes.Home.routes) {
+                                    popUpTo(Routes.Notice.routes) { inclusive = false }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
                         )
                     }
                 )
