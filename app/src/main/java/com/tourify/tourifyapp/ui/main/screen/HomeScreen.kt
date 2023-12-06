@@ -1,11 +1,11 @@
 package com.tourify.tourifyapp.ui.main.screen
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
@@ -46,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tourify.tourifyapp.R
+import com.tourify.tourifyapp.data.db.DBHistorySearchHandler
 import com.tourify.tourifyapp.ui.component.GreetingBar
 import com.tourify.tourifyapp.ui.component.ModalBottomSheetAllNearbyWisata
 import com.tourify.tourifyapp.ui.component.ModalBottomSheetAllPopularWisata
@@ -58,13 +60,14 @@ import com.tourify.tourifyapp.ui.component.PopularWisata
 import com.tourify.tourifyapp.ui.component.TextFieldSearch
 import com.tourify.tourifyapp.ui.component.TopBarAllWisata
 import com.tourify.tourifyapp.ui.component.WisataCategory
-import com.tourify.tourifyapp.ui.theme.ColorBackground
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
+import com.tourify.tourifyapp.utils.checkKeywords
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,11 +76,12 @@ fun HomeScreen(
     context: Context,
     navController: NavController,
     paddingValues: PaddingValues,
-    navigateToMapsWisata: (String) -> Unit = {}
+    navigateToFavorite: (Int) -> Unit = {},
+    navigateToNotice: (Int) -> Unit = {},
 ) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
-        systemUiController.setSystemBarsColor(ColorBackground, darkIcons = true)
+        systemUiController.setSystemBarsColor(ColorWhite, darkIcons = true)
         onDispose {}
     }
     val scrollState = rememberScrollState()
@@ -90,6 +94,7 @@ fun HomeScreen(
     val modalFiltersBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val modalDetailBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showListProvince by rememberSaveable { mutableStateOf(false) }
+    var showHistorySearch by rememberSaveable { mutableStateOf(true) }
     var showSearchWisata by rememberSaveable { mutableStateOf(false) }
     var showAllPopularWisata by rememberSaveable { mutableStateOf(false) }
     var showAllNearbyWisata by rememberSaveable { mutableStateOf(false) }
@@ -115,8 +120,8 @@ fun HomeScreen(
                 onShowListProvince = { showValue ->
                     showListProvince = showValue
                 },
-                onShowNotice = { },
-                onShowFavorite = { },
+                onShowNotice = { navigateToFavorite(1) },
+                onShowFavorite = { navigateToNotice(1) },
                 firstProvince = firstProvince
             )
             Column(
@@ -272,9 +277,6 @@ fun HomeScreen(
                     navController = navController,
                     onShowDetailWisata = { showValue ->
                         showDetailWisata = showValue
-                    },
-                    onShowMapsWisata = { lonLat ->
-                        navigateToMapsWisata(lonLat)
                     }
                 )
             }
@@ -368,18 +370,34 @@ fun HomeScreen(
                     topBar = {
                         TopBarAllWisata(
                             context = context,
-                            onKeywords = { keywords = it },
-                            onShowFilters = { showFilters = it }
+                            value = keywords,
+                            onKeywords = {
+                                keywords = it
+                            },
+                            onShowFilters = { showFilters = it },
+                            onShowHistorySearch = { showHistorySearch = it },
+                            onAddHistorySearch = { isAdd ->
+                                val cKey = checkKeywords(keywords)
+                                if (isAdd && cKey) {
+                                    val dbHistorySearchHandler = DBHistorySearchHandler(context)
+                                    dbHistorySearchHandler.addHistorySearch(keywords)
+                                }
+                            }
                         )
                     }) { paddingValues ->
                     ModalBottomSheetSearchWisata(
+                        context = context,
                         modifier = Modifier
                             .padding(top = paddingValues.calculateTopPadding())
                             .background(ColorWhite),
-                        onDetail = {
-                            idDetailWisata = it
+                        showHistorySearch = showHistorySearch,
+                        onDetail = { idDetail ->
+                            idDetailWisata = idDetail
                             showDetailWisata = true
                         },
+                        onKeywords = { word ->
+                            keywords = word
+                        }
                     )
                 }
             }

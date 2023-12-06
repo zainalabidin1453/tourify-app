@@ -52,3 +52,8 @@ fun modifyMoneyFormat(total: Int): String {
     formatter.maximumFractionDigits = 0
     return "${formatter.format(total.toLong()).replace("IDR", "").trim()},-"
 }
+
+fun checkKeywords(keywords: String): Boolean {
+    val wordCount = keywords.trim().split("\\s+".toRegex()).joinToString("").length
+    return wordCount >= 4
+}

@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,8 +26,11 @@ import com.tourify.tourifyapp.ui.theme.TextPrimary
 @Composable
 fun TopBarAllWisata(
     context: Context,
+    value: String = "",
     onShowFilters: (Boolean) -> Unit = {},
-    onKeywords: (String) -> Unit = {}
+    onKeywords: (String) -> Unit = {},
+    onShowHistorySearch: (Boolean) -> Unit = {},
+    onAddHistorySearch: (Boolean) -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -38,11 +45,18 @@ fun TopBarAllWisata(
                 content = {
                     TextFieldSearch(
                         modifier = Modifier.weight(0.8f),
+                        keywords = value,
                         placeholder = stringResource(R.string.search_wisata),
                         icon = R.drawable.ic_search,
                         iconDescription = R.string.search_wisata,
                         keyboardType = KeyboardType.Text,
-                        onTextChanged = { onKeywords(it) },
+                        onTextChanged = {
+                            onKeywords(it)
+                            if(it.isEmpty() || it == "") onShowHistorySearch(true) else onShowHistorySearch(false)
+                        },
+                        onAddToHistory = { isAdd ->
+                            if(isAdd) onAddHistorySearch(true) else onAddHistorySearch(false)
+                        },
                         isEnabled = true
                     )
                     Spacer(modifier = Modifier.width(12.dp))

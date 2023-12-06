@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -24,7 +23,6 @@ import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.preference.OnBoardingDataStore
 import com.tourify.tourifyapp.route.Routes
 import com.tourify.tourifyapp.ui.theme.ColorBlue
-import com.tourify.tourifyapp.ui.theme.ColorInfo
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import kotlinx.coroutines.delay
 
@@ -56,10 +54,10 @@ fun SplashScreen(
         endY = 1500.0f
     )
     Box(
-        contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(gradient)
+            .background(gradient),
+        contentAlignment = Alignment.Center,
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo_tourify),

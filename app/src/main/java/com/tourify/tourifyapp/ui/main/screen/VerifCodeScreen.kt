@@ -58,19 +58,17 @@ fun VerifCodeScreen(
     navigateToCheckEmail: () -> Unit,
     navigateToCreatePassword: (String) -> Unit
 ) {
+    val scrollState = rememberScrollState()
+    var codeOTP by rememberSaveable { mutableStateOf("") }
+    var isLoading by rememberSaveable { mutableStateOf(false) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val email = navBackStackEntry?.arguments?.getString("email")
+    val interactionSource = remember { MutableInteractionSource() }
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
         systemUiController.setSystemBarsColor(ColorBackground, darkIcons = true)
         onDispose {}
     }
-    val scrollState = rememberScrollState()
-    var codeOTP by rememberSaveable { mutableStateOf("") }
-    var isLoading by rememberSaveable { mutableStateOf(false) }
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val email = navBackStackEntry?.arguments?.getString("email")
-    val interactionSource = remember { MutableInteractionSource() }
-
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -19,8 +19,11 @@ sealed class Routes(val routes: String) {
     data object MyTickets : Routes("myTickets")
     data object Culinary : Routes("culinary")
     data object ScanObjek : Routes("scanObjek")
-    data object Maps : Routes("maps/{lon}/{lat}") {
-        fun createRoute(lon: String, lat: String) = "maps/$lon/$lat"
+    data object FavoriteWisata : Routes("favoriteWisata/{usersId}") {
+        fun createRoute(usersId: Int) = "favoriteWisata/$usersId"
+    }
+    data object Notice : Routes("notice/{usersId}") {
+        fun createRoute(usersId: Int) = "notice/$usersId"
     }
     data object AboutApp : Routes("aboutApp")
 }

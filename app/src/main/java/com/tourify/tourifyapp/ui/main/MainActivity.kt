@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.view.WindowCompat
 import com.tourify.tourifyapp.ui.theme.TourifyAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,14 +16,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val context = LocalContext.current
-            TourifyAppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
+            TourifyAppTheme(
+                content = {
                     TourifyApp(context = context)
                 }
-            }
+            )
         }
     }
 }
