@@ -1,109 +1,109 @@
 package com.tourify.tourifyapp.data.sources
 
-import com.tourify.tourifyapp.model.ItemProvinceModel
+import com.tourify.tourifyapp.model.ModelItemProvince
 
 object ItemProvince {
     val data = listOf(
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Aceh"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sumatra Utara"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sumatra Barat"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Riau"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Kepulauan Riau"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Jambi"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sumatera Selatan"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Bangka Belitung"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Bengkulu"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Lampung"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Banten"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Jawa Barat"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "DKI Jakarta"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Jawa Barat"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Jawa Tengah"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "DI Yogyakarta"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Jawa Timur"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Bali"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "NTB"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "NTT"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Kalimantan Barat"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Kalimantan Tengah"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Kalimantan Selatan"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Kalimantan Timur"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Kalimantan Utara"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sulawesi Utara"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sulawesi Tengah"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sulawesi Selatan"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sulawesi Tenggara"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Gorontalo"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Sulawesi Barat"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Maluku"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Maluku Utara"
         ),
-        ItemProvinceModel(
+        ModelItemProvince(
             name = "Papua"
         )
     )

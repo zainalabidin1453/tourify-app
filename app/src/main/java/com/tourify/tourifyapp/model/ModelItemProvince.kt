@@ -1,5 +1,5 @@
 package com.tourify.tourifyapp.model
 
-data class ItemProvinceModel(
+data class ModelItemProvince(
     val name: String
 )
