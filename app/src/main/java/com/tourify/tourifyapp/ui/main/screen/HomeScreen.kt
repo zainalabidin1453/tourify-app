@@ -120,8 +120,8 @@ fun HomeScreen(
                 onShowListProvince = { showValue ->
                     showListProvince = showValue
                 },
-                onShowNotice = { navigateToFavorite(1) },
-                onShowFavorite = { navigateToNotice(1) },
+                onShowNotice = { navigateToNotice(1) },
+                onShowFavorite = { navigateToFavorite(1) },
                 firstProvince = firstProvince
             )
             Column(
