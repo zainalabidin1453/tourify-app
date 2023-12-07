@@ -40,7 +40,7 @@ fun TextField(
     placeholder: String,
     icon: Int,
     iconDescription: Int,
-    height: Dp = 50.dp,
+      height: Dp = 55.dp,
     fontSize: TextUnit = 14.sp,
     iconSize: Dp = 22.dp,
     keyboardType: KeyboardType,
