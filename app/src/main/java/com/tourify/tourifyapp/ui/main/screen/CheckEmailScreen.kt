@@ -143,7 +143,7 @@ fun CheckEmailScreen(
                                             title = R.string.security_info,
                                             icon = R.drawable.ic_key,
                                             sizeCircle = 25.dp,
-                                            shadow = 2.dp,
+                                            shadow = 5.dp,
                                             isIcon = true,
                                             tint = TextSecondary,
                                             onClick = {}
