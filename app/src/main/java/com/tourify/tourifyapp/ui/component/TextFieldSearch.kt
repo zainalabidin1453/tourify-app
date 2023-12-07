@@ -69,7 +69,7 @@ fun TextFieldSearch(
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
-            .height(46.dp)
+            .height(55.dp)
             .clip(RoundedCornerShape(16.dp))
             .clickable { onClick() },
         value = text,
