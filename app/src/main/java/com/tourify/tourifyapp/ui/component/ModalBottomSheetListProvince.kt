@@ -30,13 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.tourify.tourifyapp.data.sources.ItemProvince
-import com.tourify.tourifyapp.model.ItemProvinceModel
+import com.tourify.tourifyapp.model.ModelItemProvince
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
-import com.tourify.tourifyapp.ui.theme.ColorWhite
-import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
-import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
 
@@ -99,7 +96,7 @@ fun ModalBottomSheetListProvince(
 }
 
 @Composable
-fun ItemMenuProvince(item: ItemProvinceModel, onClick: (String) -> Unit, currentProvince: String) {
+fun ItemMenuProvince(item: ModelItemProvince, onClick: (String) -> Unit, currentProvince: String) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     Box(

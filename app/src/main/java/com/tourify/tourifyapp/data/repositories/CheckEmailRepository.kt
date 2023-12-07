@@ -3,13 +3,12 @@ package com.tourify.tourifyapp.data.repositories
 import com.tourify.tourifyapp.BuildConfig
 import com.tourify.tourifyapp.api.ApiService
 import com.tourify.tourifyapp.constants.Constants
-import com.tourify.tourifyapp.model.CheckEmailResponse
+import com.tourify.tourifyapp.model.RegistrationResponse
 
 class CheckEmailRepository(private val apiService: ApiService) {
-    suspend fun login(email: String): CheckEmailResponse {
-        return apiService.checkEmail(
+    suspend fun login(email: String): RegistrationResponse {
+        return apiService.registration(
             token = BuildConfig.TOKEN,
-            path = Constants.PATH_LOGIN,
             email = email
         )
     }

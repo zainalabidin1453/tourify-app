@@ -1,9 +1,14 @@
 package com.tourify.tourifyapp.ui.component
 
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,6 +35,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -54,6 +61,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.tourify.tourifyapp.R
+import com.tourify.tourifyapp.ui.theme.ColorBlue
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorInfo
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
@@ -75,8 +83,10 @@ fun ModalBottomSheetDetailWisata(
     onShowDetailWisata: (Boolean) -> Unit,
 ) {
     val modalMapsBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalInBookingBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showMapsWisata by rememberSaveable { mutableStateOf(false) }
-    var isFavorite by rememberSaveable { mutableStateOf(false) }
+    var showInBooking by rememberSaveable { mutableStateOf(false) }
+    val isFavorite by rememberSaveable { mutableStateOf(false) }
     val scrollModalDetailBottomState = rememberScrollState()
     val scope = rememberCoroutineScope()
     Column(
@@ -96,7 +106,12 @@ fun ModalBottomSheetDetailWisata(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(282.dp)
-                            .shadow(25.dp, RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp), true, spotColor = TextPrimary)
+                            .shadow(
+                                25.dp,
+                                RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp),
+                                true,
+                                spotColor = TextPrimary
+                            )
                             .clip(RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
                     )
                 }
@@ -420,10 +435,173 @@ fun ModalBottomSheetDetailWisata(
                 background = ColorPrimary,
                 contentColor = ColorWhite,
                 enabled = true,
-                onClick = {}
+                onClick = { showInBooking = true }
             )
         }
     )
+    if (showInBooking) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .fillMaxSize(),
+            onDismissRequest = {
+                showInBooking = false
+            },
+            sheetState = modalInBookingBottomState,
+            containerColor = ColorWhite,
+            shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
+            dragHandle = {
+                BottomSheetDefaults.DragHandle(color = ColorSecondary)
+            },
+            content = {
+                var progress by rememberSaveable { mutableIntStateOf(1) }
+                Scaffold(
+                    containerColor = ColorWhite,
+                    topBar = {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 18.dp, end = 18.dp, bottom = 18.dp),
+                            content = {
+                                Text(
+                                    text = "Pesan Perjalanan",
+                                    style = StyleText.copy(
+                                        color = TextPrimary,
+                                        fontFamily = fonts,
+                                        fontWeight = FontWeight.Medium,
+                                        fontSize = 14.sp,
+                                        lineHeight = 14.sp,
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(12.dp))
+                                ProgressBarBooking(
+                                    progressValue = progress,
+                                    onClick = { progress = it }
+                                )
+                            }
+                        )
+                    },
+                    bottomBar = {
+                        ButtonInBooking(
+                            modifier = Modifier.padding(18.dp),
+                            text = "Lanjutkan",
+                            onClick = {
+                                if (progress <= 3) progress += 1
+                            },
+                            onBatal = {
+                                scope.launch { modalInBookingBottomState.hide() }.invokeOnCompletion {
+                                    if (!modalInBookingBottomState.isVisible) {
+                                        showInBooking = false
+                                    }
+                                }
+                            },
+                            enabled = true,
+                            info = false,
+                        )
+                    }) { paddingValues ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = paddingValues.calculateTopPadding(),
+                                bottom = paddingValues.calculateBottomPadding()
+                            )
+                            .background(ColorWhite),
+                        content = {
+                            when (progress) {
+                                1 -> {
+                                    AnimatedVisibility(
+                                        visible = progress == 1,
+                                        enter = slideInHorizontally(
+                                            initialOffsetX = { fullSize -> fullSize },
+                                            animationSpec = tween(500)
+                                        ),
+                                        exit = slideOutHorizontally(
+                                            targetOffsetX = { fullSize -> -fullSize },
+                                            animationSpec = tween(500)
+                                        ),
+                                        content = {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .background(ColorBlue)
+                                                    .pointerInput(Unit) {
+                                                        detectHorizontalDragGestures { _, dragAmount ->
+                                                            progress = if (dragAmount < 0) {
+                                                                2
+                                                            } else {
+                                                                1
+                                                            }
+                                                        }
+                                                    }
+                                            )
+                                        }
+                                    )
+                                }
+                                2 -> {
+                                    AnimatedVisibility(
+                                        visible = progress == 2,
+                                        enter = slideInHorizontally(
+                                            initialOffsetX = { fullSize -> fullSize },
+                                            animationSpec = tween(500)
+                                        ),
+                                        exit = slideOutHorizontally(
+                                            targetOffsetX = { fullSize -> -fullSize },
+                                            animationSpec = tween(500)
+                                        ),
+                                        content = {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .background(ColorWarning)
+                                                    .pointerInput(Unit) {
+                                                        detectHorizontalDragGestures { _, dragAmount ->
+                                                            progress = if (dragAmount < 0) {
+                                                                3
+                                                            } else {
+                                                                1
+                                                            }
+                                                        }
+                                                    }
+                                            )
+                                        }
+                                    )
+                                }
+                                3 -> {
+                                    AnimatedVisibility(
+                                        visible = progress == 3,
+                                        enter = slideInHorizontally(
+                                            initialOffsetX = { fullSize -> fullSize },
+                                            animationSpec = tween(500)
+                                        ),
+                                        exit = slideOutHorizontally(
+                                            targetOffsetX = { fullSize -> -fullSize },
+                                            animationSpec = tween(500)
+                                        ),
+                                        content = {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .background(ColorDanger)
+                                                    .pointerInput(Unit) {
+                                                        detectHorizontalDragGestures { _, dragAmount ->
+                                                            progress = if (dragAmount < 0) {
+                                                                3
+                                                            } else {
+                                                                2
+                                                            }
+                                                        }
+                                                    }
+                                            )
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    }
     if (showMapsWisata) {
         ModalBottomSheet(
             modifier = Modifier
