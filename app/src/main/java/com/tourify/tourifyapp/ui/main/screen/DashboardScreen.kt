@@ -1,6 +1,8 @@
 package com.tourify.tourifyapp.ui.main.screen
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.material3.Scaffold
@@ -17,6 +19,7 @@ import com.tourify.tourifyapp.route.Routes
 import com.tourify.tourifyapp.ui.component.BottomNavigationBar
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DashboardScreen(
     context: Context,

@@ -64,7 +64,7 @@ fun TopBarAllWisata(
                         context = context,
                         title = R.string.filters,
                         icon = R.drawable.ic_filters,
-                        sizeCircle = 45.dp,
+                        sizeCircle = 50.dp,
                         sizeIcon = 26.dp,
                         shadow = 4.dp,
                         isIcon = true,

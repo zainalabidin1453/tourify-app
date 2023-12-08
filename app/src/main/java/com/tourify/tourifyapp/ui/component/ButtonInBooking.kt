@@ -71,7 +71,7 @@ fun ButtonInBooking(
                         modifier = Modifier
                             .fillMaxWidth(0.3f)
                             .padding(end = 8.dp)
-                            .height(50.dp)
+                            .height(55.dp)
                             .shadow(10.dp, Shapes.medium, spotColor = ColorSecondary),
                         onClick = onBatal,
                         colors = ButtonDefaults.buttonColors(
@@ -96,6 +96,7 @@ fun ButtonInBooking(
                         text = text,
                         background = ColorPrimary,
                         contentColor = ColorWhite,
+                        height = 55.dp,
                         enabled = enabled,
                         onClick = {
                             onClick()
