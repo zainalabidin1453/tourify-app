@@ -53,4 +53,5 @@
     <string name="descending">Urutkan dari Z ke A</string>
     <string name="security_info">Info Keamanan</string>
     <string name="favorite_daftar">Daftar Favorit</string>
+    <string name="find_tour_guide">Cari Pemandu Wisata</string>
 </resources>

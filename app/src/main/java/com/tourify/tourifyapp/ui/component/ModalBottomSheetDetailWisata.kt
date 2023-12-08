@@ -1,6 +1,8 @@
 package com.tourify.tourifyapp.ui.component
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -75,6 +78,7 @@ import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalBottomSheetDetailWisata(
@@ -454,6 +458,16 @@ fun ModalBottomSheetDetailWisata(
             },
             content = {
                 var progress by rememberSaveable { mutableIntStateOf(1) }
+                var startTripDateBooking by rememberSaveable { mutableStateOf("") }
+                var endTripDateBooking by rememberSaveable { mutableStateOf("") }
+                var allTripDateBooking by rememberSaveable { mutableStateOf("") }
+                var nameBooking by rememberSaveable { mutableStateOf("") }
+                var emailBooking by rememberSaveable { mutableStateOf("") }
+                var telpBooking by rememberSaveable { mutableStateOf("") }
+                var tourGuideIdBooking by rememberSaveable { mutableIntStateOf(0) }
+                var isWithTourGuideBooking by rememberSaveable { mutableStateOf(true) }
+                var totalTicketsBooking by rememberSaveable { mutableIntStateOf(0) }
+                var totalPriceBooking by rememberSaveable { mutableIntStateOf(0) }
                 Scaffold(
                     containerColor = ColorWhite,
                     topBar = {
@@ -507,95 +521,21 @@ fun ModalBottomSheetDetailWisata(
                             )
                             .background(ColorWhite),
                         content = {
-                            when (progress) {
-                                1 -> {
-                                    AnimatedVisibility(
-                                        visible = progress == 1,
-                                        enter = slideInHorizontally(
-                                            initialOffsetX = { fullSize -> fullSize },
-                                            animationSpec = tween(500)
-                                        ),
-                                        exit = slideOutHorizontally(
-                                            targetOffsetX = { fullSize -> -fullSize },
-                                            animationSpec = tween(500)
-                                        ),
-                                        content = {
-                                            Box(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .background(ColorBlue)
-                                                    .pointerInput(Unit) {
-                                                        detectHorizontalDragGestures { _, dragAmount ->
-                                                            progress = if (dragAmount < 0) {
-                                                                2
-                                                            } else {
-                                                                1
-                                                            }
-                                                        }
-                                                    }
-                                            )
-                                        }
-                                    )
-                                }
-                                2 -> {
-                                    AnimatedVisibility(
-                                        visible = progress == 2,
-                                        enter = slideInHorizontally(
-                                            initialOffsetX = { fullSize -> fullSize },
-                                            animationSpec = tween(500)
-                                        ),
-                                        exit = slideOutHorizontally(
-                                            targetOffsetX = { fullSize -> -fullSize },
-                                            animationSpec = tween(500)
-                                        ),
-                                        content = {
-                                            Box(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .background(ColorWarning)
-                                                    .pointerInput(Unit) {
-                                                        detectHorizontalDragGestures { _, dragAmount ->
-                                                            progress = if (dragAmount < 0) {
-                                                                3
-                                                            } else {
-                                                                1
-                                                            }
-                                                        }
-                                                    }
-                                            )
-                                        }
-                                    )
-                                }
-                                3 -> {
-                                    AnimatedVisibility(
-                                        visible = progress == 3,
-                                        enter = slideInHorizontally(
-                                            initialOffsetX = { fullSize -> fullSize },
-                                            animationSpec = tween(500)
-                                        ),
-                                        exit = slideOutHorizontally(
-                                            targetOffsetX = { fullSize -> -fullSize },
-                                            animationSpec = tween(500)
-                                        ),
-                                        content = {
-                                            Box(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .background(ColorDanger)
-                                                    .pointerInput(Unit) {
-                                                        detectHorizontalDragGestures { _, dragAmount ->
-                                                            progress = if (dragAmount < 0) {
-                                                                3
-                                                            } else {
-                                                                2
-                                                            }
-                                                        }
-                                                    }
-                                            )
-                                        }
-                                    )
-                                }
-                            }
+                            ModalBottomSheetBookingTrip(
+                                context = context,
+                                progress = progress,
+                                onProgress = { progress = it },
+                                onStartTripDateBooking = { startTripDateBooking = it },
+                                onEndTripDateBooking = { endTripDateBooking = it },
+                                onAllTripDateBooking = { allTripDateBooking = it },
+                                onNameBooking = { nameBooking = it },
+                                onEmailBooking = { emailBooking = it },
+                                onTelpBooking = { telpBooking = it },
+                                onTourGuideIdBooking = { tourGuideIdBooking = it },
+                                isWithTourGuideBooking = { isWithTourGuideBooking = it },
+                                onTotalTicketsBooking = { totalTicketsBooking = it},
+                                onTotalPriceBooking = { totalPriceBooking = it },
+                            )
                         }
                     )
                 }
@@ -710,6 +650,7 @@ fun ExpandedText(modifier: Modifier = Modifier, text: String) {
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun ModalBottomSheetDetailWisataPreview() {
