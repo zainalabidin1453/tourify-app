@@ -31,7 +31,7 @@ fun ButtonPrimary(
     background: Color,
     contentColor: Color,
     enabled: Boolean,
-    height: Dp = 50.dp,
+    height: Dp = 55.dp,
     shadow: Dp = 10.dp,
     fontSize: TextUnit = 16.sp,
     onClick: () -> Unit

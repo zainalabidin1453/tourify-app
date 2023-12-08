@@ -45,7 +45,7 @@ fun TextFieldPassword(
     placeholder: String,
     iconDescription: Int,
     onTextChanged: (String) -> Unit,
-    height: Dp = 50.dp,
+    height: Dp = 55.dp,
     fontSize: TextUnit = 14.sp,
     iconSize: Dp = 22.dp,
     isError: Boolean

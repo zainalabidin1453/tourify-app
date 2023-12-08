@@ -69,7 +69,7 @@ fun TextFieldSearch(
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
-            .height(46.dp)
+            .height(50.dp)
             .clip(RoundedCornerShape(16.dp))
             .clickable { onClick() },
         value = text,
@@ -107,8 +107,8 @@ fun TextFieldSearch(
             color = TextPrimary,
             fontFamily = fonts,
             fontWeight = FontWeight.Light,
-            fontSize = 11.sp,
-            lineHeight = 11.sp,
+            fontSize = 12.sp,
+            lineHeight = 12.sp,
         ),
         placeholder = {
             Text(
@@ -117,8 +117,8 @@ fun TextFieldSearch(
                 style = StyleText.copy(
                     fontFamily = fonts,
                     fontWeight = FontWeight.Light,
-                    fontSize = 11.sp,
-                    lineHeight = 11.sp
+                    fontSize = 12.sp,
+                    lineHeight = 12.sp
                 )
             )
         },

@@ -66,7 +66,7 @@ fun ModalBottomSheetBookingTrip(
     var telpBooking by rememberSaveable { mutableStateOf("") }
     var tourGuideIdBooking by rememberSaveable { mutableIntStateOf(0) }
     var isWithTourGuideBooking by rememberSaveable { mutableStateOf(true) }
-    var totalTicketsBooking by rememberSaveable { mutableIntStateOf(0) }
+    var totalTicketsBooking by rememberSaveable { mutableIntStateOf(1) }
     var totalPriceBooking by rememberSaveable { mutableIntStateOf(0) }
     val scrollState = rememberScrollState()
 
@@ -122,7 +122,7 @@ fun ModalBottomSheetBookingTrip(
                                modifier = Modifier
                                    .fillMaxWidth()
                                    .verticalScroll(scrollState)
-                                   .padding(start = 18.dp, end = 18.dp),
+                                   .padding(start = 18.dp, end = 18.dp, top = 2.dp),
                                content = {
                                    CardWisataTicketsBooking(
                                        photo = R.drawable.error_image,
@@ -160,62 +160,74 @@ fun ModalBottomSheetBookingTrip(
                                            lineHeight = 15.sp,
                                        )
                                    )
-                                   Spacer(modifier = Modifier.height(14.dp))
-                                   Text(
-                                       text = "Pilih Tanggal Perjalanan",
-                                       style = StyleText.copy(
-                                           color = TextPrimary,
-                                           fontFamily = fonts,
-                                           fontWeight = FontWeight.Medium,
-                                           fontSize = 12.sp,
-                                           lineHeight = 12.sp,
-                                       )
-                                   )
-                                   Spacer(modifier = Modifier.height(12.dp))
-                                   TextFieldDateBooking(
-                                       placeholder = "Pilih tanggal perjalanan",
-                                       icon = R.drawable.ic_calendar,
-                                       iconDescription = R.drawable.ic_calendar,
-                                       keyboardType = KeyboardType.Text,
-                                       isError = false,
-                                       fontSize = 12.sp,
-                                       onStartDate = {
-                                           startTripDateBooking = it
-                                           onStartTripDateBooking(startTripDateBooking)
-                                       },
-                                       onEndDate = {
-                                           endTripDateBooking = it
-                                           onEndTripDateBooking(endTripDateBooking)
-                                       },
-                                       onAllDate = {
-                                           allTripDateBooking = it
-                                           onAllTripDateBooking(allTripDateBooking)
-                                       }
-                                   )
-                                   Spacer(modifier = Modifier.height(10.dp))
-                                   Text(
-                                       text = "*Pastikan tanggal perjalanan Anda sudah sesuai. Anda tidak dapat mengatur ulang tanggal perjalanan setelah memesan.",
-                                       maxLines = 4,
-                                       style = StyleText.copy(
-                                           color = TextSecondary,
-                                           fontFamily = fonts,
-                                           fontWeight = FontWeight.Light,
-                                           fontSize = 10.sp,
-                                           lineHeight = 15.sp,
-                                       )
-                                   )
                                }
                            )
                         }
                         2 -> {
-
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .verticalScroll(scrollState)
+                                    .padding(start = 18.dp, end = 18.dp, top = 2.dp),
+                                content = {
+                                    Text(
+                                        text = "Pilih Tanggal Perjalanan",
+                                        style = StyleText.copy(
+                                            color = TextPrimary,
+                                            fontFamily = fonts,
+                                            fontWeight = FontWeight.Medium,
+                                            fontSize = 12.sp,
+                                            lineHeight = 12.sp,
+                                        )
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    TextFieldDateBooking(
+                                        placeholder = "Pilih tanggal perjalanan",
+                                        icon = R.drawable.ic_calendar,
+                                        iconDescription = R.drawable.ic_calendar,
+                                        keyboardType = KeyboardType.Text,
+                                        isError = false,
+                                        fontSize = 12.sp,
+                                        onStartDate = {
+                                            startTripDateBooking = it
+                                            onStartTripDateBooking(startTripDateBooking)
+                                        },
+                                        onEndDate = {
+                                            endTripDateBooking = it
+                                            onEndTripDateBooking(endTripDateBooking)
+                                        },
+                                        onAllDate = {
+                                            allTripDateBooking = it
+                                            onAllTripDateBooking(allTripDateBooking)
+                                        }
+                                    )
+                                    Spacer(modifier = Modifier.height(10.dp))
+                                    Text(
+                                        text = "*Pastikan tanggal perjalanan Anda sudah sesuai. Anda tidak dapat mengatur ulang tanggal perjalanan setelah memesan.",
+                                        maxLines = 4,
+                                        style = StyleText.copy(
+                                            color = TextSecondary,
+                                            fontFamily = fonts,
+                                            fontWeight = FontWeight.Light,
+                                            fontSize = 10.sp,
+                                            lineHeight = 15.sp,
+                                        )
+                                    )
+                                }
+                            )
                         }
                         3 -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .verticalScroll(scrollState)
+                                    .padding(start = 18.dp, end = 18.dp, top = 2.dp),
+                                content = {
 
+                                }
+                            )
                         }
-                        else -> {
-
-                        }
+                        else -> {}
                     }
                 }
             )

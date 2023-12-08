@@ -60,7 +60,7 @@ fun SplashScreen(
         contentAlignment = Alignment.Center,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo_tourify),
+            painter = painterResource(id = R.drawable.logo_tourify_fix),
             contentDescription = "Logo Tourify",
             modifier = Modifier
                 .scale(scale.value)
