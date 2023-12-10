@@ -86,7 +86,7 @@ fun ItemTourGuide(context: Context, id: Int, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(12.dp))
-            .background(ColorSecondary)
+            .background(ColorSecondary.copy(0.5f))
             .clickable(
                 onClick = { showProfile = true }
             ),
@@ -95,7 +95,7 @@ fun ItemTourGuide(context: Context, id: Int, onClick: () -> Unit) {
             if (showProfile) {
                 ModalBottomSheet(
                     modifier = Modifier
-                        .height(341.dp),
+                        .height(346.dp),
                     onDismissRequest = {
                         showProfile = false
                     },

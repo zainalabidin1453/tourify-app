@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,9 +51,6 @@ import com.tourify.tourifyapp.ui.theme.TextLight
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
 import com.tourify.tourifyapp.utils.DateRangePickerScreen
-import com.tourify.tourifyapp.utils.changeDateToLong
-import com.tourify.tourifyapp.utils.modifyDateRange
-import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,19 +65,14 @@ fun TextFieldDateBooking(
     keyboardType: KeyboardType,
     onStartDate: (String) -> Unit,
     onEndDate: (String) -> Unit,
-    onAllDate: (String) -> Unit,
-    isError: Boolean
+    isError: Boolean,
+    value: String,
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
-    var startDate by rememberSaveable { mutableStateOf("") }
-    var endDate by rememberSaveable { mutableStateOf("") }
     var showDateTo by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
     val modalDatePickerBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
-    val dateRange = modifyDateRange(startDate, endDate)
-    text = dateRange
     OutlinedTextField(
-        value = text,
+        value = value,
         onValueChange = {},
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = ColorWhite,
@@ -101,7 +92,7 @@ fun TextFieldDateBooking(
             .fillMaxWidth()
             .height(height)
             .clip(Shapes.medium)
-            .clickable { showDateTo = true  },
+            .clickable { showDateTo = true },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         textStyle = StyleText.copy(
@@ -184,15 +175,12 @@ fun TextFieldDateBooking(
                         content = {
                             DateRangePickerScreen(
                                 onStartDate = {
-                                    startDate = it
-                                    onStartDate(startDate)
-                                    onAllDate(dateRange)
+                                    onStartDate(it)
+                                },
+                                onEndDate = {
+                                    onEndDate(it)
                                 }
-                            ) {
-                                endDate = it
-                                onEndDate(startDate)
-                                onAllDate(dateRange)
-                            }
+                            )
                         }
                     )
                 }
@@ -208,12 +196,12 @@ fun TextFieldDateBookingPreview() {
     val isError by rememberSaveable { mutableStateOf(false) }
     TextFieldDateBooking(
         placeholder = "Pilih tanggal perjalanan",
-        icon = R.drawable.ic_mail,
-        iconDescription = R.string.email_address,
-        keyboardType = KeyboardType.Email,
+        icon = R.drawable.ic_calendar,
+        iconDescription = R.string.choose_trip_date,
+        keyboardType = KeyboardType.Text,
         isError = isError,
         onStartDate = {},
         onEndDate = {},
-        onAllDate = {}
+        value = ""
     )
 }

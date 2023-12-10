@@ -3,13 +3,17 @@ package com.tourify.tourifyapp.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.os.Build
 import android.text.TextUtils
 import android.util.Patterns
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -120,6 +124,72 @@ fun isValidEndDate(date: String): Boolean {
         }  catch (_: Exception) { }
     }
     return false
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun trackTripWithDate(tripDate: String): Int {
+    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+    return when (tripDate.count { it == ' ' }) {
+        3 -> {
+            // If format "dd MMM yyyy"
+            val startDate = LocalDate.parse(tripDate, formatter)
+            return if (LocalDate.now().isBefore(startDate)) 1 else 2
+        }
+        4 -> {
+            // If format "dd - dd MMM yyyy"
+            val dates = tripDate.split(" ")
+            val startDate = LocalDate.parse("${dates[0]} ${dates[3]} ${dates[4]}", formatter)
+            return if (LocalDate.now().isBefore(startDate)) 1 else 2
+        }
+        5 -> {
+            // If format "dd MMM - dd MMM yyyy"
+            val dates = tripDate.split(" - ")
+            val startDateString = "${dates[0]} ${LocalDate.parse(dates[1], formatter).year}"
+            val startDate = LocalDate.parse(startDateString, formatter)
+            return if (LocalDate.now().isBefore(startDate)) 1 else 2
+        }
+        6 -> {
+            // If format "dd MMM yyyy - dd MMM yyyy"
+            val dates = tripDate.split(" - ")
+            val startDateString = dates[0]
+            val startDate = LocalDate.parse(startDateString, formatter)
+            return if (LocalDate.now().isBefore(startDate)) 1 else 2
+        }
+        else -> 1
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun getCheckInDate(tripDate: String): String {
+    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+    return when (tripDate.count { it == ' ' }) {
+        3 -> {
+            // If format "dd MMM yyyy"
+            val startDate = LocalDate.parse(tripDate, formatter)
+            return startDate.format(formatter)
+        }
+        4 -> {
+            // If format "dd - dd MMM yyyy"
+            val dates = tripDate.split(" ")
+            val startDate = LocalDate.parse("${dates[0]} ${dates[3]} ${dates[4]}", formatter)
+            return startDate.format(formatter)
+        }
+        5 -> {
+            // If format "dd MMM - dd MMM yyyy"
+            val dates = tripDate.split(" - ")
+            val startDateString = "${dates[0]} ${LocalDate.parse(dates[1], formatter).year}"
+            val startDate = LocalDate.parse(startDateString, formatter)
+            return startDate.format(formatter)
+        }
+        6 -> {
+            // If format "dd MMM yyyy - dd MMM yyyy"
+            val dates = tripDate.split(" - ")
+            val startDateString = dates[0]
+            val startDate = LocalDate.parse(startDateString, formatter)
+            return startDate.format(formatter)
+        }
+        else -> return tripDate.format(formatter)
+    }
 }
 
 fun changeDateToLong(date: String): Long {

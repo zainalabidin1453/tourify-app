@@ -13,6 +13,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +33,7 @@ fun ButtonInBooking(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
+    onInfo: () -> Unit = {},
     onBatal: () -> Unit,
     enabled: Boolean = true,
     info: Boolean = true,
@@ -49,15 +51,16 @@ fun ButtonInBooking(
                     horizontalArrangement = Arrangement.Center,
                     content = {
                         Text(
-                            text = "Keseruan Perjalanan Dijamin Bersama Pemandu Wisata Profesional",
+                            text = "Keseruan Perjalanan Dijamin Bersama Pemandu Wisata Profesional.",
                             style = StyleText.copy(
                                 color = TextSecondary,
                                 fontFamily = fonts,
                                 fontWeight = FontWeight.Light,
-                                fontSize = 10.sp,
-                                lineHeight = 15.sp,
+                                fontSize = 11.sp,
+                                lineHeight = 16.sp,
                                 textAlign = TextAlign.Center
-                            )
+                            ),
+                            fontStyle = FontStyle.Italic
                         )
                     }
                 )
@@ -75,7 +78,7 @@ fun ButtonInBooking(
                             .shadow(10.dp, Shapes.medium, spotColor = ColorSecondary),
                         onClick = onBatal,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = ColorSecondary,
+                            containerColor = ColorSecondary.copy(alpha = 0.5f),
                             contentColor = TextSecondary
                         ),
                         shape = Shapes.medium,
@@ -94,12 +97,15 @@ fun ButtonInBooking(
                         modifier = Modifier
                             .fillMaxWidth(),
                         text = text,
-                        background = ColorPrimary,
-                        contentColor = ColorWhite,
+                        background = if(enabled) ColorPrimary else ColorSecondary.copy(alpha = 0.5f),
+                        contentColor = if(enabled) ColorWhite else TextSecondary,
                         height = 55.dp,
                         enabled = enabled,
                         onClick = {
-                            onClick()
+                            if (enabled)
+                                onClick()
+                            else
+                                onInfo()
                         }
                     )
                 }

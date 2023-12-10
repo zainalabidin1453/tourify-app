@@ -54,4 +54,9 @@
     <string name="security_info">Info Keamanan</string>
     <string name="favorite_daftar">Daftar Favorit</string>
     <string name="find_tour_guide">Cari Pemandu Wisata</string>
+    <string name="complete_your_order_data">Lengkapi Data Pesanan Anda</string>
+    <string name="choose_trip_date">Pilih Tanggal Perjalanan</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="phone_number">Nomor Telepon</string>
+    <string name="add_notes">Tambahkan Catatan</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -45,9 +46,10 @@ fun TextField(
     iconSize: Dp = 22.dp,
     keyboardType: KeyboardType,
     onTextChanged: (String) -> Unit,
-    isError: Boolean
+    isError: Boolean,
+    value: String = ""
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf(value) }
     OutlinedTextField(
         value = text,
         onValueChange = { newText ->
@@ -72,6 +74,7 @@ fun TextField(
             .height(height),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        keyboardActions = KeyboardActions(),
         textStyle = StyleText.copy(
             color = TextPrimary,
             fontFamily = fonts,
