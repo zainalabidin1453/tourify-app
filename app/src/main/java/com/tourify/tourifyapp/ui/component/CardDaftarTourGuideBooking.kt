@@ -1,9 +1,12 @@
 package com.tourify.tourifyapp.ui.component
 
 import android.content.Context
+import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,7 +56,11 @@ import com.tourify.tourifyapp.ui.theme.fonts
 
 @Composable
 fun CardDaftarTourGuideBooking(
-    context: Context
+    context: Context,
+    querySearch: String,
+    onChooseTourGuide: (Int) -> Unit,
+    onWithNoTourGuide: (Boolean) -> Unit,
+    tourGuideIdBooking: Int
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -71,7 +78,13 @@ fun CardDaftarTourGuideBooking(
                 ItemTourGuideBooking(
                     context = context,
                     id = itemCategory.id,
-                    onClick = {}
+                    tourGuideIdBooking = tourGuideIdBooking,
+                    onChooseTourGuide = {
+                        onChooseTourGuide(it)
+                    },
+                    onWithNoTourGuide = {
+                        onWithNoTourGuide(it)
+                    }
                 )
                 if (itemIndex == ItemWisataCategory.dataCategory.size - 1) {
                     Spacer(modifier = Modifier.width(14.dp))
@@ -81,58 +94,35 @@ fun CardDaftarTourGuideBooking(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun ItemTourGuideBooking(context: Context, id: Int, onClick: () -> Unit) {
+fun ItemTourGuideBooking(
+    context: Context,
+    id: Int,
+    tourGuideIdBooking: Int,
+    onChooseTourGuide: (Int) -> Unit,
+    onWithNoTourGuide:  (Boolean) -> Unit,
+) {
     var showProfile by rememberSaveable { mutableStateOf(false) }
-    var checked = rememberSaveable { mutableStateOf(false) }
+    val borderModifier = if (id == tourGuideIdBooking && tourGuideIdBooking != 0) {
+        Modifier.border(1.dp, ColorPrimary, RoundedCornerShape(12.dp))
+    } else {
+        Modifier
+    }
     Box(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(12.dp))
-            .background(ColorSecondary)
-            .clickable(
-                onClick = { showProfile = true }
-            ),
+            .background(ColorSecondary.copy(0.5f))
+            .combinedClickable(
+                onClick = {
+                    onChooseTourGuide(id)
+                    onWithNoTourGuide(false)
+                },
+                onLongClick = { showProfile = true }
+            )
+            .then(borderModifier),
         contentAlignment = Alignment.Center,
         content = {
-            if (showProfile) {
-                ModalBottomSheet(
-                    modifier = Modifier
-                        .height(341.dp),
-                    onDismissRequest = {
-                        showProfile = false
-                    },
-                    containerColor = ColorTransparent,
-                    shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
-                    dragHandle = {},
-                    content = {
-                        Column(
-                            content = {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 18.dp, end = 18.dp, top = 18.dp)
-                                        .clip(Shapes.small)
-                                        .background(ColorWhite),
-                                    contentAlignment = Alignment.Center,
-                                    content = {
-                                        ModalBottomSheetProfileTourGuide(context = context)
-                                    }
-                                )
-                                ButtonPrimary(
-                                    modifier = Modifier
-                                        .padding(start = 18.dp, end = 18.dp, bottom = 18.dp, top = 14.dp),
-                                    text = "Tutup",
-                                    background = ColorSecondary,
-                                    contentColor = TextPrimary,
-                                    enabled = true,
-                                    onClick = { showProfile = false }
-                                )
-                            }
-                        )
-                    }
-                )
-            }
             Column(
                 modifier = Modifier
                     .padding(start = 8.dp, end = 8.dp, bottom = 7.dp, top = 9.dp),
@@ -180,19 +170,20 @@ fun ItemTourGuideBooking(context: Context, id: Int, onClick: () -> Unit) {
                     .align(Alignment.BottomEnd)
                     .size(15.dp)
                     .clip(RoundedCornerShape(100))
-                    .border(2.dp, ColorWhite, RoundedCornerShape(100))
                     .background(ColorSecondary)
+                    .border(2.dp, ColorWhite, RoundedCornerShape(100))
                     .clickable(
                         onClick = {
-                            checked.value = !checked.value
+                            onChooseTourGuide(id)
+                            onWithNoTourGuide(false)
                         }
                     ),
                 contentAlignment = Alignment.Center,
                 content = {
-                    if(checked.value) {
+                    if(id == tourGuideIdBooking && tourGuideIdBooking != 0) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_check_small),
-                            contentDescription = "TourGuide Dipilih",
+                            painter = painterResource(id = R.drawable.ic_check),
+                            contentDescription = "Pemandu Wisata Dipilih",
                             modifier = Modifier
                                 .size(25.dp),
                             tint = ColorPrimary
@@ -230,6 +221,44 @@ fun ItemTourGuideBooking(context: Context, id: Int, onClick: () -> Unit) {
             )
         }
     )
+    if (showProfile) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .height(346.dp),
+            onDismissRequest = {
+                showProfile = false
+            },
+            containerColor = ColorTransparent,
+            shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp),
+            dragHandle = {},
+            content = {
+                Column(
+                    content = {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 18.dp, end = 18.dp, top = 18.dp)
+                                .clip(Shapes.small)
+                                .background(ColorWhite),
+                            contentAlignment = Alignment.Center,
+                            content = {
+                                ModalBottomSheetProfileTourGuide(context = context)
+                            }
+                        )
+                        ButtonPrimary(
+                            modifier = Modifier
+                                .padding(start = 18.dp, end = 18.dp, bottom = 18.dp, top = 14.dp),
+                            text = "Tutup",
+                            background = ColorSecondary,
+                            contentColor = TextPrimary,
+                            enabled = true,
+                            onClick = { showProfile = false }
+                        )
+                    }
+                )
+            }
+        )
+    }
 }
 
 @Preview(showBackground = true)
@@ -238,5 +267,9 @@ fun CardDaftarTourGuideBookingPreview() {
     val context = LocalContext.current
     CardDaftarTourGuideBooking(
         context = context,
+        querySearch = "",
+        onChooseTourGuide = {},
+        tourGuideIdBooking = 0,
+        onWithNoTourGuide = {}
     )
 }

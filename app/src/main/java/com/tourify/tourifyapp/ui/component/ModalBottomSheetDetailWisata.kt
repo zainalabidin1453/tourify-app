@@ -3,21 +3,15 @@ package com.tourify.tourifyapp.ui.component
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -48,7 +42,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -64,7 +57,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.tourify.tourifyapp.R
-import com.tourify.tourifyapp.ui.theme.ColorBlue
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorInfo
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
@@ -76,6 +68,9 @@ import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
+import com.tourify.tourifyapp.utils.Toasty
+import com.tourify.tourifyapp.utils.isValidEndDate
+import com.tourify.tourifyapp.utils.modifyDateRange
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -85,6 +80,7 @@ fun ModalBottomSheetDetailWisata(
     context: Context,
     navController: NavController,
     onShowDetailWisata: (Boolean) -> Unit,
+    onPayOrder: (String) -> Unit
 ) {
     val modalMapsBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val modalInBookingBottomState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -464,9 +460,9 @@ fun ModalBottomSheetDetailWisata(
                 var nameBooking by rememberSaveable { mutableStateOf("") }
                 var emailBooking by rememberSaveable { mutableStateOf("") }
                 var telpBooking by rememberSaveable { mutableStateOf("") }
-                var tourGuideIdBooking by rememberSaveable { mutableIntStateOf(0) }
-                var isWithTourGuideBooking by rememberSaveable { mutableStateOf(true) }
-                var totalTicketsBooking by rememberSaveable { mutableIntStateOf(0) }
+                var tourGuideIdBooking by rememberSaveable { mutableStateOf(0) }
+                var isWithNoTourGuide by rememberSaveable { mutableStateOf(false) }
+                var totalTicketsBooking by rememberSaveable { mutableIntStateOf(1) }
                 var totalPriceBooking by rememberSaveable { mutableIntStateOf(0) }
                 Scaffold(
                     containerColor = ColorWhite,
@@ -489,7 +485,9 @@ fun ModalBottomSheetDetailWisata(
                                 Spacer(modifier = Modifier.height(12.dp))
                                 ProgressBarBooking(
                                     progressValue = progress,
-                                    onClick = { progress = it }
+                                    onClick = { progressId ->
+                                        progress = progressId
+                                    }
                                 )
                             }
                         )
@@ -497,9 +495,12 @@ fun ModalBottomSheetDetailWisata(
                     bottomBar = {
                         ButtonInBooking(
                             modifier = Modifier.padding(18.dp),
-                            text = "Lanjutkan",
+                            text = if (progress <= 2) "Lanjutkan" else "Pembayaran",
                             onClick = {
-                                if (progress <= 3) progress += 1
+                                if (progress <= 2) progress += 1 else onPayOrder("TRF20221120102211")
+                            },
+                            onInfo = {
+                                Toasty.show(context, R.string.complete_your_order_data)
                             },
                             onBatal = {
                                 scope.launch { modalInBookingBottomState.hide() }.invokeOnCompletion {
@@ -508,8 +509,16 @@ fun ModalBottomSheetDetailWisata(
                                     }
                                 }
                             },
-                            enabled = true,
-                            info = false,
+                            enabled = when (progress) {
+                                1 -> true
+                                2 -> isValidEndDate(startTripDateBooking) && nameBooking.isNotEmpty() && emailBooking.isNotEmpty() && telpBooking.isNotEmpty()
+                                3 -> true
+                                else -> false
+                            },
+                            info = when (progress) {
+                                1 -> !isWithNoTourGuide
+                                else -> false
+                            },
                         )
                     }) { paddingValues ->
                     Column(
@@ -525,16 +534,37 @@ fun ModalBottomSheetDetailWisata(
                                 context = context,
                                 progress = progress,
                                 onProgress = { progress = it },
-                                onStartTripDateBooking = { startTripDateBooking = it },
-                                onEndTripDateBooking = { endTripDateBooking = it },
-                                onAllTripDateBooking = { allTripDateBooking = it },
+                                onStartTripDateBooking = {
+                                    startTripDateBooking = it
+                                    allTripDateBooking = modifyDateRange(startTripDateBooking, endTripDateBooking)
+                                },
+                                onEndTripDateBooking = {
+                                    endTripDateBooking = it
+                                    allTripDateBooking = modifyDateRange(startTripDateBooking, endTripDateBooking)
+                                },
                                 onNameBooking = { nameBooking = it },
                                 onEmailBooking = { emailBooking = it },
                                 onTelpBooking = { telpBooking = it },
-                                onTourGuideIdBooking = { tourGuideIdBooking = it },
-                                isWithTourGuideBooking = { isWithTourGuideBooking = it },
+                                onTourGuideIdBooking = {
+                                    tourGuideIdBooking = it
+                                },
+                                onWithNoTourGuide = {
+                                    isWithNoTourGuide = it
+                                    if (isWithNoTourGuide) {
+                                        tourGuideIdBooking = 0
+                                    }
+                                },
                                 onTotalTicketsBooking = { totalTicketsBooking = it},
                                 onTotalPriceBooking = { totalPriceBooking = it },
+                                isWithNoTourGuide = isWithNoTourGuide,
+                                totalTicketsBooking = totalTicketsBooking,
+                                startTripDateBooking = startTripDateBooking,
+                                endTripDateBooking = endTripDateBooking,
+                                allTripDateBooking = allTripDateBooking,
+                                tourGuideIdBooking = tourGuideIdBooking,
+                                nameBooking = nameBooking,
+                                emailBooking = emailBooking,
+                                telpBooking = telpBooking
                             )
                         }
                     )
@@ -658,6 +688,7 @@ fun ModalBottomSheetDetailWisataPreview() {
     ModalBottomSheetDetailWisata(
         context = context,
         navController = NavController(context),
-        onShowDetailWisata = {}
+        onShowDetailWisata = {},
+        onPayOrder = {}
     )
 }

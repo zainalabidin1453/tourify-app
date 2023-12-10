@@ -68,7 +68,7 @@ fun LoadingButtonPrimary(
     modifier: Modifier = Modifier,
     background: Color = ColorPrimary,
     onClick: () -> Unit,
-    height: Dp = 50.dp,
+    height: Dp = 55.dp,
     shadow: Dp = 10.dp
 ) {
     Button(

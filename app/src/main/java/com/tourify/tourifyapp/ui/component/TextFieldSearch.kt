@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
+import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
@@ -57,6 +58,7 @@ fun TextFieldSearch(
     onAddToHistory: (Boolean) -> Unit = {},
     isError: Boolean = false,
     isEnabled: Boolean = false,
+    isToBooking: Boolean = false,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     keywords: String = ""
 ) {
@@ -95,7 +97,7 @@ fun TextFieldSearch(
             unfocusedBorderColor = TextLight,
             errorContainerColor = ColorWhite,
             errorBorderColor = ColorDanger,
-            disabledContainerColor = ColorWhite,
+            disabledContainerColor = if(isToBooking) ColorSecondary.copy(0.5f) else ColorWhite,
             cursorColor = ColorPrimary,
         ),
         isError = isError,
