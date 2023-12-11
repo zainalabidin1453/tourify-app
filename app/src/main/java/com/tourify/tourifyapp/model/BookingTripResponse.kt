@@ -3,6 +3,7 @@ package com.tourify.tourifyapp.model
 data class BookingTripResponse(
     val statusCode: Int,
     val message: String,
+    val error: String? = null,
     val data: DataBookingTripResponse? = null
 )
 

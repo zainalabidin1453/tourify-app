@@ -103,7 +103,6 @@ fun HomeScreen(
     var idDetailWisata by rememberSaveable { mutableIntStateOf(0) }
     var firstProvince by rememberSaveable { mutableStateOf("Sumatra Barat") }
     var keywords by rememberSaveable { mutableStateOf("") }
-    var categoryWisata by rememberSaveable { mutableStateOf("") }
     var isAscending by rememberSaveable { mutableStateOf(false) }
     var isFree by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -170,7 +169,8 @@ fun HomeScreen(
                 content = {
                     WisataCategory(
                         onClick = { categoryValue ->
-                            categoryWisata = categoryValue
+                            keywords = categoryValue
+                            showSearchWisata = true
                         }
                     )
                 }
@@ -178,7 +178,7 @@ fun HomeScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 18.dp, top = 16.dp, bottom = 12.dp, end = 18.dp),
+                    .padding(start = 18.dp, top = 14.dp, bottom = 12.dp, end = 18.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 content = {
@@ -208,7 +208,6 @@ fun HomeScreen(
                 }
             )
             PopularWisata(
-                categoryWisata = categoryWisata,
                 onDetail = {
                     idDetailWisata = it
                     showDetailWisata = true
@@ -217,7 +216,7 @@ fun HomeScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 18.dp, top = 14.dp, bottom = 12.dp, end = 18.dp),
+                    .padding(start = 18.dp, top = 14.dp, bottom = 2.dp, end = 18.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 content = {

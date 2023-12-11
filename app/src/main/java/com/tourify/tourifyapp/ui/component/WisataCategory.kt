@@ -71,7 +71,7 @@ fun WisataCategory(
                     color = itemCategory.color,
                     onClick = { id ->
                         clickId = id
-                        onClick(itemCategory.enLabel)
+                        onClick(itemCategory.inLabel)
                     }
                 )
                 if (itemIndex == ItemWisataCategory.dataCategory.size - 1) {
@@ -83,7 +83,7 @@ fun WisataCategory(
 }
 
 @Composable
-fun ItemCategory(id: Int, clickId: Int, icon: Int, inLabel: Int, color: Color, onClick: (Int) -> Unit = {}) {
+fun ItemCategory(id: Int, clickId: Int, icon: Int, inLabel: String, color: Color, onClick: (Int) -> Unit = {}) {
     val borderModifier = if (id == clickId) {
         Modifier.border(1.dp, ColorPrimary, RoundedCornerShape(25.dp))
     } else {
@@ -108,14 +108,14 @@ fun ItemCategory(id: Int, clickId: Int, icon: Int, inLabel: Int, color: Color, o
                 content = {
                     Icon(
                         painter = painterResource(id = icon),
-                        contentDescription = stringResource(id = inLabel),
+                        contentDescription = inLabel,
                         modifier = Modifier
                             .size(15.dp),
                         tint = color
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = stringResource(id = inLabel),
+                        text = inLabel,
                         style = StyleText.copy(
                             color = TextPrimary,
                             fontFamily = fonts,

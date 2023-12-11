@@ -14,96 +14,77 @@ import com.tourify.tourifyapp.model.MyTicketsResponse
 import com.tourify.tourifyapp.model.RegistrationResponse
 import com.tourify.tourifyapp.model.ScanningObjectResponse
 import com.tourify.tourifyapp.model.VerificationResponse
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ApiService {
-    @FormUrlEncoded
     @POST("/user/registration")
     suspend fun registration(
-        @Field("token") token: String,
-        @Field("email") email: String
+        @Body email: String
     ): RegistrationResponse
 
-    @FormUrlEncoded
     @POST("/user/verification")
     suspend fun verification(
-        @Field("token") token: String,
-        @Field("email") email: String,
-        @Field("codeVerif") codeVerif: Int
+        @Body email: String,
+        @Body codeVerif: Int
     ): VerificationResponse
 
-    @FormUrlEncoded
-    @PUT("/user/password")
+    @PUT("/user/password/{email}")
     suspend fun createPassword(
-        @Field("token") token: String,
-        @Field("password") password: String
+        @Path("email") email: String,
+        @Body password: String
     ): CreatePasswordResponse
 
-    @FormUrlEncoded
     @POST("/user/login")
     suspend fun login(
-        @Field("token") token: String,
-        @Field("email") email: String,
-        @Field("password") password: String
+        @Body email: String,
+        @Body password: String
     ): LoginResponse
 
-    @FormUrlEncoded
     @POST("/user/logout")
     suspend fun logout(
-        @Field("token") token: String,
-        @Field("email") email: String
+        @Body email: String
     ): LogoutResponse
 
-    @FormUrlEncoded
     @GET("/destinations")
-    suspend fun getDestinations(
-        @Field("token") token: String
-    ): DestinationsResponse
+    suspend fun getDestinations(): DestinationsResponse
 
-    @FormUrlEncoded
-    @GET("/favorites")
+    @PUT("/favorites/{userId}")
     suspend fun getFavorites(
-        @Field("token") token: String,
-        @Field("userId") userId: Int
+        @Path("userId") userId: Int,
     ): FavoritesResponse
 
-    @FormUrlEncoded
     @POST("/favorites")
     suspend fun addFavorites(
-        @Field("token") token: String,
-        @Field("userId") userId: Int,
-        @Field("destinationsId") destinationsId: Int
+        @Body userId: Int,
+        @Body destinationId: Int
     ): AddFavoritesResponse
 
-    @FormUrlEncoded
-    @DELETE("/favorites")
+    @DELETE("/favorites/{userId}/{destinationId}")
     suspend fun deleteFavorites(
-        @Field("token") token: String,
-        @Field("userId") userId: Int,
-        @Field("destinationsId") destinationsId: Int
+        @Path("userId") userId: Int,
+        @Path("destinationId") destinationId: Int
     ): DeleteFavoritesResponse
 
-    @FormUrlEncoded
     @GET("/culinary")
-    suspend fun getCulinary(
-        @Field("token") token: String
-    ): CulinaryResponse
+    suspend fun getCulinary(): CulinaryResponse
 
-    @FormUrlEncoded
     @POST("/booking")
     suspend fun bookingTrip(
-        @Field("token") token: String,
-        @Field("userId") userId: Int,
-        @Field("destinationsId") destinationsId: Int,
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("noHp") noHp: String,
-        @Field("tripDate") tripDate: String
+        @Body userId: Int,
+        @Body destinationId: Int,
+        @Body tourGuideId: Int,
+        @Body name: String,
+        @Body email: String,
+        @Body telephone: String,
+        @Body tripDate: String,
+        @Body note: String
     ): BookingTripResponse
 
     @FormUrlEncoded

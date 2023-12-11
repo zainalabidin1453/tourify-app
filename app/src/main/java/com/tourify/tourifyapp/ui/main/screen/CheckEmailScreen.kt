@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,8 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,9 +44,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tourify.tourifyapp.R
+import com.tourify.tourifyapp.data.factory.ViewModelCheckEmailFactory
+import com.tourify.tourifyapp.data.viewmodels.CheckEmailViewModel
+import com.tourify.tourifyapp.di.Injection
 import com.tourify.tourifyapp.ui.component.ButtonPrimary
 import com.tourify.tourifyapp.ui.component.CircleButton
 import com.tourify.tourifyapp.ui.component.LoadingButtonPrimary
@@ -63,7 +71,12 @@ fun CheckEmailScreen(
     context: Context,
     navController: NavController,
     navigateToVerifCode: (String) -> Unit,
-    navigateToEnterPassword: (String) -> Unit
+    navigateToEnterPassword: (String) -> Unit,
+    checkEmailViewModel: CheckEmailViewModel = viewModel(
+        factory = ViewModelCheckEmailFactory(
+            Injection.provideCheckEmailRepository()
+        )
+    )
 ) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController) {
@@ -73,6 +86,7 @@ fun CheckEmailScreen(
     var email by rememberSaveable { mutableStateOf("") }
     var isLoading by rememberSaveable { mutableStateOf(false) }
     var isError by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
     Scaffold(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets(0.dp)),
@@ -80,10 +94,19 @@ fun CheckEmailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .shadow(10.dp, RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp),
-                        true, spotColor = ColorSecondary)
+                    .shadow(
+                        10.dp, RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp),
+                        true, spotColor = ColorSecondary
+                    )
                     .clip(RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp))
-                    .background(ColorWhite),
+                    .background(ColorWhite)
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = {
+                                focusManager.clearFocus()
+                            }
+                        )
+                    },
                 content = {
                     Column(
                         modifier = Modifier
@@ -179,8 +202,10 @@ fun CheckEmailScreen(
                                             enabled = true,
                                             onClick = {
                                                 val emailValue = email
-                                                if (emailValue.isNotEmpty() && isValidEmail(emailValue)) {
+                                                if (emailValue.isNotEmpty() && isValidEmail(emailValue)
+                                                ) {
                                                     isLoading = true
+
                                                 } else {
                                                     isError = true
                                                     isLoading = false
@@ -231,7 +256,7 @@ fun CheckEmailScreen(
                 }
             )
         }
-    ){
+    ) {
         Image(
             modifier = Modifier
                 .fillMaxWidth(),
