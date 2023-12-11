@@ -59,4 +59,14 @@
     <string name="full_name">Nama Lengkap</string>
     <string name="phone_number">Nomor Telepon</string>
     <string name="add_notes">Tambahkan Catatan</string>
+    <string name="succsess">Success!</string>
+    <string name="pending">Pending…</string>
+    <string name="failed">Failed!</string>
+    <string name="succsess_payment">Selamat pembayaran Anda berhasil dan pesanan telah dikonfirmasi! Nikmati pengalaman tanpa hambatan dan persiapkan diri untuk petualangan yang tak terlupakan bersama kami!</string>
+    <string name="pending_payment">Mohon bersabar sejenak, pembayaran sedang diproses. Kami sedang bekerja keras untuk menyelesaikannya agar Anda dapat segera memulai petualangan yang tak terlupakan!</string>
+    <string name="failed_payment">Maaf, Pembayaran Gagal. Terjadi kendala saat proses pembayaran Anda. Mohon coba lagi atau hubungi tim kami untuk bantuan lebih lanjut. Kami siap membantu Anda.</string>
+    <string name="waiting_payment">Terima kasih telah melakukan pembayaran, harap bersabar sejenak dan jangan kembali. Status pesanan Anda akan segera diproses dalam beberapa detik.</string>
+    <string name="succsess_payment_btn">Lihat Pesanan</string>
+    <string name="pending_payment_btn">Kembali</string>
+    <string name="failed_payment_btn">Coba Lagi</string>
 </resources>
