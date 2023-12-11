@@ -2,6 +2,13 @@ package com.tourify.tourifyapp.data.sources
 
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.constants.Constants
+import com.tourify.tourifyapp.constants.Constants.CATEGORY_ADVENTURE
+import com.tourify.tourifyapp.constants.Constants.CATEGORY_EDUCATION_CULTURE
+import com.tourify.tourifyapp.constants.Constants.CATEGORY_FAMILY_VACATION
+import com.tourify.tourifyapp.constants.Constants.CATEGORY_HONEYMOON
+import com.tourify.tourifyapp.constants.Constants.CATEGORY_ICONIC_SIGHT
+import com.tourify.tourifyapp.constants.Constants.CATEGORY_PHOTOGRAPHY_VIDEOGRAPHY
+import com.tourify.tourifyapp.constants.Constants.CATEGORY_RECREATION
 import com.tourify.tourifyapp.model.ModelWisataCategory
 import com.tourify.tourifyapp.ui.theme.ColorBlue
 import com.tourify.tourifyapp.ui.theme.ColorBlueLight
@@ -14,51 +21,44 @@ import com.tourify.tourifyapp.ui.theme.ColorOrange
 object ItemWisataCategory {
     val dataCategory = listOf(
         ModelWisataCategory(
-            1, R.drawable.ic_beach,
-            R.string.category_beach,
-            Constants.CATEGORY_BEACH,
+            1, R.drawable.ic_natural,
+            CATEGORY_ADVENTURE,
             ColorBlue
         ),
         ModelWisataCategory(
             2,
-            R.drawable.ic_lake,
-            R.string.category_lake,
-            Constants.CATEGORY_LAKE,
+            R.drawable.ic_beach,
+            CATEGORY_FAMILY_VACATION,
             ColorBlueLight
         ),
         ModelWisataCategory(
             3,
-            R.drawable.ic_waterfall,
-            R.string.category_waterfall,
-            Constants.CATEGORY_WATERFALL,
+            R.drawable.ic_sunset_sea,
+            CATEGORY_HONEYMOON,
             ColorOrange
         ),
         ModelWisataCategory(
-            5,
-            R.drawable.ic_natural,
-            R.string.category_natural,
-            Constants.CATEGORY_NATURAL,
+            4,
+            R.drawable.ic_museum,
+            CATEGORY_EDUCATION_CULTURE,
             ColorGreen
         ),
         ModelWisataCategory(
-            6,
-            R.drawable.ic_museum,
-            R.string.category_museum,
-            Constants.CATEGORY_MUSEUM,
+            5,
+            R.drawable.ic_photography_lens,
+            CATEGORY_PHOTOGRAPHY_VIDEOGRAPHY,
             ColorChocolate
         ),
         ModelWisataCategory(
-            7,
+            6,
             R.drawable.ic_historical,
-            R.string.category_historical,
-            Constants.CATEGORY_HISTORICAL,
+            CATEGORY_RECREATION,
             ColorMaroon
         ),
         ModelWisataCategory(
-            8,
+            7,
             R.drawable.ic_landmark,
-            R.string.category_landmark,
-            Constants.CATEGORY_LANDMARK,
+            CATEGORY_ICONIC_SIGHT,
             ColorDanger
         )
     )

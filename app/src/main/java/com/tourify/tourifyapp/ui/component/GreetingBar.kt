@@ -3,8 +3,10 @@ package com.tourify.tourifyapp.ui.component
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,6 +53,7 @@ fun GreetingBar(
     firstProvince: String
 ){
     var showListProvince by rememberSaveable { mutableStateOf(false) }
+    
     Row(
         modifier = Modifier
             .fillMaxWidth()

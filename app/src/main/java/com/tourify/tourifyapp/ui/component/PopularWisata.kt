@@ -47,7 +47,6 @@ import com.tourify.tourifyapp.utils.modifyNumberFormat
 @Composable
 fun PopularWisata(
     modifier: Modifier = Modifier,
-    categoryWisata: String,
     onDetail: (Int) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
@@ -214,7 +213,6 @@ fun PopularWisataCard(onClick: (Int) -> Unit) {
 @Composable
 fun PopularWisataPreview() {
     PopularWisata(
-        categoryWisata = "",
         onDetail = {}
     )
 }

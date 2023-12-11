@@ -192,6 +192,20 @@ fun getCheckInDate(tripDate: String): String {
     }
 }
 
+fun findTypeDestinations(keywords: String): List<String> {
+    return when (keywords) {
+        "Pemandangan Ikonis" -> listOf("Landmark")
+        "Liburan Keluarga" -> listOf("Beach", "Lake", "Natural", "Waterfall")
+        "Bulan Madu" -> listOf("Beach")
+        "Pendidikan & Budaya" -> listOf("Museum", "Historical")
+        "Fotografi & Videografi" -> listOf("Beach", "Lake", "Natural", "Waterfall","Landmark", "Historical", "Museum")
+        "Rekreasi" -> listOf("Historical", "Museum")
+        "Pertualangan" -> listOf("Natural")
+        "Atraksi Air" -> listOf("Lake", "Waterfall", "Beach")
+        else -> listOf("Beach", "Lake", "Natural", "Waterfall", "Landmark", "Historical", "Museum")
+    }
+}
+
 fun changeDateToLong(date: String): Long {
     if (date.isEmpty()) {
         return -1L

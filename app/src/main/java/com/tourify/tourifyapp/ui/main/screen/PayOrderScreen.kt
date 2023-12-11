@@ -33,7 +33,7 @@ fun PayOrderScreen(
             )
         },
         bottomBar = {
-            
+
         },
     ){
         Column(

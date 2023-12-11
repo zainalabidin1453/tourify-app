@@ -3,6 +3,7 @@ package com.tourify.tourifyapp.model
 data class CulinaryResponse(
     val statusCode: Int,
     val message: String,
+    val error: String? = null,
     val data: List<DataCulinaryResponse>? = null
 )
 
