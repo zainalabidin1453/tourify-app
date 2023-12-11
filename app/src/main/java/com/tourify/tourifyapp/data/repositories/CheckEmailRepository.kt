@@ -8,7 +8,6 @@ import com.tourify.tourifyapp.model.RegistrationResponse
 class CheckEmailRepository(private val apiService: ApiService) {
     suspend fun login(email: String): RegistrationResponse {
         return apiService.registration(
-            token = BuildConfig.TOKEN,
             email = email
         )
     }
