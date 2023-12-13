@@ -62,14 +62,14 @@ fun ModalBottomSheetFilters(
                                 content = {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_filters_2),
-                                        contentDescription = "Urutkan Data",
+                                        contentDescription = stringResource(id = R.string.sort_data),
                                         modifier = Modifier
                                             .size(15.dp),
                                         tint = ColorPrimary
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
-                                        text = "Urutkan data",
+                                        text = stringResource(id = R.string.sort_data),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -129,14 +129,14 @@ fun ModalBottomSheetFilters(
                                 content = {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_coin),
-                                        contentDescription = "Filter Data Berdasarkan Harga Tiket",
+                                        contentDescription = stringResource(id = R.string.filter_by_ticket),
                                         modifier = Modifier
                                             .size(15.dp),
                                         tint = ColorPrimary
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
-                                        text = "Filter data",
+                                        text = stringResource(id = R.string.filter_data),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -151,7 +151,7 @@ fun ModalBottomSheetFilters(
                                 verticalAlignment = Alignment.CenterVertically,
                                 content = {
                                     Text(
-                                        text = "Paid",
+                                        text = stringResource(id = R.string.paid),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -168,7 +168,7 @@ fun ModalBottomSheetFilters(
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
-                                        text = "Free",
+                                        text = stringResource(id = R.string.free),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
