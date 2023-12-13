@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
-import com.tourify.tourifyapp.ui.theme.ColorWarning
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
@@ -86,7 +83,7 @@ fun TrackTrip(
                                         verticalArrangement = Arrangement.SpaceBetween,
                                         content = {
                                             Text(
-                                                text = "Booking Tiket Masuk",
+                                                text = stringResource(id = R.string.book_ticket),
                                                 style = StyleText.copy(
                                                     color = TextSecondary,
                                                     fontFamily = fonts,
@@ -97,7 +94,7 @@ fun TrackTrip(
                                             )
                                             Spacer(modifier = Modifier.height(2.dp))
                                             Text(
-                                                text = "02 Nov 2023",
+                                                text = stringResource(id = R.string.date),
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -135,7 +132,7 @@ fun TrackTrip(
                                         verticalArrangement = Arrangement.SpaceBetween,
                                         content = {
                                             Text(
-                                                text = "Perjalanan",
+                                                text = stringResource(id = R.string.trip),
                                                 style = StyleText.copy(
                                                     color = TextSecondary,
                                                     fontFamily = fonts,
@@ -184,7 +181,7 @@ fun TrackTrip(
                                         verticalArrangement = Arrangement.SpaceBetween,
                                         content = {
                                             Text(
-                                                text = "Check In",
+                                                text = stringResource(id = R.string.check_in),
                                                 style = StyleText.copy(
                                                     color = TextSecondary,
                                                     fontFamily = fonts,
@@ -214,7 +211,7 @@ fun TrackTrip(
                         horizontalAlignment = Alignment.End,
                         content = {
                             Text(
-                                text = "To: 19 - 21 Nov 2023",
+                                text = stringResource(id = R.string.date_book),
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,
@@ -225,7 +222,7 @@ fun TrackTrip(
                             )
                             Spacer(modifier = Modifier.height(2.dp))
                             Text(
-                                text = "2 Hari",
+                                text = stringResource(id = R.string.how_many_days),
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,
@@ -247,7 +244,7 @@ fun TrackTrip(
 @Composable
 fun TrackTripPreview(){
     TrackTrip(
-        tripDate = "12 Nov - 15 Des 2023",
+        tripDate = stringResource(id = R.string.date_book),
         isFirstBooking = false
     )
 }
