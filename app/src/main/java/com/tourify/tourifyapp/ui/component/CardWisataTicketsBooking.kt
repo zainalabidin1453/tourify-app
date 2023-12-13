@@ -103,7 +103,7 @@ fun CardWisataTicketsBooking(
                                             Column(
                                                 content = {
                                                     Text(
-                                                        text = "Wisata Name",
+                                                        text = stringResource(id = R.string.tourism),
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -125,7 +125,7 @@ fun CardWisataTicketsBooking(
                                                             )
                                                             Spacer(modifier = Modifier.width(1.dp))
                                                             Text(
-                                                                text = "Location, Indonesia",
+                                                                text = stringResource(id = R.string.location),
                                                                 style = StyleText.copy(
                                                                     color = TextPrimary,
                                                                     fontFamily = fonts,
@@ -158,7 +158,7 @@ fun CardWisataTicketsBooking(
                                                     Text(
                                                         modifier = Modifier
                                                             .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
-                                                        text = "Pantai",
+                                                        text = stringResource(id = R.string.types_tourism),
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -217,7 +217,7 @@ fun CardWisataTicketsBooking(
                                 content = {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_min),
-                                        contentDescription = "Kurangkan",
+                                        contentDescription = stringResource(id = R.string.mines),
                                         modifier = Modifier
                                             .size(16.dp)
                                             .padding(2.dp),
@@ -268,7 +268,7 @@ fun CardWisataTicketsBooking(
                                 content = {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_plus),
-                                        contentDescription = "Tambahkan",
+                                        contentDescription = stringResource(id = R.string.plus),
                                         modifier = Modifier
                                             .size(16.dp)
                                             .padding(2.dp),
@@ -289,9 +289,9 @@ fun CardWisataTicketsBooking(
 fun CardWisataTicketsBookingPreview() {
     CardWisataTicketsBooking(
         photo = R.drawable.error_image,
-        name = "Wisata Name",
-        location = "Location, Indonesia",
-        category = "Pantai",
+        name = stringResource(id = R.string.tourism),
+        location = stringResource(id = R.string.location),
+        category = stringResource(id = R.string.types_tourism),
         priceTickets = 10000,
         totalTickets = 5,
         onPlusTickets = {},
