@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -96,7 +97,7 @@ fun VerifCodeScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     content = {
                         Text(
-                            text = "Kode Verifikasi",
+                            text = stringResource(id = R.string.code_verif),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -107,7 +108,7 @@ fun VerifCodeScreen(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Masukkan kode verifikasi yang sudah dikirim melalui email Anda",
+                            text = stringResource(id = R.string.verif_notes),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -129,7 +130,7 @@ fun VerifCodeScreen(
             content = {
                 Image(
                     painter = painterResource(id = R.drawable.ic_codeotp),
-                    contentDescription = "Icon Verifikasi Kode",
+                    contentDescription = stringResource(id = R.string.icon_verif),
                     modifier = Modifier
                         .fillMaxWidth(),
                     contentScale = ContentScale.Fit
@@ -150,7 +151,7 @@ fun VerifCodeScreen(
                 Row(
                     content = {
                         Text(
-                            text = "Belum menerima kode?",
+                            text = stringResource(id = R.string.no_code),
                             style = StyleText.copy(
                                 color = TextSecondary,
                                 fontFamily = fonts,
@@ -167,7 +168,7 @@ fun VerifCodeScreen(
                                     indication = null,
                                     onClick = {}
                                 ),
-                            text = "Kirim ulang",
+                            text = stringResource(id = R.string.resent_code),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -191,7 +192,7 @@ fun VerifCodeScreen(
                     navigateToCreatePassword(email!!)
                 } else {
                     ButtonPrimary(
-                        text = "Verifikasi kode",
+                        text = stringResource(id = R.string.start_verifikasi),
                         background = ColorPrimary,
                         contentColor = ColorWhite,
                         enabled = true,
@@ -225,5 +226,3 @@ fun VerifCodeScreenPreview() {
         navigateToCreatePassword = {}
     )
 }
-
-
