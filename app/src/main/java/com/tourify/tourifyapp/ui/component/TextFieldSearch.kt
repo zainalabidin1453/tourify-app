@@ -1,7 +1,6 @@
 package com.tourify.tourifyapp.ui.component
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -162,7 +161,7 @@ fun TextFieldSearchPreview() {
     val isError by rememberSaveable { mutableStateOf(false) }
 
     TextFieldSearch(
-        placeholder = "Cari tempat wisata",
+        placeholder = stringResource(id = R.string.search_wisata),
         icon = R.drawable.ic_search,
         iconDescription = R.string.email_address,
         keyboardType = KeyboardType.Text,
