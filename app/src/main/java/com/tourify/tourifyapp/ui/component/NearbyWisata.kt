@@ -115,7 +115,7 @@ fun NearbyWisataCard(onClick: (Int) -> Unit) {
                                     Column(
                                         content = {
                                             Text(
-                                                text = "Wisata Name",
+                                                text = stringResource(id = R.string.tourism),
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -137,7 +137,7 @@ fun NearbyWisataCard(onClick: (Int) -> Unit) {
                                                     )
                                                     Spacer(modifier = Modifier.width(1.dp))
                                                     Text(
-                                                        text = "Location, Indonesia",
+                                                        text = stringResource(id = R.string.location),
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -171,7 +171,7 @@ fun NearbyWisataCard(onClick: (Int) -> Unit) {
                                         verticalAlignment = Alignment.CenterVertically,
                                         content = {
                                             Text(
-                                                text = "0 Km",
+                                                text = stringResource(id = R.string.distance_tourism),
                                                 style = StyleText.copy(
                                                     color = ColorInfo,
                                                     fontFamily = fonts,
@@ -191,7 +191,7 @@ fun NearbyWisataCard(onClick: (Int) -> Unit) {
                                                     Text(
                                                         modifier = Modifier
                                                             .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
-                                                        text = "Pantai",
+                                                        text = stringResource(id = R.string.types_tourism),
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
