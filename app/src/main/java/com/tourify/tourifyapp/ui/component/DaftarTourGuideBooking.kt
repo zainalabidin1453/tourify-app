@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -38,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
-import com.tourify.tourifyapp.ui.theme.ColorWarning
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
@@ -65,7 +63,7 @@ fun DaftarTourGuideBooking(
             .fillMaxWidth(),
         content = {
             Text(
-                text = "Daftar Pemandu Wisata",
+                text = stringResource(id = R.string.guide_list),
                 style = StyleText.copy(
                     color = TextPrimary,
                     fontFamily = fonts,
@@ -88,7 +86,7 @@ fun DaftarTourGuideBooking(
                         content = {
                             TextFieldSearch(
                                 modifier = Modifier.padding(end = 14.dp),
-                                placeholder = "Cari Pemandu Wisata",
+                                placeholder = stringResource(id = R.string.guide_search),
                                 icon = R.drawable.ic_search,
                                 iconDescription = R.string.find_tour_guide,
                                 keyboardType = KeyboardType.Text,
@@ -132,7 +130,7 @@ fun DaftarTourGuideBooking(
                                             if(isWithNoTourGuide) {
                                                 Icon(
                                                     painter = painterResource(id = R.drawable.ic_check),
-                                                    contentDescription = "Saya tidak membutuhkan Pemandu Wisata",
+                                                    contentDescription = stringResource(id = R.string.no_guide),
                                                     modifier = Modifier
                                                         .size(25.dp),
                                                     tint = ColorPrimary
@@ -142,7 +140,7 @@ fun DaftarTourGuideBooking(
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
-                                        text = "Saya tidak membutuhkan pemandu wisata",
+                                        text = stringResource(id = R.string.no_guide),
                                         style = StyleText.copy(
                                             color = TextSecondary,
                                             fontFamily = fonts,
