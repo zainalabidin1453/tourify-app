@@ -128,7 +128,7 @@ fun ModalBottomSheetDetailWisata(
                             Text(
                                 modifier = Modifier
                                     .padding(start = 1.dp),
-                                text = "Wisata Name",
+                                text = stringResource(id = R.string.tourism),
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,
@@ -150,7 +150,7 @@ fun ModalBottomSheetDetailWisata(
                                     )
                                     Spacer(modifier = Modifier.width(1.dp))
                                     Text(
-                                        text = "Location, Indonesia",
+                                        text = stringResource(id = R.string.location),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -228,7 +228,7 @@ fun ModalBottomSheetDetailWisata(
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = "0.0 (0)",
+                                        text = stringResource(id = R.string.tourism_total_rating),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -271,7 +271,7 @@ fun ModalBottomSheetDetailWisata(
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = "0.0 Km",
+                                        text = stringResource(id = R.string.distance_tourism),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -314,13 +314,13 @@ fun ModalBottomSheetDetailWisata(
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = "0",
+                                        text = stringResource(id = R.string.total_culinary),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
                                             fontWeight = FontWeight.Light,
                                             fontSize = 12.sp,
-                                            lineHeight = 12.sp
+                                            lineHeight = 12.sp,
                                         )
                                     )
                                 }
@@ -342,7 +342,7 @@ fun ModalBottomSheetDetailWisata(
                             .padding(start = 14.dp, end = 14.dp, top = 12.dp, bottom = 12.dp),
                         content = {
                             Text(
-                                text = "Wisata Name",
+                                text = stringResource(id = R.string.tourism),
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,
@@ -371,7 +371,7 @@ fun ModalBottomSheetDetailWisata(
                                             )
                                             Spacer(modifier = Modifier.width(2.dp))
                                             Text(
-                                                text = "Buka (08:00 - 15:00 WIB)",
+                                                text = stringResource(id = R.string.open_closed),
                                                 style = StyleText.copy(
                                                     color = ColorInfo,
                                                     fontFamily = fonts,
@@ -383,7 +383,7 @@ fun ModalBottomSheetDetailWisata(
                                         }
                                     )
                                     Text(
-                                        text = "Tiket Masuk (Rp0,-)",
+                                        text = stringResource(id = R.string.tourism_ticket_price),
                                         style = StyleText.copy(
                                             color = ColorDanger,
                                             fontFamily = fonts,
@@ -395,7 +395,7 @@ fun ModalBottomSheetDetailWisata(
                                 }
                             )
                             Spacer(modifier = Modifier.height(6.dp))
-                            ExpandedText(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                            ExpandedText(text = stringResource(id = R.string.tourism_desc))
                         }
                     )
                 }
@@ -413,7 +413,7 @@ fun ModalBottomSheetDetailWisata(
                             .padding(start = 14.dp, top = 12.dp, bottom = 12.dp),
                         content = {
                             Text(
-                                text = "Daftar Pemandu Wisata",
+                                text = stringResource(id = R.string.guide_list),
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,
@@ -431,7 +431,7 @@ fun ModalBottomSheetDetailWisata(
             ButtonPrimary(
                 modifier = Modifier
                     .padding(start = 18.dp, end = 18.dp, bottom = 18.dp),
-                text = "Pesan Perjalanan",
+                text = stringResource(id = R.string.order_vacation),
                 background = ColorPrimary,
                 contentColor = ColorWhite,
                 enabled = true,
@@ -473,7 +473,7 @@ fun ModalBottomSheetDetailWisata(
                                 .padding(start = 18.dp, end = 18.dp, bottom = 18.dp),
                             content = {
                                 Text(
-                                    text = "Pesan Perjalanan",
+                                    text = stringResource(id = R.string.order_vacation),
                                     style = StyleText.copy(
                                         color = TextPrimary,
                                         fontFamily = fonts,
@@ -590,7 +590,7 @@ fun ModalBottomSheetDetailWisata(
                     containerColor = ColorWhite,
                     topBar = {
                         TopBarScreenModal(
-                            title = "Wisata Name",
+                            title = stringResource(id = R.string.tourism),
                             onBack = { showValue ->
                                 scope.launch { modalMapsBottomState.hide() }.invokeOnCompletion {
                                     if (!modalMapsBottomState.isVisible) {
