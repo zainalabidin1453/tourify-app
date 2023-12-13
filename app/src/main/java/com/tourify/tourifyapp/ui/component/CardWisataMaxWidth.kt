@@ -73,7 +73,7 @@ fun CardWisataMaxWidth(
                         content = {
                             Image(
                                 painter = painterResource(id = R.drawable.error_image),
-                                contentDescription = "",
+                                contentDescription = stringResource(id = R.string.error),
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .align(Alignment.Center),
@@ -95,7 +95,7 @@ fun CardWisataMaxWidth(
                                     Column(
                                         content = {
                                             Text(
-                                                text = "Wisata Name",
+                                                text = stringResource(id = R.string.tourism),
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -117,7 +117,7 @@ fun CardWisataMaxWidth(
                                                     )
                                                     Spacer(modifier = Modifier.width(1.dp))
                                                     Text(
-                                                        text = "Location, Indonesia",
+                                                        text = stringResource(id = R.string.location),
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -158,7 +158,7 @@ fun CardWisataMaxWidth(
                                             Text(
                                                 modifier = Modifier
                                                     .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
-                                                text = "Pantai",
+                                                text = stringResource(id = R.string.types_tourism),
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
