@@ -13,12 +13,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ButtonStylePrimary
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
@@ -51,12 +53,12 @@ fun ButtonInBooking(
                     horizontalArrangement = Arrangement.Center,
                     content = {
                         Text(
-                            text = "Keseruan Perjalanan Dijamin Bersama Pemandu Wisata Profesional.",
+                            text = stringResource(id = R.string.booking_text),
                             style = StyleText.copy(
                                 color = TextSecondary,
                                 fontFamily = fonts,
                                 fontWeight = FontWeight.Light,
-                                fontSize = 11.sp,
+                                fontSize = 13.sp,
                                 lineHeight = 16.sp,
                                 textAlign = TextAlign.Center
                             ),
@@ -84,7 +86,7 @@ fun ButtonInBooking(
                         shape = Shapes.medium,
                         content = {
                             Text(
-                                text = "Batal",
+                                text = stringResource(id = R.string.cancel),
                                 style = ButtonStylePrimary.copy(
                                     fontFamily = fonts,
                                     fontWeight = FontWeight.Normal,
@@ -119,7 +121,7 @@ fun ButtonInBooking(
 fun ButtonInBookingPreview(){
     ButtonInBooking(
         modifier = Modifier.padding(18.dp),
-        text = "Lanjutkan",
+        text = stringResource(id = R.string.next),
         onClick = {},
         onBatal = {},
         enabled = true
