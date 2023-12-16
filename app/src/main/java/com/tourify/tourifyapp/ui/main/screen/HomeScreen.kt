@@ -141,7 +141,7 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Temukan Kebahagiaan Anda Bersama Kami!",
+                        text = stringResource(id = R.string.home_text),
                         maxLines = 3,
                         style = StyleText.copy(
                             color = TextPrimary,
@@ -523,5 +523,3 @@ fun HomeScreenPreview() {
         paddingValues = PaddingValues(0.dp)
     )
 }
-
-
