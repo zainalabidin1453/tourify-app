@@ -24,11 +24,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.data.sources.ItemProvince
 import com.tourify.tourifyapp.model.ModelItemProvince
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
@@ -147,6 +149,6 @@ fun ModalBottomSheetListProvincePreview() {
         navController = NavController(context),
         onShowListProvince = {},
         onProvince = {},
-        firstProvince = "Sumatra Barat"
+        firstProvince = stringResource(id = R.string.first_province),
     )
 }
