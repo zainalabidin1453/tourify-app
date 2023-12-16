@@ -136,7 +136,7 @@ fun PopularWisataCard(onClick: (Int) -> Unit) {
                                     Text(
                                         modifier = Modifier
                                             .padding(start = 1.dp),
-                                        text = "Wisata Name",
+                                        text = stringResource(id = R.string.tourism),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -158,7 +158,7 @@ fun PopularWisataCard(onClick: (Int) -> Unit) {
                                             )
                                             Spacer(modifier = Modifier.width(1.dp))
                                             Text(
-                                                text = "Location, Indonesia",
+                                                text = stringResource(id = R.string.location),
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
