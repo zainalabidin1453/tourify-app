@@ -84,7 +84,7 @@ fun TopBarScreenModal(
 @Composable
 fun TopBarScreenModalPreview() {
     TopBarScreenModal(
-        title = "Wisata Name",
+        title = stringResource(id = R.string.tourism),
         onBack = {}
     )
 }
