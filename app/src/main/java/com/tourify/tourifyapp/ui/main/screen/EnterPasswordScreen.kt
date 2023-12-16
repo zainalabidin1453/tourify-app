@@ -99,7 +99,7 @@ fun EnterPasswordScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     content = {
                         Text(
-                            text = "Kata Sandi",
+                            text = stringResource(id = R.string.password),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -110,7 +110,7 @@ fun EnterPasswordScreen(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Rahasia terjaga: masukkan kata sandi akun Anda untuk melanjutkan.",
+                            text = stringResource(id = R.string.pass_note),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -157,7 +157,7 @@ fun EnterPasswordScreen(
                 Row(
                     content = {
                         Text(
-                            text = "Lupa Kata Sandi?",
+                            text = stringResource(id = R.string.forgot_pass),
                             style = StyleText.copy(
                                 color = TextSecondary,
                                 fontFamily = fonts,
@@ -174,7 +174,7 @@ fun EnterPasswordScreen(
                                     indication = null,
                                     onClick = { navigateToForgotPassword(email!!) }
                                 ),
-                            text = "Reset",
+                            text = stringResource(id = R.string.reset),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -198,7 +198,7 @@ fun EnterPasswordScreen(
                     navigateToDashboard()
                 } else {
                     ButtonPrimary(
-                        text = "Masuk",
+                        text = stringResource(id = R.string.log_in),
                         background = ColorPrimary,
                         contentColor = ColorWhite,
                         enabled = true,
@@ -233,5 +233,3 @@ fun EnterPasswordScreenPreview() {
         navigateToForgotPassword = {}
     )
 }
-
-
