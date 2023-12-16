@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -122,7 +121,7 @@ fun CheckEmailScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 content = {
                                     Text(
-                                        text = "Login/Daftar",
+                                        text = stringResource(id = R.string.login),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -133,7 +132,7 @@ fun CheckEmailScreen(
                                     )
                                     Spacer(modifier = Modifier.height(10.dp))
                                     Text(
-                                        text = "Silahkan masuk ke akun Anda",
+                                        text = stringResource(id = R.string.log_in_your_account),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -196,7 +195,7 @@ fun CheckEmailScreen(
                                         navigateToEnterPassword(email)
                                     } else {
                                         ButtonPrimary(
-                                            text = "Lanjutkan",
+                                            text = stringResource(id = R.string.next),
                                             background = ColorPrimary,
                                             contentColor = ColorWhite,
                                             enabled = true,
@@ -226,7 +225,7 @@ fun CheckEmailScreen(
                                 content = {
                                     Spacer(modifier = Modifier.height(30.dp))
                                     Text(
-                                        text = "atau login/daftar dengan",
+                                        text = stringResource(id = R.string.or_login_with),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -241,7 +240,7 @@ fun CheckEmailScreen(
                                 }
                             )
                             Text(
-                                text = "Dengan mendaftar, Saya menyetujui Syarat & Ketentuan dan Kebijakan Privasi Tourify",
+                                text = stringResource(id = R.string.tourify_privacy_notes),
                                 style = StyleText.copy(
                                     color = TextSecondary,
                                     fontFamily = fonts,
@@ -324,4 +323,3 @@ fun CheckEmailScreenPreview() {
         navigateToEnterPassword = {}
     )
 }
-
