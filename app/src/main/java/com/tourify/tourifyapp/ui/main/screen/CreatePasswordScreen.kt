@@ -97,7 +97,7 @@ fun CreatePasswordScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     content = {
                         Text(
-                            text = "Buat Kata Sandi",
+                            text = stringResource(id = R.string.create_password),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -108,7 +108,7 @@ fun CreatePasswordScreen(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Pertahankan privasi anda: buat kata sandi yang sulit ditembus!",
+                            text = stringResource(id = R.string.privacy_notes),
                             style = StyleText.copy(
                                 color = TextPrimary,
                                 fontFamily = fonts,
@@ -201,7 +201,7 @@ fun CreatePasswordScreen(
                     navigateToDashboard()
                 } else {
                     ButtonPrimary(
-                        text = "Simpan",
+                        text = stringResource(id = R.string.save_pass),
                         background = ColorPrimary,
                         contentColor = ColorWhite,
                         enabled = true,
@@ -244,5 +244,3 @@ fun CreatePasswordScreenPreview() {
         navigateToDashboard = {}
     )
 }
-
-
