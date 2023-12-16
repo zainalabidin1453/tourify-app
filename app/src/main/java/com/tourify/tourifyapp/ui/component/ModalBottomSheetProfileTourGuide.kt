@@ -57,24 +57,37 @@ fun ModalBottomSheetProfileTourGuide(
                 errorImg = R.drawable.avatar,
                 onClick = {}
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "TourGuide Name",
-                style = StyleText.copy(
-                    color = TextPrimary,
-                    fontFamily = fonts,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp,
-                    lineHeight = 14.sp
-                ),
-                textAlign = TextAlign.Center
-            )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    content = {
+                        Text(
+                            text = stringResource(id = R.string.guide_name),
+                            style = StyleText.copy(
+                                color = TextPrimary,
+                                fontFamily = fonts,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                lineHeight = 14.sp
+                            ),
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.width(3.dp))
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_verified),
+                            contentDescription = stringResource(id = R.string.verified),
+                            modifier = Modifier
+                                .size(10.dp),
+                            tint = ColorBlue
+                        )
+                    }
+                )
+
             Spacer(modifier = Modifier.height(2.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     Text(
-                        text = "@username",
+                        text = stringResource(id = R.string.username),
                         style = StyleText.copy(
                             color = TextSecondary,
                             fontFamily = fonts,
@@ -83,14 +96,6 @@ fun ModalBottomSheetProfileTourGuide(
                             lineHeight = 12.sp
                         ),
                         textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.width(3.dp))
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_verified),
-                        contentDescription = stringResource(id = R.string.verified),
-                        modifier = Modifier
-                            .size(10.dp),
-                        tint = ColorBlue
                     )
                 }
             )
@@ -132,7 +137,7 @@ fun ModalBottomSheetProfileTourGuide(
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = "Rating",
+                                        text = stringResource(id = R.string.rating),
                                         style = StyleText.copy(
                                             color = TextSecondary,
                                             fontFamily = fonts,
@@ -169,7 +174,7 @@ fun ModalBottomSheetProfileTourGuide(
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = "Perjalanan",
+                                        text = stringResource(id = R.string.trip),
                                         style = StyleText.copy(
                                             color = TextSecondary,
                                             fontFamily = fonts,
@@ -206,7 +211,7 @@ fun ModalBottomSheetProfileTourGuide(
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = "Biaya/jam",
+                                        text = stringResource(id = R.string.hourly_charge),
                                         style = StyleText.copy(
                                             color = TextSecondary,
                                             fontFamily = fonts,
