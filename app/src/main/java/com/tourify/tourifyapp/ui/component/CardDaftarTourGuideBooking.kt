@@ -1,7 +1,6 @@
 package com.tourify.tourifyapp.ui.component
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -139,7 +138,7 @@ fun ItemTourGuideBooking(
                     )
                     Spacer(modifier = Modifier.height(7.dp))
                     Text(
-                        text = "TourGuide Name",
+                        text = stringResource(id = R.string.guide_name),
                         style = StyleText.copy(
                             color = TextPrimary,
                             fontFamily = fonts,
@@ -151,7 +150,7 @@ fun ItemTourGuideBooking(
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "Rp9000/jam",
+                        text = stringResource(id = R.string.guide_price),
                         style = StyleText.copy(
                             color = ColorDanger,
                             fontFamily = fonts,
@@ -183,7 +182,7 @@ fun ItemTourGuideBooking(
                     if(id == tourGuideIdBooking && tourGuideIdBooking != 0) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_check),
-                            contentDescription = "Pemandu Wisata Dipilih",
+                            contentDescription = stringResource(id = R.string.choose_guide),
                             modifier = Modifier
                                 .size(25.dp),
                             tint = ColorPrimary
@@ -207,7 +206,7 @@ fun ItemTourGuideBooking(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "0.0 (0)",
+                        text = stringResource(id = R.string.guide_rating),
                         style = StyleText.copy(
                             color = TextPrimary,
                             fontFamily = fonts,
@@ -248,7 +247,7 @@ fun ItemTourGuideBooking(
                         ButtonPrimary(
                             modifier = Modifier
                                 .padding(start = 18.dp, end = 18.dp, bottom = 18.dp, top = 14.dp),
-                            text = "Tutup",
+                            text = stringResource(id = R.string.close),
                             background = ColorSecondary,
                             contentColor = TextPrimary,
                             enabled = true,
