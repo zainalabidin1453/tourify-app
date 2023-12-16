@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,9 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -91,7 +88,7 @@ fun TopBarPayOrderScreen(
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "#myTRF20231122340010",
+                                text = stringResource(id = R.string.order_number),
                                 style = StyleText.copy(
                                     color = TextSecondary,
                                     fontFamily = fonts,
@@ -112,7 +109,7 @@ fun TopBarPayOrderScreen(
 @Composable
 fun TopBarPayOrderScreenPreview() {
     TopBarPayOrderScreen(
-        title = "Bayar Pesanan",
+        title = stringResource(id = R.string.pay_order),
         onBack = {}
     )
 }
