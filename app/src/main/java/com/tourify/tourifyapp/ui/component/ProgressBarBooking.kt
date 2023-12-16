@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -83,7 +84,7 @@ fun ProgressBarBooking(
                                     }
                                 }
                             ),
-                            contentDescription = "Step 1",
+                            contentDescription = stringResource(id = R.string.step),
                             modifier = Modifier
                                 .size(18.dp)
                                 .padding(top = 3.dp),
@@ -106,13 +107,13 @@ fun ProgressBarBooking(
                                 Text(
                                     text = when (it) {
                                         0 -> {
-                                           "Pesan"
+                                            stringResource(id = R.string.order)
                                         }
                                         1 -> {
-                                            "Detail"
+                                            stringResource(id = R.string.details)
                                         }
                                         else -> {
-                                            "Rincian"
+                                            stringResource(id = R.string.details_order)
                                         }
                                     },
                                     style = StyleText.copy(
