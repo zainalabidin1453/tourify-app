@@ -21,13 +21,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -103,7 +99,7 @@ fun ModalBottomSheetSearchWisata(
                                                 content = {
                                                     Icon(
                                                         painter = painterResource(id = R.drawable.ic_clock),
-                                                        contentDescription = "Riwayat Pencarian",
+                                                        contentDescription = stringResource(id = R.string.search_history),
                                                         modifier = Modifier
                                                             .size(13.dp),
                                                         tint = TextSecondary
@@ -123,7 +119,7 @@ fun ModalBottomSheetSearchWisata(
                                             )
                                             Icon(
                                                 painter = painterResource(id = R.drawable.ic_cross),
-                                                contentDescription = "Hapus Pencarian",
+                                                contentDescription = stringResource(id = R.string.delete_history),
                                                 modifier = Modifier
                                                     .size(11.dp)
                                                     .clickable(
@@ -191,7 +187,7 @@ fun ModalBottomSheetSearchWisata(
                                         .padding(start = 2.dp),
                                     content = {
                                         Text(
-                                            text = "Anda mungkin suka",
+                                            text = stringResource(id = R.string.you_may_like),
                                             style = StyleText.copy(
                                                 color = TextPrimary,
                                                 fontFamily = fonts,
@@ -215,14 +211,14 @@ fun ModalBottomSheetSearchWisata(
                                             content = {
                                                 Icon(
                                                     painter = painterResource(id = R.drawable.ic_circle),
-                                                    contentDescription = "Sedang Populer",
+                                                    contentDescription = stringResource(id = R.string.popular),
                                                     modifier = Modifier
                                                         .size(6.dp),
                                                     tint = ColorDanger
                                                 )
                                                 Spacer(modifier = Modifier.width(6.dp))
                                                 Text(
-                                                    text = "Pantai yang Indah di Padang",
+                                                    text = stringResource(id = R.string.keywoard_popular),
                                                     style = StyleText.copy(
                                                         color = TextSecondary,
                                                         fontFamily = fonts,
