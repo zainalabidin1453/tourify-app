@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.preference.OnBoardingDataStore
@@ -61,7 +62,7 @@ fun SplashScreen(
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo_tourify_fix),
-            contentDescription = "Logo Tourify",
+            contentDescription = stringResource(id = R.string.logo),
             modifier = Modifier
                 .scale(scale.value)
         )
