@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
-import com.tourify.tourifyapp.ui.theme.ColorWarning
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
@@ -130,9 +129,9 @@ fun ModalBottomSheetBookingTrip(
                                 content = {
                                     CardWisataTicketsBooking(
                                         photo = R.drawable.error_image,
-                                        name = "Wisata Name",
-                                        location = "Location, Indonesia",
-                                        category = "Pantai",
+                                        name = stringResource(id = R.string.tourism),
+                                        location = stringResource(id = R.string.location),
+                                        category = stringResource(id = R.string.types_tourism),
                                         priceTickets = 10000,
                                         totalTickets = totalTicketsBooking,
                                         onPlusTickets = {
@@ -161,7 +160,7 @@ fun ModalBottomSheetBookingTrip(
                                         content = {
                                             Icon(
                                                 painter = painterResource(id = R.drawable.ic_circle),
-                                                contentDescription = "Informasi",
+                                                contentDescription = stringResource(id = R.string.information),
                                                 modifier = Modifier
                                                     .padding(top = 6.dp)
                                                     .size(4.dp),
@@ -169,7 +168,7 @@ fun ModalBottomSheetBookingTrip(
                                             )
                                             Spacer(modifier = Modifier.width(4.dp))
                                             Text(
-                                                text = "Pilih pemandu wisata lokal, jika Anda membutuhkannya. Anda dapat memilih untuk tidak menggunakan layanan ini.",
+                                                text = stringResource (id = R.string.guide_info),
                                                 maxLines = 4,
                                                 style = StyleText.copy(
                                                     color = TextSecondary,
@@ -192,7 +191,7 @@ fun ModalBottomSheetBookingTrip(
                                     .padding(start = 18.dp, end = 18.dp, top = 2.dp),
                                 content = {
                                     Text(
-                                        text = "Pilih Tanggal Perjalanan",
+                                        text = stringResource (id = R.string.choose_date),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -203,7 +202,7 @@ fun ModalBottomSheetBookingTrip(
                                     )
                                     Spacer(modifier = Modifier.height(12.dp))
                                     TextFieldDateBooking(
-                                        placeholder = "Pilih tanggal perjalanan",
+                                        placeholder = stringResource (id = R.string.choose_date),
                                         value = allTripDateBooking,
                                         icon = R.drawable.ic_calendar,
                                         iconDescription = R.drawable.ic_calendar,
@@ -222,7 +221,7 @@ fun ModalBottomSheetBookingTrip(
                                         content = {
                                             Icon(
                                                 painter = painterResource(id = R.drawable.ic_circle),
-                                                contentDescription = "Informasi",
+                                                contentDescription = stringResource (id = R.string.information),
                                                 modifier = Modifier
                                                     .padding(top = 6.dp)
                                                     .size(4.dp),
@@ -230,7 +229,7 @@ fun ModalBottomSheetBookingTrip(
                                             )
                                             Spacer(modifier = Modifier.width(4.dp))
                                             Text(
-                                                text = "Pastikan tanggal perjalanan Anda sudah sesuai. Anda tidak dapat mengatur ulang tanggal perjalanan setelah memesan.",
+                                                text = stringResource (id = R.string.info_date),
                                                 maxLines = 4,
                                                 style = StyleText.copy(
                                                     color = TextSecondary,
@@ -244,7 +243,7 @@ fun ModalBottomSheetBookingTrip(
                                     )
                                     Spacer(modifier = Modifier.height(14.dp))
                                     Text(
-                                        text = "Detail Pemesan",
+                                        text = stringResource (id = R.string.users_details),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -255,7 +254,7 @@ fun ModalBottomSheetBookingTrip(
                                     )
                                     Spacer(modifier = Modifier.height(12.dp))
                                     TextField(
-                                        placeholder = "Nama Lengkap",
+                                        placeholder = stringResource (id = R.string.full_name),
                                         icon = R.drawable.ic_user,
                                         iconDescription = R.string.full_name,
                                         keyboardType = KeyboardType.Text,
@@ -269,7 +268,7 @@ fun ModalBottomSheetBookingTrip(
                                     )
                                     Spacer(modifier = Modifier.height(10.dp))
                                     TextField(
-                                        placeholder = "Alamat Email",
+                                        placeholder = stringResource (id = R.string.email_address),
                                         icon = R.drawable.ic_mail,
                                         iconDescription = R.string.email_address,
                                         keyboardType = KeyboardType.Email,
@@ -283,7 +282,7 @@ fun ModalBottomSheetBookingTrip(
                                     )
                                     Spacer(modifier = Modifier.height(10.dp))
                                     TextField(
-                                        placeholder = "No Telepon",
+                                        placeholder = stringResource (id = R.string.phone_number),
                                         icon = R.drawable.ic_phone,
                                         iconDescription = R.string.phone_number,
                                         keyboardType = KeyboardType.Number,
@@ -300,7 +299,7 @@ fun ModalBottomSheetBookingTrip(
                                         content = {
                                             Icon(
                                                 painter = painterResource(id = R.drawable.ic_circle),
-                                                contentDescription = "Informasi",
+                                                contentDescription = stringResource (id = R.string.information),
                                                 modifier = Modifier
                                                     .padding(top = 6.dp)
                                                     .size(4.dp),
@@ -308,7 +307,7 @@ fun ModalBottomSheetBookingTrip(
                                             )
                                             Spacer(modifier = Modifier.width(4.dp))
                                             Text(
-                                                text = "Informasi pesanan, tiket, dan konfirmasi akan dikirim ke detail kontak tertera.",
+                                                text = stringResource(id = R.string.order_info),
                                                 maxLines = 4,
                                                 style = StyleText.copy(
                                                     color = TextSecondary,
@@ -331,7 +330,7 @@ fun ModalBottomSheetBookingTrip(
                                     .padding(start = 18.dp, end = 18.dp, top = 2.dp),
                                 content = {
                                     Text(
-                                        text = "Rincian Perjalanan",
+                                        text = stringResource(id = R.string.order_details),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -373,7 +372,7 @@ fun ModalBottomSheetBookingTrip(
                                                                 verticalArrangement = Arrangement.SpaceBetween,
                                                                 content = {
                                                                     Text(
-                                                                        text = "TourGuide Name",
+                                                                        text = stringResource(id = R.string.guide_name),
                                                                         style = StyleText.copy(
                                                                             color = TextPrimary,
                                                                             fontFamily = fonts,
@@ -384,7 +383,7 @@ fun ModalBottomSheetBookingTrip(
                                                                     )
                                                                     Spacer(modifier = Modifier.height(1.dp))
                                                                     Text(
-                                                                        text = "emailanda@example.com",
+                                                                        text = stringResource(id = R.string.guide_email),
                                                                         style = StyleText.copy(
                                                                             color = TextSecondary,
                                                                             fontFamily = fonts,
@@ -395,7 +394,7 @@ fun ModalBottomSheetBookingTrip(
                                                                     )
                                                                     Spacer(modifier = Modifier.height(2.dp))
                                                                     Text(
-                                                                        text = "Rp9.000,-/jam",
+                                                                        text = stringResource(id = R.string.guide_price),
                                                                         style = StyleText.copy(
                                                                             color = TextSecondary,
                                                                             fontFamily = fonts,
@@ -422,7 +421,7 @@ fun ModalBottomSheetBookingTrip(
                                                         verticalAlignment = Alignment.CenterVertically,
                                                         content = {
                                                             Text(
-                                                                text = "Harga Tiket",
+                                                                text = stringResource(id = R.string.ticket_price),
                                                                 style = StyleText.copy(
                                                                     color = TextSecondary,
                                                                     fontFamily = fonts,
@@ -432,36 +431,7 @@ fun ModalBottomSheetBookingTrip(
                                                                 )
                                                             )
                                                             Text(
-                                                                text = "(x1) Rp10000,-",
-                                                                style = StyleText.copy(
-                                                                    color = TextSecondary,
-                                                                    fontFamily = fonts,
-                                                                    fontWeight = FontWeight.Light,
-                                                                    fontSize = 12.sp,
-                                                                    lineHeight = 12.sp,
-                                                                )
-                                                            )
-                                                        }
-                                                    )
-                                                    Spacer(modifier = Modifier.height(6.dp))
-                                                    Row(
-                                                        modifier = Modifier
-                                                            .fillMaxWidth(),
-                                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                                        verticalAlignment = Alignment.CenterVertically,
-                                                        content = {
-                                                            Text(
-                                                                text = "Jasa Pemandu Wisata",
-                                                                style = StyleText.copy(
-                                                                    color = TextSecondary,
-                                                                    fontFamily = fonts,
-                                                                    fontWeight = FontWeight.Light,
-                                                                    fontSize = 12.sp,
-                                                                    lineHeight = 12.sp,
-                                                                )
-                                                            )
-                                                            Text(
-                                                                text = "Rp880.000,-",
+                                                                text = stringResource(id = R.string.ticket_price_total),
                                                                 style = StyleText.copy(
                                                                     color = TextSecondary,
                                                                     fontFamily = fonts,
@@ -480,7 +450,7 @@ fun ModalBottomSheetBookingTrip(
                                                         verticalAlignment = Alignment.CenterVertically,
                                                         content = {
                                                             Text(
-                                                                text = "Diskon/Voucher (%)",
+                                                                text = stringResource(id = R.string.guide_services),
                                                                 style = StyleText.copy(
                                                                     color = TextSecondary,
                                                                     fontFamily = fonts,
@@ -490,36 +460,7 @@ fun ModalBottomSheetBookingTrip(
                                                                 )
                                                             )
                                                             Text(
-                                                                text = "- Rp0,-",
-                                                                style = StyleText.copy(
-                                                                    color = TextSecondary,
-                                                                    fontFamily = fonts,
-                                                                    fontWeight = FontWeight.Light,
-                                                                    fontSize = 12.sp,
-                                                                    lineHeight = 12.sp,
-                                                                )
-                                                            )
-                                                        }
-                                                    )
-                                                    Spacer(modifier = Modifier.height(6.dp))
-                                                    Row(
-                                                        modifier = Modifier
-                                                            .fillMaxWidth(),
-                                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                                        verticalAlignment = Alignment.CenterVertically,
-                                                        content = {
-                                                            Text(
-                                                                text = "Layanan Aplikasi",
-                                                                style = StyleText.copy(
-                                                                    color = TextSecondary,
-                                                                    fontFamily = fonts,
-                                                                    fontWeight = FontWeight.Light,
-                                                                    fontSize = 12.sp,
-                                                                    lineHeight = 12.sp,
-                                                                )
-                                                            )
-                                                            Text(
-                                                                text = "Rp3000,-",
+                                                                text = stringResource(id = R.string.guide_price_total),
                                                                 style = StyleText.copy(
                                                                     color = TextSecondary,
                                                                     fontFamily = fonts,
@@ -538,7 +479,65 @@ fun ModalBottomSheetBookingTrip(
                                                         verticalAlignment = Alignment.CenterVertically,
                                                         content = {
                                                             Text(
-                                                                text = "Total",
+                                                                text = stringResource(id = R.string.discount_order),
+                                                                style = StyleText.copy(
+                                                                    color = TextSecondary,
+                                                                    fontFamily = fonts,
+                                                                    fontWeight = FontWeight.Light,
+                                                                    fontSize = 12.sp,
+                                                                    lineHeight = 12.sp,
+                                                                )
+                                                            )
+                                                            Text(
+                                                                text = stringResource(id = R.string.discount_order_total),
+                                                                style = StyleText.copy(
+                                                                    color = TextSecondary,
+                                                                    fontFamily = fonts,
+                                                                    fontWeight = FontWeight.Light,
+                                                                    fontSize = 12.sp,
+                                                                    lineHeight = 12.sp,
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    Spacer(modifier = Modifier.height(6.dp))
+                                                    Row(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth(),
+                                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                                        verticalAlignment = Alignment.CenterVertically,
+                                                        content = {
+                                                            Text(
+                                                                text = stringResource(id = R.string.app_service_fee),
+                                                                style = StyleText.copy(
+                                                                    color = TextSecondary,
+                                                                    fontFamily = fonts,
+                                                                    fontWeight = FontWeight.Light,
+                                                                    fontSize = 12.sp,
+                                                                    lineHeight = 12.sp,
+                                                                )
+                                                            )
+                                                            Text(
+                                                                text = stringResource(id = R.string.app_service_fee_total),
+                                                                style = StyleText.copy(
+                                                                    color = TextSecondary,
+                                                                    fontFamily = fonts,
+                                                                    fontWeight = FontWeight.Light,
+                                                                    fontSize = 12.sp,
+                                                                    lineHeight = 12.sp,
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    Spacer(modifier = Modifier.height(6.dp))
+                                                    Row(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth(),
+                                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                                        verticalAlignment = Alignment.CenterVertically,
+                                                        content = {
+                                                            Text(
+                                                                text = stringResource(id = R.string.total),
                                                                 style = StyleText.copy(
                                                                     color = ColorDanger,
                                                                     fontFamily = fonts,
@@ -548,7 +547,7 @@ fun ModalBottomSheetBookingTrip(
                                                                 )
                                                             )
                                                             Text(
-                                                                text = "- Rp0,-",
+                                                                text = stringResource(id = R.string.total_order),
                                                                 style = StyleText.copy(
                                                                     color = ColorDanger,
                                                                     fontFamily = fonts,
@@ -565,7 +564,7 @@ fun ModalBottomSheetBookingTrip(
                                     )
                                     Spacer(modifier = Modifier.height(14.dp))
                                     Text(
-                                        text = "Catatan",
+                                        text = stringResource(id = R.string.notes),
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -576,7 +575,7 @@ fun ModalBottomSheetBookingTrip(
                                     )
                                     Spacer(modifier = Modifier.height(12.dp))
                                     TextField(
-                                        placeholder = "Tambah Catatan",
+                                        placeholder = stringResource(id = R.string.add_notes),
                                         icon = R.drawable.ic_message_square,
                                         iconDescription = R.string.add_notes,
                                         keyboardType = KeyboardType.Text,
@@ -593,7 +592,7 @@ fun ModalBottomSheetBookingTrip(
                                         content = {
                                             Icon(
                                                 painter = painterResource(id = R.drawable.ic_circle),
-                                                contentDescription = "Informasi",
+                                                contentDescription = stringResource(id = R.string.information),
                                                 modifier = Modifier
                                                     .padding(top = 6.dp)
                                                     .size(4.dp),
@@ -601,7 +600,7 @@ fun ModalBottomSheetBookingTrip(
                                             )
                                             Spacer(modifier = Modifier.width(4.dp))
                                             Text(
-                                                text = "Tambahkan catatan untuk pemandu wisata Anda. Misalnya, kebutuhan khusus, dll.",
+                                                text = stringResource(id = R.string.notes_for_guide),
                                                 maxLines = 4,
                                                 style = StyleText.copy(
                                                     color = TextSecondary,
