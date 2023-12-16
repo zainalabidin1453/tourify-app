@@ -152,6 +152,6 @@ fun GreetingBarPreview() {
         onShowListProvince = {},
         onShowNotice = {},
         onShowFavorite = {},
-        firstProvince = "Sumatra Barat"
+        firstProvince = stringResource(id = R.string.first_province)
     )
 }
