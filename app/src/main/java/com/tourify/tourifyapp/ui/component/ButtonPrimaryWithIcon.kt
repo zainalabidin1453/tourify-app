@@ -2,9 +2,7 @@ package com.tourify.tourifyapp.ui.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -22,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,7 +29,6 @@ import com.tourify.tourifyapp.ui.theme.ColorPrimary
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
-import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
 
@@ -78,7 +74,7 @@ fun ButtonPrimaryWithIcon(
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_right),
-                        contentDescription = "Selanjutnya",
+                        contentDescription = stringResource(id = R.string.further),
                         modifier = Modifier
                             .size(iconSize),
                         tint = contentColor
@@ -93,7 +89,7 @@ fun ButtonPrimaryWithIcon(
 @Composable
 fun ButtonPrimaryWithIconPreview() {
     ButtonPrimaryWithIcon(
-        text = "Lanjutkan",
+        text = stringResource(id = R.string.next),
         background = ColorPrimary,
         contentColor = ColorWhite,
         enabled = true,
