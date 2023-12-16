@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,23 +60,23 @@ fun OnBoardingScreen(
     val onBoardingValue = listOf(
         OnBoardingItem(
             R.drawable.onboarding_2,
-            "Pesan E-ticket dengan Mudah",
-            "Pesan e-ticket masuk untuk destinasi favorit tanpa antrian, dengan kemudahan dan kenyamanan di ujung jari Anda."
+            stringResource(id = R.string.onboarding_title_1),
+            stringResource(id = R.string.onboarding_teks_1),
         ),
         OnBoardingItem(
             R.drawable.onboarding_1,
-            "Temukan Panduan Lokal Terbaik di Tourify",
-            "Anda dapat dengan mudah memesan pemandu wisata yang berpengetahuan luas untuk melengkapi perjalanan tak terlupakan Anda."
+            stringResource(id = R.string.onboarding_title_2),
+            stringResource(id = R.string.onboarding_teks_2),
         ),
         OnBoardingItem(
             R.drawable.onboarding_3,
-            "Fitur AI untuk Mengeksplorasi Objek Wisata",
-            "Manfaatkan fitur AI untuk memindai dan mengeksplorasi detail sejarah dari objek wisata yang Anda foto."
+            stringResource(id = R.string.onboarding_title_3),
+            stringResource(id = R.string.onboarding_teks_3),
         ),
         OnBoardingItem(
             R.drawable.onboarding_4,
-            "Jelajahi Daftar Kuliner Lokal",
-            "Temukan rekomendasi kuliner lokal yang tak terlupakan di sekitar destinasi favorit Anda. Nikmati pengalaman kuliner yang autentik dan lezat."
+            stringResource(id = R.string.onboarding_title_4),
+            stringResource(id = R.string.onboarding_teks_4),
         )
     )
     Scaffold(
@@ -110,7 +111,7 @@ fun OnBoardingScreen(
                             onBoardingPref.saveOnBoardingStatus(true)
                         }
                         ButtonPrimaryWithIcon(
-                            text = "Mulai",
+                            text = stringResource(id = R.string.start),
                             background = ColorPrimary,
                             contentColor = ColorWhite,
                             enabled = true,
@@ -125,7 +126,7 @@ fun OnBoardingScreen(
                     } else {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_arrow_right),
-                            contentDescription = "Selanjutnya",
+                            contentDescription = stringResource(id = R.string.further),
                             modifier = Modifier
                                 .size(30.dp)
                                 .align(Alignment.CenterVertically)
@@ -228,5 +229,3 @@ fun OnBoardingScreenPreview() {
         navigateTo = {}
     )
 }
-
-
