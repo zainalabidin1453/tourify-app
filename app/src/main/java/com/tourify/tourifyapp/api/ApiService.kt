@@ -2,7 +2,6 @@ package com.tourify.tourifyapp.api
 
 import com.tourify.tourifyapp.model.AddFavoritesResponse
 import com.tourify.tourifyapp.model.BookingTripResponse
-import com.tourify.tourifyapp.model.CreatePasswordResponse
 import com.tourify.tourifyapp.model.CulinaryResponse
 import com.tourify.tourifyapp.model.DeleteFavoritesResponse
 import com.tourify.tourifyapp.model.DestinationsResponse
@@ -11,100 +10,101 @@ import com.tourify.tourifyapp.model.LoginResponse
 import com.tourify.tourifyapp.model.LogoutResponse
 import com.tourify.tourifyapp.model.MyProfileResponse
 import com.tourify.tourifyapp.model.MyTicketsResponse
+import com.tourify.tourifyapp.model.RecommendationResponse
 import com.tourify.tourifyapp.model.RegistrationResponse
 import com.tourify.tourifyapp.model.ScanningObjectResponse
+import com.tourify.tourifyapp.model.StatusPesananResponse
 import com.tourify.tourifyapp.model.VerificationResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
-    @POST("/user/registration")
+    @POST("user/registration")
     suspend fun registration(
-        @Body email: String
+        @Body requestBody: RequestBody
     ): RegistrationResponse
 
-    @POST("/user/verification")
+    @POST("user/verification")
     suspend fun verification(
-        @Body email: String,
-        @Body codeVerif: Int
+        @Body requestBody: RequestBody
     ): VerificationResponse
 
-    @PUT("/user/password/{email}")
+    @PUT("user/password/{email}")
     suspend fun createPassword(
         @Path("email") email: String,
-        @Body password: String
-    ): CreatePasswordResponse
-
-    @POST("/user/login")
-    suspend fun login(
-        @Body email: String,
-        @Body password: String
+        @Body requestBody: RequestBody
     ): LoginResponse
 
-    @POST("/user/logout")
+    @POST("user/login")
+    suspend fun login(
+        @Body requestBody: RequestBody
+    ): LoginResponse
+
+    @POST("user/logout")
     suspend fun logout(
-        @Body email: String
+        @Body requestBody: RequestBody
     ): LogoutResponse
 
-    @GET("/destinations")
+    @GET("destinations")
     suspend fun getDestinations(): DestinationsResponse
 
-    @PUT("/favorites/{userId}")
+    @GET("favorites/{userId}")
     suspend fun getFavorites(
         @Path("userId") userId: Int,
     ): FavoritesResponse
 
-    @POST("/favorites")
+    @POST("favorites")
     suspend fun addFavorites(
-        @Body userId: Int,
-        @Body destinationId: Int
+        @Body requestBody: RequestBody
     ): AddFavoritesResponse
 
-    @DELETE("/favorites/{userId}/{destinationId}")
+    @DELETE("favorites")
     suspend fun deleteFavorites(
-        @Path("userId") userId: Int,
-        @Path("destinationId") destinationId: Int
+        @Body requestBody: RequestBody
     ): DeleteFavoritesResponse
 
-    @GET("/culinary")
+    @GET("culinary")
     suspend fun getCulinary(): CulinaryResponse
 
-    @POST("/booking")
+    @POST("booking")
     suspend fun bookingTrip(
-        @Body userId: Int,
-        @Body destinationId: Int,
-        @Body tourGuideId: Int,
-        @Body name: String,
-        @Body email: String,
-        @Body telephone: String,
-        @Body tripDate: String,
-        @Body note: String
+        @Body requestBody: RequestBody
     ): BookingTripResponse
 
-    @FormUrlEncoded
-    @GET("/mytickets")
+    @Multipart
+    @POST("scanning")
+    suspend fun scanningObject(
+        @Part image: MultipartBody.Part,
+    ): ScanningObjectResponse
+
+    @POST("predict")
+    suspend fun getRecommendation(
+        @Body requestBody: RequestBody
+    ): RecommendationResponse
+
+    @GET("mytickets/{userId}")
     suspend fun getMyTickets(
-        @Field("token") token: String,
-        @Field("userId") userId: Int
+        @Path("userId") userId: Int,
     ): MyTicketsResponse
 
-    @FormUrlEncoded
-    @GET("/myprofile")
-    suspend fun getMyProfile(
-        @Field("token") token: String,
-        @Field("userId") userId: Int
-    ): MyProfileResponse
+    @POST("booking_status")
+    suspend fun statusPesanan(
+        @Body requestBody: RequestBody
+    ): StatusPesananResponse
 
-    @FormUrlEncoded
-    @POST("/scanning")
-    suspend fun scanningObject(
-        @Field("token") token: String,
-        @Field("photoObject") photoObject: String
-    ): ScanningObjectResponse
+    @GET("user/{userId}")
+    suspend fun getMyProfile(
+        @Path("userId") userId: Int,
+    ): MyProfileResponse
 }

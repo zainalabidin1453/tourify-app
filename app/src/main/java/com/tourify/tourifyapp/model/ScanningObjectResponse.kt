@@ -1,15 +1,15 @@
 package com.tourify.tourifyapp.model
 
 data class ScanningObjectResponse(
-    val statusCode: Int,
+    val data: DataScanningObjectResponse? = null,
+    val error: String? = null,
     val message: String,
-    val data: DataScanningObjectResponse? = null
+    val statusCode: Int
 )
 
 data class DataScanningObjectResponse(
     val name: String,
-    val type: String,
-    val description: String,
+    val caption: String,
     val photo: String
 )
 

@@ -1,19 +1,19 @@
 package com.tourify.tourifyapp.model
 
 data class CulinaryResponse(
-    val statusCode: Int,
-    val message: String,
+    val data: List<DataCulinaryResponse>? = null,
     val error: String? = null,
-    val data: List<DataCulinaryResponse>? = null
+    val message: String,
+    val statusCode: Int
 )
 
 data class DataCulinaryResponse(
+    val caption: String,
+    val country: String,
     val id: Int,
     val name: String,
-    val regency: String,
+    val photo: String,
     val province: String,
-    val country: String,
-    val caption: String,
-    val photo: String
+    val regency: String
 )
 

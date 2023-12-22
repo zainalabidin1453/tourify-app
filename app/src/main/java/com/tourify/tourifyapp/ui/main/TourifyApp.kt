@@ -1,15 +1,13 @@
 package com.tourify.tourifyapp.ui.main
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.tourify.tourifyapp.preference.OnBoardingDataStore
 import com.tourify.tourifyapp.route.Routes
 import com.tourify.tourifyapp.ui.main.screen.CheckEmailScreen
 import com.tourify.tourifyapp.ui.main.screen.CreatePasswordScreen
@@ -19,6 +17,7 @@ import com.tourify.tourifyapp.ui.main.screen.OnBoardingScreen
 import com.tourify.tourifyapp.ui.main.screen.SplashScreen
 import com.tourify.tourifyapp.ui.main.screen.VerifCodeScreen
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun TourifyApp(
     context: Context,
@@ -34,6 +33,8 @@ fun TourifyApp(
                     navigateTo = {
                         navController.navigate(it) {
                             popUpTo(Routes.SplashSreen.routes) { inclusive = true }
+                            launchSingleTop = true
+                            restoreState = false
                         }
                     }
                 )
@@ -44,6 +45,8 @@ fun TourifyApp(
                     navigateTo = {
                         navController.navigate(Routes.CheckEmail.routes) {
                             popUpTo(Routes.OnBoarding.routes) { inclusive = true }
+                            launchSingleTop = true
+                            restoreState = false
                         }
                     }
                 )
@@ -51,12 +54,12 @@ fun TourifyApp(
             composable(route = Routes.CheckEmail.routes) {
                 CheckEmailScreen(
                     context = context,
-                    navController = navController,
                     navigateToVerifCode = { email ->
                         val route = Routes.VerifCode.createRoute(email)
                         navController.navigate(route) {
                             popUpTo(Routes.CheckEmail.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     },
                     navigateToEnterPassword = { email ->
@@ -64,6 +67,7 @@ fun TourifyApp(
                         navController.navigate(route) {
                             popUpTo(Routes.CheckEmail.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     }
                 )
@@ -76,6 +80,7 @@ fun TourifyApp(
                         navController.navigate(Routes.CheckEmail.routes) {
                             popUpTo(Routes.VerifCode.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     },
                     navigateToCreatePassword = { email ->
@@ -83,6 +88,7 @@ fun TourifyApp(
                         navController.navigate(route) {
                             popUpTo(Routes.VerifCode.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     }
                 )
@@ -95,12 +101,14 @@ fun TourifyApp(
                         navController.navigate(Routes.CheckEmail.routes) {
                             popUpTo(Routes.EnterPassword.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     },
                     navigateToDashboard = {
                         navController.navigate(Routes.Dashboard.routes) {
                             popUpTo(Routes.EnterPassword.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     },
                     navigateToForgotPassword = { email ->
@@ -108,6 +116,7 @@ fun TourifyApp(
                         navController.navigate(route) {
                             popUpTo(Routes.EnterPassword.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     }
                 )
@@ -120,12 +129,14 @@ fun TourifyApp(
                         navController.navigate(Routes.CheckEmail.routes) {
                             popUpTo(Routes.CreatePassword.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     },
                     navigateToDashboard = {
                         navController.navigate(Routes.Dashboard.routes) {
                             popUpTo(Routes.CreatePassword.routes) { inclusive = true }
                             launchSingleTop = true
+                            restoreState = false
                         }
                     }
                 )

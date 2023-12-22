@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +22,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,8 +40,10 @@ import com.tourify.tourifyapp.ui.theme.fonts
 
 @Composable
 fun TextFieldCodeVerif(
+    modifier: Modifier = Modifier,
     otpCount: Int = 6,
-    otpTextChange: (String) -> Unit
+    otpTextChange: (String) -> Unit,
+    onSend: () -> Unit = {}
 ) {
     var codeOTP by rememberSaveable { mutableStateOf("") }
     BasicTextField(
@@ -48,8 +53,13 @@ fun TextFieldCodeVerif(
             codeOTP = filteredText
             otpTextChange(filteredText)
         },
-        modifier = Modifier.fillMaxWidth(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        modifier = modifier.fillMaxWidth(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Send),
+        keyboardActions = KeyboardActions(
+            onSend = {
+                onSend()
+            }
+        ),
         textStyle = TextStyle.Default.copy(textAlign = TextAlign.Center),
         decorationBox = {
             Row(

@@ -63,7 +63,7 @@ fun TopBarScreenModal(
                             ),
                         tint = TextPrimary
                     )
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
                     Text(
                         text = title,
                         style = StyleText.copy(

@@ -1,6 +1,5 @@
 package com.tourify.tourifyapp.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,10 +29,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.tourify.tourifyapp.R
+import com.tourify.tourifyapp.model.DataDestinationsResponse
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWarning
@@ -42,11 +43,15 @@ import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
+import com.tourify.tourifyapp.utils.cutLocation
 import com.tourify.tourifyapp.utils.modifyNumberFormat
 
 @Composable
 fun CardWisataMaxWidth(
-    onClick: (Int) -> Unit
+    item: DataDestinationsResponse,
+    onClick: () -> Unit,
+    isFavorite: Boolean,
+    onToggleFavorite: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -55,7 +60,7 @@ fun CardWisataMaxWidth(
             .background(ColorWhite)
             .clickable(
                 onClick = {
-                    onClick(1)
+                    onClick()
                 }
             ),
         content = {
@@ -71,13 +76,17 @@ fun CardWisataMaxWidth(
                             .clip(RoundedCornerShape(10.dp))
                             .align(Alignment.CenterVertically),
                         content = {
-                            Image(
-                                painter = painterResource(id = R.drawable.error_image),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .align(Alignment.Center),
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(item.photo)
+                                    .crossfade(true)
+                                    .error(R.drawable.error_image)
+                                    .build(),
+                                contentDescription = item.name,
                                 contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                alignment = Alignment.Center
                             )
                         }
                     )
@@ -94,8 +103,13 @@ fun CardWisataMaxWidth(
                                 content = {
                                     Column(
                                         content = {
+                                            val destinationsName = if (item.name.length > 22) {
+                                                "${item.name.substring(0, 19)}..."
+                                            } else {
+                                                item.name
+                                            }
                                             Text(
-                                                text = "Wisata Name",
+                                                text = destinationsName,
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -116,8 +130,9 @@ fun CardWisataMaxWidth(
                                                         tint = ColorDanger
                                                     )
                                                     Spacer(modifier = Modifier.width(1.dp))
+                                                    val location = cutLocation("${item.regency}, ${item.province}")
                                                     Text(
-                                                        text = "Location, Indonesia",
+                                                        text = location,
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -132,11 +147,12 @@ fun CardWisataMaxWidth(
                                     )
                                     CircleButtonSmallFavorite(
                                         context = LocalContext.current,
-                                        title = R.string.add_to_favorite,
-                                        icon = R.drawable.ic_heart,
+                                        title = if (isFavorite) R.string.remove_from_favorite else R.string.add_to_favorite,
+                                        icon = if (isFavorite) R.drawable.ic_heart_fill else R.drawable.ic_heart,
                                         size = 25.dp,
+                                        tint = if (isFavorite) ColorDanger else TextPrimary,
                                         color = ColorSecondary,
-                                        onClick = {}
+                                        onClick = { onToggleFavorite() }
                                     )
                                 }
                             )
@@ -158,7 +174,7 @@ fun CardWisataMaxWidth(
                                             Text(
                                                 modifier = Modifier
                                                     .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
-                                                text = "Pantai",
+                                                text = item.type,
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -203,13 +219,5 @@ fun CardWisataMaxWidth(
                 }
             )
         }
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardWisataMaxWidthPreview() {
-    CardWisataMaxWidth(
-        onClick = {}
     )
 }

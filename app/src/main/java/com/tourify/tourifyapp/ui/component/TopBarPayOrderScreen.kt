@@ -38,19 +38,21 @@ import com.tourify.tourifyapp.ui.theme.fonts
 @Composable
 fun TopBarPayOrderScreen(
     title: String,
+    desc: String,
     onBack: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(3.dp, spotColor = TextPrimary)
+            .padding(top = 36.dp)
+            .shadow(2.dp, spotColor = TextPrimary.copy(0.5f))
             .background(ColorWhite),
         content = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(18.dp),
+                    .padding(start = 18.dp, end = 18.dp, top = 18.dp, bottom = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     Row(
@@ -85,19 +87,19 @@ fun TopBarPayOrderScreen(
                                     color = TextPrimary,
                                     fontFamily = fonts,
                                     fontWeight = FontWeight.Medium,
-                                    fontSize = 16.sp,
-                                    lineHeight = 16.sp
+                                    fontSize = 14.sp,
+                                    lineHeight = 14.sp
                                 )
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
+                            Spacer(modifier = Modifier.height(2.dp))
                             Text(
-                                text = "#myTRF20231122340010",
+                                text = desc,
                                 style = StyleText.copy(
                                     color = TextSecondary,
                                     fontFamily = fonts,
                                     fontWeight = FontWeight.Light,
-                                    fontSize = 14.sp,
-                                    lineHeight = 14.sp
+                                    fontSize = 12.sp,
+                                    lineHeight = 12.sp
                                 )
                             )
                         }
@@ -113,6 +115,7 @@ fun TopBarPayOrderScreen(
 fun TopBarPayOrderScreenPreview() {
     TopBarPayOrderScreen(
         title = "Bayar Pesanan",
+        desc = "#myTRF20241211230452",
         onBack = {}
     )
 }

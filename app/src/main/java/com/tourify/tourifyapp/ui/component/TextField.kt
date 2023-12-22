@@ -51,6 +51,7 @@ import androidx.core.view.ViewCompat
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
+import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
@@ -71,11 +72,12 @@ fun TextField(
     keyboardType: KeyboardType,
     onTextChanged: (String) -> Unit,
     isError: Boolean,
-    value: String = ""
+    value: String = "",
+    isLastField: Boolean = false,
+    onSend: () -> Unit = {}
 ) {
     var text by rememberSaveable { mutableStateOf(value) }
     val focusManager = LocalFocusManager.current
-
     OutlinedTextField(
         value = text,
         onValueChange = { newText ->
@@ -86,7 +88,7 @@ fun TextField(
             focusedContainerColor = ColorWhite,
             focusedBorderColor = ColorPrimary,
             unfocusedContainerColor = ColorWhite,
-            unfocusedBorderColor = TextLight,
+            unfocusedBorderColor = ColorSecondary,
             errorContainerColor = ColorWhite,
             errorBorderColor = ColorDanger,
             disabledContainerColor = ColorWhite,
@@ -99,10 +101,11 @@ fun TextField(
             .fillMaxWidth()
             .height(height),
         singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType, imeAction = ImeAction.Send),
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType, imeAction = if(isLastField) ImeAction.Send else ImeAction.Next),
         keyboardActions = KeyboardActions(
+            onNext = { focusManager.moveFocus(FocusDirection.Down) },
             onSend = {
-                focusManager.clearFocus()
+                onSend()
             }
         ),
         textStyle = StyleText.copy(

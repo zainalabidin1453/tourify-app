@@ -1,13 +1,17 @@
 package com.tourify.tourifyapp.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class LoginResponse(
-    val statusCode: Int,
-    val message: String,
+    val data: DataLoginResponse? = null,
     val error: String? = null,
-    val data: DataLoginResponse? = null
+    val message: String,
+    val statusCode: Int
 )
 
+@Serializable
 data class DataLoginResponse(
-    val userId: Int,
-    val email: String
+    val email: String,
+    val userId: String
 )

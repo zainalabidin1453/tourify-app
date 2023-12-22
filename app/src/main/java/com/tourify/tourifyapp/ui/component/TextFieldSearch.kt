@@ -59,8 +59,11 @@ fun TextFieldSearch(
     isError: Boolean = false,
     isEnabled: Boolean = false,
     isToBooking: Boolean = false,
+    isToCulinary: Boolean = false,
+    isWithBorder: Boolean = true,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    keywords: String = ""
+    keywords: String = "",
+    clip: RoundedCornerShape = RoundedCornerShape(16.dp),
 ) {
     var text by rememberSaveable { mutableStateOf(keywords) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -72,37 +75,39 @@ fun TextFieldSearch(
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .clip(clip)
             .clickable { onClick() },
         value = text,
         onValueChange = { newText ->
-            lastChangeTime = System.currentTimeMillis()
-            text = newText
             onTextChanged(newText)
-            coroutineScope.launch {
-                delay(6000L)
-                val currentTime = System.currentTimeMillis()
-                if (currentTime - lastChangeTime >= 6000L) {
-                    onAddToHistory(true)
-                } else {
-                    onAddToHistory(false)
+            if(!isToCulinary){
+                lastChangeTime = System.currentTimeMillis()
+                text = newText
+                coroutineScope.launch {
+                    delay(6000L)
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastChangeTime >= 6000L) {
+                        onAddToHistory(true)
+                    } else {
+                        onAddToHistory(false)
+                    }
                 }
             }
         },
         enabled = isEnabled,
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = ColorWhite,
-            focusedBorderColor = ColorPrimary,
+            focusedBorderColor = if(!isWithBorder) ColorWhite else ColorPrimary,
             unfocusedContainerColor = ColorWhite,
-            unfocusedBorderColor = TextLight,
+            unfocusedBorderColor = if(!isWithBorder) ColorWhite else TextLight,
             errorContainerColor = ColorWhite,
-            errorBorderColor = ColorDanger,
+            errorBorderColor = if(!isWithBorder) ColorWhite else ColorDanger,
             disabledContainerColor = if(isToBooking) ColorSecondary.copy(0.5f) else ColorWhite,
             cursorColor = ColorPrimary,
         ),
         isError = isError,
         maxLines = 1,
-        shape = Shapes.small,
+        shape = clip,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         textStyle = StyleText.copy(

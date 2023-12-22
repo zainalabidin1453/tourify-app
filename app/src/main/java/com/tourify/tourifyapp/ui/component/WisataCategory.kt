@@ -102,7 +102,7 @@ fun ItemCategory(id: Int, clickId: Int, icon: Int, inLabel: String, color: Color
         content = {
             Row(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp)
                     .align(Alignment.Center),
                 verticalAlignment = Alignment.CenterVertically,
                 content = {

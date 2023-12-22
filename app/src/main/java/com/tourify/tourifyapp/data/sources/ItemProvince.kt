@@ -1,111 +1,111 @@
 package com.tourify.tourifyapp.data.sources
 
+import com.tourify.tourifyapp.constants.Constants
 import com.tourify.tourifyapp.model.ModelItemProvince
 
 object ItemProvince {
     val data = listOf(
         ModelItemProvince(
-            name = "Aceh"
+            name = Constants.ACEH
         ),
         ModelItemProvince(
-            name = "Sumatra Utara"
+            name = Constants.NORTH_SUMATRA
         ),
         ModelItemProvince(
-            name = "Sumatra Barat"
+            name = Constants.WEST_SUMATRA
         ),
         ModelItemProvince(
-            name = "Riau"
+            name = Constants.RIAU
         ),
         ModelItemProvince(
-            name = "Kepulauan Riau"
+            name = Constants.RIAU_ISLANDS
         ),
         ModelItemProvince(
-            name = "Jambi"
+            name = Constants.JAMBI
         ),
         ModelItemProvince(
-            name = "Sumatera Selatan"
+            name = Constants.SOUTH_SUMATRA
         ),
         ModelItemProvince(
-            name = "Bangka Belitung"
+            name = Constants.BANGKA_BELITUNG
         ),
         ModelItemProvince(
-            name = "Bengkulu"
+            name = Constants.BENGKULU
         ),
         ModelItemProvince(
-            name = "Lampung"
+            name = Constants.LAMPUNG
         ),
         ModelItemProvince(
-            name = "Banten"
+            name = Constants.BANTEN
         ),
         ModelItemProvince(
-            name = "Jawa Barat"
+            name = Constants.WEST_JAVA
         ),
         ModelItemProvince(
-            name = "DKI Jakarta"
+            name = Constants.JAKARTA
         ),
         ModelItemProvince(
-            name = "Jawa Barat"
+            name = Constants.CENTRAL_JAVA
         ),
         ModelItemProvince(
-            name = "Jawa Tengah"
+            name = Constants.YOGYAKARTA
         ),
         ModelItemProvince(
-            name = "DI Yogyakarta"
+            name = Constants.EAST_JAVA
         ),
         ModelItemProvince(
-            name = "Jawa Timur"
+            name = Constants.BALI
         ),
         ModelItemProvince(
-            name = "Bali"
+            name = Constants.WEST_NUSA_TENGGARA
         ),
         ModelItemProvince(
-            name = "NTB"
+            name = Constants.EAST_NUSA_TENGGARA
         ),
         ModelItemProvince(
-            name = "NTT"
+            name = Constants.WEST_KALIMANTAN
         ),
         ModelItemProvince(
-            name = "Kalimantan Barat"
+            name = Constants.CENTRAL_KALIMANTAN
         ),
         ModelItemProvince(
-            name = "Kalimantan Tengah"
+            name = Constants.SOUTH_KALIMANTAN
         ),
         ModelItemProvince(
-            name = "Kalimantan Selatan"
+            name = Constants.EAST_KALIMANTAN
         ),
         ModelItemProvince(
-            name = "Kalimantan Timur"
+            name = Constants.NORTH_KALIMANTAN
         ),
         ModelItemProvince(
-            name = "Kalimantan Utara"
+            name = Constants.NORTH_SULAWESI
         ),
         ModelItemProvince(
-            name = "Sulawesi Utara"
+            name = Constants.CENTRAL_SULAWESI
         ),
         ModelItemProvince(
-            name = "Sulawesi Tengah"
+            name = Constants.SOUTH_SULAWESI
         ),
         ModelItemProvince(
-            name = "Sulawesi Selatan"
+            name = Constants.SOUTHEAST_SULAWESI
         ),
         ModelItemProvince(
-            name = "Sulawesi Tenggara"
+            name = Constants.GORONTALO
         ),
         ModelItemProvince(
-            name = "Gorontalo"
+            name = Constants.WEST_SULAWESI
         ),
         ModelItemProvince(
-            name = "Sulawesi Barat"
+            name = Constants.MALUKU
         ),
         ModelItemProvince(
-            name = "Maluku"
+            name = Constants.NORTH_MALUKU
         ),
         ModelItemProvince(
-            name = "Maluku Utara"
-        ),
-        ModelItemProvince(
-            name = "Papua"
+            name = Constants.PAPUA
         )
     )
 }
+
+
 

@@ -1,40 +1,34 @@
 package com.tourify.tourifyapp.model
 
 data class MyTicketsResponse(
-    val statusCode: Int,
+    val data: List<DataMyTicketsResponse>? = null,
+    val error: String? = null,
     val message: String,
-    val data: List<DataMyTicketsResponseResponse>? = null
+    val statusCode: Int
 )
 
-data class DataMyTicketsResponseResponse(
+data class DataMyTicketsResponse(
+    val bookingCode: String,
+    val bookingDate: String,
+    val checkInDate: String? = null,
+    val destinationId: Int,
     val id: Int,
-    val destinationsId: Int,
-    val codeBooking: String,
-    val statusCheckIn: Int,
-    val dateBooking: String,
     val dateTrip: String,
-    val withTourGuide: Boolean,
-    val tourGuideId: Int,
+    val ordererNote: String,
     val statusPayment: Int,
-    val totalTicket: String,
-    val ticketPrice: Int,
-    val totalServicesTourGuide: Int,
-    val totalDiscount: Int,
-    val applicationFee: Int,
-    val totalPrice: Int,
-    val notes: String,
-    val dataTourGuide: DataTourGuideMyTicketsResponse? = null
+    val totalPayment: Int,
+    val tourGuideData: DataTourGuideMyTicketsResponse? = null,
+    val tourGuideId: Int,
+    val tripDate: String,
+    val userId: String
 )
 
 data class DataTourGuideMyTicketsResponse(
+    val email: String,
     val id: Int,
     val name: String,
-    val email: String,
-    val noWhatsapp: String,
-    val servicePrice: Int,
     val photoProfile: String,
-    val totalReview: String,
-    val rating: Double,
+    val servicePrice: Int,
     val totalTrip: Int
 )
 

@@ -1,29 +1,17 @@
 package com.tourify.tourifyapp.model
 
 data class MyProfileResponse(
-    val statusCode: Int,
+    val data: List<DataMyProfileResponse>? = null,
+    val error: String? = null,
     val message: String,
-    val data: DataMyProfileResponse? = null
+    val statusCode: Int
 )
 
 data class DataMyProfileResponse(
-    val userId: Int,
+    val id: String,
     val name: String,
     val email: String,
-    val username: String,
-    val dateBirth: String,
-    val gender: Int,
-    val address: String,
-    val village: String,
-    val subdistrict: String,
-    val regency: String,
-    val province: String,
-    val country: String,
-    val zipCode: String,
-    val citizenship: String,
-    val noTelephone: String,
-    val statusAccount: Int,
-    val isVerification: Boolean
+    val username: String
 )
 
 

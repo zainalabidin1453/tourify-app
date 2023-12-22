@@ -1,7 +1,6 @@
 package com.tourify.tourifyapp.data.sources
 
 import com.tourify.tourifyapp.R
-import com.tourify.tourifyapp.constants.Constants
 import com.tourify.tourifyapp.constants.Constants.CATEGORY_ADVENTURE
 import com.tourify.tourifyapp.constants.Constants.CATEGORY_EDUCATION_CULTURE
 import com.tourify.tourifyapp.constants.Constants.CATEGORY_FAMILY_VACATION

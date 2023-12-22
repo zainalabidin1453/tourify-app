@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -38,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.preference.OnBoardingDataStore
 import com.tourify.tourifyapp.ui.component.ButtonPrimaryWithIcon
@@ -78,6 +81,11 @@ fun OnBoardingScreen(
             "Temukan rekomendasi kuliner lokal yang tak terlupakan di sekitar destinasi favorit Anda. Nikmati pengalaman kuliner yang autentik dan lezat."
         )
     )
+    val systemUiController = rememberSystemUiController()
+    DisposableEffect(systemUiController) {
+        systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = false)
+        onDispose {}
+    }
     Scaffold(
         containerColor = ColorWhite,
         bottomBar = {
@@ -171,7 +179,7 @@ fun OnBoardingContent(
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.55f)
+                    .fillMaxHeight(0.6f)
                     .align(Alignment.Center)
                     .shadow(
                         25.dp,

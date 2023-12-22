@@ -1,17 +1,17 @@
 package com.tourify.tourifyapp.model
 
 data class BookingTripResponse(
-    val statusCode: Int,
-    val message: String,
+    val data: DataBookingTripResponse? = null,
     val error: String? = null,
-    val data: DataBookingTripResponse? = null
+    val message: String,
+    val statusCode: Int
 )
 
 data class DataBookingTripResponse(
-    val id: Int,
     val code: String,
-    val total: String,
-    val withTourGuide: Boolean,
-    val statusPayment: Int
+    val id: Int,
+    val statusPayment: Int,
+    val total: Int,
+    val withTourGuide: Boolean
 )
 

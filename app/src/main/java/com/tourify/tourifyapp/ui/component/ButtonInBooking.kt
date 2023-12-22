@@ -114,6 +114,55 @@ fun ButtonInBooking(
     )
 }
 
+@Composable
+fun LoadingButtonInBooking(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth(),
+        content = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                content = {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(0.3f)
+                            .padding(end = 8.dp)
+                            .height(55.dp)
+                            .shadow(10.dp, Shapes.medium, spotColor = ColorSecondary),
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = ColorSecondary.copy(alpha = 0.5f),
+                            contentColor = TextSecondary
+                        ),
+                        shape = Shapes.medium,
+                        content = {
+                            Text(
+                                text = "Batal",
+                                style = ButtonStylePrimary.copy(
+                                    fontFamily = fonts,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 16.sp,
+                                )
+                            )
+                        }
+                    )
+                    LoadingButtonPrimary(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        background = ColorPrimary,
+                        height = 55.dp,
+                        onClick = {}
+                    )
+                }
+            )
+        }
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ButtonInBookingPreview(){
@@ -123,5 +172,13 @@ fun ButtonInBookingPreview(){
         onClick = {},
         onBatal = {},
         enabled = true
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoadingButtonInBookingPreview(){
+    LoadingButtonInBooking(
+        modifier = Modifier.padding(18.dp)
     )
 }

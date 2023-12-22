@@ -1,7 +1,7 @@
 package com.tourify.tourifyapp.model
 
 data class AddFavoritesResponse(
-    val statusCode: Int,
+    val error: String? = null,
     val message: String,
-    val error: String? = null
+    val statusCode: Int
 )

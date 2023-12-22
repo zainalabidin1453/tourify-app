@@ -35,10 +35,10 @@ fun CircleAssyncImgSmall(
 ){
     Box(
         modifier = Modifier
-            .shadow(10.dp, RoundedCornerShape(percent = 100), true, spotColor = ColorPrimary)
             .size(size)
+            .shadow(10.dp, RoundedCornerShape(percent = 100), true, spotColor = ColorWhite)
+            .border(width = 1.dp, color = ColorWhite, CircleShape)
             .background(ColorWhite)
-            .border(width = 1.dp, color = ColorPrimary, CircleShape)
             .clickable {
                 onClick()
             }
