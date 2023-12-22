@@ -1,6 +1,8 @@
 package com.tourify.tourifyapp.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,22 +34,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
+import com.tourify.tourifyapp.ui.theme.ColorWarning
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
-import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
 import com.tourify.tourifyapp.utils.modifyMoneyFormat
+import com.tourify.tourifyapp.utils.modifyNumberFormat
 
 @Composable
 fun CardWisataTicketsBooking(
-    photo: String,
+    photo: Int,
     name: String,
     location: String,
     category: String,
@@ -78,17 +79,13 @@ fun CardWisataTicketsBooking(
                                     .clip(RoundedCornerShape(10.dp))
                                     .align(Alignment.CenterVertically),
                                 content = {
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(photo)
-                                            .crossfade(true)
-                                            .error(R.drawable.error_image)
-                                            .build(),
-                                        contentDescription = name,
-                                        contentScale = ContentScale.Crop,
+                                    Image(
+                                        painter = painterResource(id = R.drawable.error_image),
+                                        contentDescription = "",
                                         modifier = Modifier
-                                            .fillMaxSize(),
-                                        alignment = Alignment.Center
+                                            .fillMaxSize()
+                                            .align(Alignment.Center),
+                                        contentScale = ContentScale.Crop,
                                     )
                                 }
                             )
@@ -105,13 +102,8 @@ fun CardWisataTicketsBooking(
                                         content = {
                                             Column(
                                                 content = {
-                                                    val destinationsName = if (name.length > 18) {
-                                                        "${name.substring(0, 15)}..."
-                                                    } else {
-                                                        name
-                                                    }
                                                     Text(
-                                                        text = destinationsName,
+                                                        text = "Wisata Name",
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -133,7 +125,7 @@ fun CardWisataTicketsBooking(
                                                             )
                                                             Spacer(modifier = Modifier.width(1.dp))
                                                             Text(
-                                                                text = location,
+                                                                text = "Location, Indonesia",
                                                                 style = StyleText.copy(
                                                                     color = TextPrimary,
                                                                     fontFamily = fonts,
@@ -166,7 +158,7 @@ fun CardWisataTicketsBooking(
                                                     Text(
                                                         modifier = Modifier
                                                             .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
-                                                        text = category,
+                                                        text = "Pantai",
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -178,9 +170,8 @@ fun CardWisataTicketsBooking(
                                                     )
                                                 }
                                             )
-                                            val price = if (priceTickets > 0) modifyMoneyFormat(priceTickets) else "Rp0,-"
                                             Text(
-                                                text = price,
+                                                text = modifyMoneyFormat(10000),
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -197,126 +188,98 @@ fun CardWisataTicketsBooking(
                     )
                 }
             )
-            if (priceTickets > 0) {
-                Spacer(modifier = Modifier.height(12.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                    content = {
-                        Row(
-                            modifier = Modifier
-                                .wrapContentWidth(),
-                            content = {
-                                Box(
-                                    modifier = Modifier
-                                        .size(25.dp)
-                                        .shadow(2.dp, RoundedCornerShape(100), spotColor = TextPrimary)
-                                        .background(ColorWhite)
-                                        .clickable(
-                                            onClick = {
-                                                if (totalTickets > 1) {
-                                                    onMinTickets(totalTickets - 1)
-                                                } else {
-                                                    onMinTickets(totalTickets)
-                                                }
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                content = {
+                    Row(
+                        modifier = Modifier
+                            .wrapContentWidth(),
+                        content = {
+                            Box(
+                                modifier = Modifier
+                                    .size(25.dp)
+                                    .shadow(2.dp, RoundedCornerShape(100), spotColor = TextPrimary)
+                                    .background(ColorWhite)
+                                    .clickable(
+                                        onClick = {
+                                            if (totalTickets > 1) {
+                                                onMinTickets(totalTickets - 1)
+                                            } else {
+                                                onMinTickets(totalTickets)
                                             }
-                                        ),
-                                    contentAlignment = Alignment.Center,
-                                    content = {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_min),
-                                            contentDescription = "Kurangkan",
-                                            modifier = Modifier
-                                                .size(16.dp)
-                                                .padding(2.dp),
-                                            tint = ColorSecondary
-                                        )
-                                    }
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Box(
-                                    modifier = Modifier
-                                        .wrapContentWidth()
-                                        .height(25.dp)
-                                        .shadow(3.dp, RoundedCornerShape(100), spotColor = TextPrimary)
-                                        .background(ColorWhite),
-                                    contentAlignment = Alignment.Center,
-                                    content = {
-                                        Text(
-                                            modifier = Modifier
-                                                .padding(start = 18.dp, end = 18.dp),
-                                            text = totalTickets.toString(),
-                                            style = StyleText.copy(
-                                                color = TextPrimary,
-                                                fontFamily = fonts,
-                                                fontWeight = FontWeight.Normal,
-                                                fontSize = 12.sp,
-                                                lineHeight = 12.sp
-                                            )
-                                        )
-                                    }
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Box(
-                                    modifier = Modifier
-                                        .size(25.dp)
-                                        .shadow(
-                                            2.dp,
-                                            RoundedCornerShape(100),
-                                            true,
-                                            spotColor = TextPrimary
-                                        )
-                                        .background(ColorWhite)
-                                        .clickable(
-                                            onClick = {
-                                                onPlusTickets(totalTickets + 1)
-                                            }
-                                        ),
-                                    contentAlignment = Alignment.Center,
-                                    content = {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_plus),
-                                            contentDescription = "Tambahkan",
-                                            modifier = Modifier
-                                                .size(16.dp)
-                                                .padding(2.dp),
-                                            tint = ColorSecondary
-                                        )
-                                    }
-                                )
-                            }
-                        )
-                    }
-                )
-            } else {
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_circle),
-                            contentDescription = "Informasi",
-                            modifier = Modifier
-                                .padding(top = 6.dp)
-                                .size(4.dp),
-                            tint = ColorDanger
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "Tiket masuk di tempat wisata ini Rp0,- (Gratis), Anda tidak perlu membeli tiket masuk. Jika Anda membutuhkan pemandu wisata lokal, Anda dapat booking sekarang.",
-                            maxLines = 4,
-                            style = StyleText.copy(
-                                color = TextSecondary,
-                                fontFamily = fonts,
-                                fontWeight = FontWeight.Light,
-                                fontSize = 10.sp,
-                                lineHeight = 15.sp
+                                        }
+                                    ),
+                                contentAlignment = Alignment.Center,
+                                content = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_min),
+                                        contentDescription = "Kurangkan",
+                                        modifier = Modifier
+                                            .size(16.dp)
+                                            .padding(2.dp),
+                                        tint = ColorSecondary
+                                    )
+                                }
                             )
-                        )
-                    }
-                )
-            }
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Box(
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .height(25.dp)
+                                    .shadow(3.dp, RoundedCornerShape(100), spotColor = TextPrimary)
+                                    .background(ColorWhite),
+                                contentAlignment = Alignment.Center,
+                                content = {
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(start = 18.dp, end = 18.dp),
+                                        text = totalTickets.toString(),
+                                        style = StyleText.copy(
+                                            color = TextPrimary,
+                                            fontFamily = fonts,
+                                            fontWeight = FontWeight.Normal,
+                                            fontSize = 12.sp,
+                                            lineHeight = 12.sp
+                                        )
+                                    )
+                                }
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Box(
+                                modifier = Modifier
+                                    .size(25.dp)
+                                    .shadow(
+                                        2.dp,
+                                        RoundedCornerShape(100),
+                                        true,
+                                        spotColor = TextPrimary
+                                    )
+                                    .background(ColorWhite)
+                                    .clickable(
+                                        onClick = {
+                                            onPlusTickets(totalTickets + 1)
+                                        }
+                                    ),
+                                contentAlignment = Alignment.Center,
+                                content = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_plus),
+                                        contentDescription = "Tambahkan",
+                                        modifier = Modifier
+                                            .size(16.dp)
+                                            .padding(2.dp),
+                                        tint = ColorSecondary
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            )
         }
     )
 }
@@ -325,11 +288,11 @@ fun CardWisataTicketsBooking(
 @Composable
 fun CardWisataTicketsBookingPreview() {
     CardWisataTicketsBooking(
-        photo = "",
+        photo = R.drawable.error_image,
         name = "Wisata Name",
         location = "Location, Indonesia",
         category = "Pantai",
-        priceTickets = 0,
+        priceTickets = 10000,
         totalTickets = 5,
         onPlusTickets = {},
         onMinTickets = {})

@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.tourify.tourifyapp.constants.Constants
 import com.tourify.tourifyapp.data.sources.ItemProvince
 import com.tourify.tourifyapp.model.ModelItemProvince
 import com.tourify.tourifyapp.ui.theme.ColorPrimary
@@ -85,8 +84,8 @@ fun ModalBottomSheetListProvince(
             sortedItemsProvince.forEach { item ->
                 ItemMenuProvince(
                     item = item,
-                    onClick = {
-                        onProvince(item.name)
+                    onClick = { province ->
+                        onProvince(province)
                         onShowListProvince(false)
                     },
                     currentProvince = firstProvince
@@ -111,8 +110,7 @@ fun ItemMenuProvince(item: ModelItemProvince, onClick: (String) -> Unit, current
                 onClick = {
                     onClick(item.name)
                 }
-            )
-            .then(
+            ).then(
                 if (isPressed) Modifier.border(1.dp, ColorPrimary, RoundedCornerShape(12.dp))
                 else Modifier
             ),
@@ -149,6 +147,6 @@ fun ModalBottomSheetListProvincePreview() {
         navController = NavController(context),
         onShowListProvince = {},
         onProvince = {},
-        firstProvince = Constants.ACEH
+        firstProvince = "Sumatra Barat"
     )
 }

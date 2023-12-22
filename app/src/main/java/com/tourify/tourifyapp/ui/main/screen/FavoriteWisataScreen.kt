@@ -12,13 +12,13 @@ import com.tourify.tourifyapp.ui.component.TopBarScreen
 import com.tourify.tourifyapp.ui.component.TopBarScreenModal
 
 @Composable
-fun NoticeScreen(
+fun FavoriteWisataScreen(
     onBack: () -> Unit
 ) {
     Scaffold (
         topBar = {
             TopBarScreen(
-                title = "Pemberitahuan",
+                title = "Daftar Favorit",
                 onBack = {
                     onBack()
                 }
@@ -38,6 +38,6 @@ fun NoticeScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun NoticeScreenPreview() {
-    NoticeScreen( onBack = {} )
+fun FavoriteWisataScreenPreview() {
+    FavoriteWisataScreen( onBack = {} )
 }

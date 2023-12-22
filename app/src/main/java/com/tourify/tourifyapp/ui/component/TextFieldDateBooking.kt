@@ -195,7 +195,7 @@ fun TextFieldDateBooking(
 fun TextFieldDateBookingPreview() {
     val isError by rememberSaveable { mutableStateOf(false) }
     TextFieldDateBooking(
-        placeholder = "Pilih tanggal perjalanan",
+        placeholder = stringResource(id = R.string.choose_trip_date),
         icon = R.drawable.ic_calendar,
         iconDescription = R.string.choose_trip_date,
         keyboardType = KeyboardType.Text,

@@ -34,20 +34,14 @@ import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.TextSecondary
 import com.tourify.tourifyapp.ui.theme.fonts
-import com.tourify.tourifyapp.utils.calculateDay
-import com.tourify.tourifyapp.utils.calculateHours
 import com.tourify.tourifyapp.utils.getCheckInDate
-import com.tourify.tourifyapp.utils.modifyDateFormat
 import com.tourify.tourifyapp.utils.trackTripWithDate
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TrackTrip(
     modifier: Modifier = Modifier,
     bookingDate: String = "",
-    startTripDate: String = "",
-    endTripDate: String = "",
     tripDate: String,
     isFirstBooking: Boolean = true,
     isCheckIn: Boolean = false
@@ -57,9 +51,6 @@ fun TrackTrip(
     } else {
         1
     }
-    val totalDays = calculateDay(startTripDate, endTripDate)
-    val dateNow = LocalDate.now()
-    val modifiedDate = modifyDateFormat(dateNow)
 
     Box(
         modifier = modifier,
@@ -106,7 +97,7 @@ fun TrackTrip(
                                             )
                                             Spacer(modifier = Modifier.height(2.dp))
                                             Text(
-                                                text = modifiedDate,
+                                                text = "02 Nov 2023",
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -223,7 +214,7 @@ fun TrackTrip(
                         horizontalAlignment = Alignment.End,
                         content = {
                             Text(
-                                text = "To: $tripDate",
+                                text = "To: 19 - 21 Nov 2023",
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,
@@ -234,7 +225,7 @@ fun TrackTrip(
                             )
                             Spacer(modifier = Modifier.height(2.dp))
                             Text(
-                                text = "$totalDays Hari",
+                                text = "2 Hari",
                                 style = StyleText.copy(
                                     color = TextPrimary,
                                     fontFamily = fonts,

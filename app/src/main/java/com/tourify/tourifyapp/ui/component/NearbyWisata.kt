@@ -1,5 +1,6 @@
 package com.tourify.tourifyapp.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,13 +30,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.tourify.tourifyapp.R
-import com.tourify.tourifyapp.data.sources.LocationDetails
-import com.tourify.tourifyapp.model.DataDestinationsResponse
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorInfo
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
@@ -45,50 +43,22 @@ import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
-import com.tourify.tourifyapp.utils.getDistanceLocation
 import com.tourify.tourifyapp.utils.modifyNumberFormat
-import com.tourify.tourifyapp.utils.shimmerBrush
 
 @Composable
 fun NearbyWisata(
     modifier: Modifier = Modifier,
-    daftarDestinations: List<DataDestinationsResponse>? = null,
-    currentLocation: LocationDetails? = null,
-    myProvince: String? = null,
-    onDetail: (Int) -> Unit,
-    favoriteItems: List<Int>,
-    onToggleFavorite: (Int) -> Unit = {},
+    onDetail: (Int) -> Unit
 ) {
-    val filteredData = daftarDestinations
-        ?.filter { it.province == myProvince }
-    val sortedData = filteredData
-        ?.sortedBy { item ->
-            getDistanceLocation(
-                LocationDetails(currentLocation!!.lat, currentLocation.lon),
-                LocationDetails(item.lat, item.lon)
-            )
-        }
-        ?.take(20)
     Column(
         modifier = modifier
             .fillMaxWidth(),
         content = {
-            sortedData?.forEach { itemNearby ->
-                val distance = getDistanceLocation(
-                    LocationDetails(currentLocation!!.lat, currentLocation.lon),
-                    LocationDetails(itemNearby.lat, itemNearby.lon)
-                )
-                val isFavorite = favoriteItems.contains(itemNearby.id)
+            repeat(10) {
                 Spacer(modifier = Modifier.height(10.dp))
                 NearbyWisataCard(
-                    distance = distance,
-                    item = itemNearby,
-                    isFavorite = isFavorite,
-                    onClick = {
-                        onDetail(itemNearby.id)
-                    },
-                    onToggleFavorite = {
-                        onToggleFavorite(itemNearby.id)
+                    onClick = { id ->
+                        onDetail(id)
                     }
                 )
             }
@@ -97,13 +67,7 @@ fun NearbyWisata(
 }
 
 @Composable
-fun NearbyWisataCard(
-    distance: Int? = null,
-    item: DataDestinationsResponse? = null,
-    onClick: () -> Unit,
-    isFavorite: Boolean,
-    onToggleFavorite: () -> Unit
-) {
+fun NearbyWisataCard(onClick: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,7 +75,7 @@ fun NearbyWisataCard(
             .background(ColorWhite)
             .clickable(
                 onClick = {
-                    onClick()
+                    onClick(1)
                 }
             ),
         content = {
@@ -127,17 +91,13 @@ fun NearbyWisataCard(
                             .clip(RoundedCornerShape(10.dp))
                             .align(Alignment.CenterVertically),
                         content = {
-                            AsyncImage(
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data(item!!.photo)
-                                    .crossfade(true)
-                                    .error(R.drawable.error_image)
-                                    .build(),
-                                contentDescription = item.name,
-                                contentScale = ContentScale.Crop,
+                            Image(
+                                painter = painterResource(id = R.drawable.error_image),
+                                contentDescription = "",
                                 modifier = Modifier
-                                    .fillMaxSize(),
-                                alignment = Alignment.Center
+                                    .fillMaxSize()
+                                    .align(Alignment.Center),
+                                contentScale = ContentScale.Crop,
                             )
                         }
                     )
@@ -155,7 +115,7 @@ fun NearbyWisataCard(
                                     Column(
                                         content = {
                                             Text(
-                                                text = item!!.name,
+                                                text = "Wisata Name",
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
@@ -177,7 +137,7 @@ fun NearbyWisataCard(
                                                     )
                                                     Spacer(modifier = Modifier.width(1.dp))
                                                     Text(
-                                                        text = "${item.regency}, ${item.province}",
+                                                        text = "Location, Indonesia",
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -192,14 +152,11 @@ fun NearbyWisataCard(
                                     )
                                     CircleButtonSmallFavorite(
                                         context = LocalContext.current,
-                                        title = if (isFavorite) R.string.remove_from_favorite else R.string.add_to_favorite,
-                                        icon = if (isFavorite) R.drawable.ic_heart_fill else R.drawable.ic_heart,
+                                        title = R.string.add_to_favorite,
+                                        icon = R.drawable.ic_heart,
                                         size = 25.dp,
-                                        tint = if (isFavorite) ColorDanger else TextPrimary,
                                         color = ColorSecondary,
-                                        onClick = {
-                                            onToggleFavorite()
-                                        }
+                                        onClick = {}
                                     )
                                 }
                             )
@@ -207,14 +164,14 @@ fun NearbyWisataCard(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(start = 2.dp, end = 6.dp),
+                                    .padding(start  = 2.dp, end = 6.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 content = {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
                                         content = {
                                             Text(
-                                                text = "$distance Km",
+                                                text = "0 Km",
                                                 style = StyleText.copy(
                                                     color = ColorInfo,
                                                     fontFamily = fonts,
@@ -234,7 +191,7 @@ fun NearbyWisataCard(
                                                     Text(
                                                         modifier = Modifier
                                                             .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
-                                                        text = item!!.type,
+                                                        text = "Pantai",
                                                         style = StyleText.copy(
                                                             color = TextPrimary,
                                                             fontFamily = fonts,
@@ -284,51 +241,10 @@ fun NearbyWisataCard(
     )
 }
 
+@Preview(showBackground = true)
 @Composable
-fun NearbyWisataLoading() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(16.dp))
-            .background(shimmerBrush(targetValue = 500f, showShimmer = true))
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(
-                model = "",
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(64.dp)
-                    .height(64.dp)
-                    .clip(
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .background(shimmerBrush(targetValue = 10f, showShimmer = true))
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-            Column {
-                AsyncImage(
-                    model = "",
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                        .clip(
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .background(
-                            shimmerBrush(
-                                targetValue = 10f,
-                                showShimmer = true
-                            )
-                        )
-                )
-            }
-        }
-    }
+fun NearbyWisataPreview() {
+    NearbyWisata(
+        onDetail = {}
+    )
 }

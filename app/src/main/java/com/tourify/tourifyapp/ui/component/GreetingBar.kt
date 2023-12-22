@@ -3,8 +3,10 @@ package com.tourify.tourifyapp.ui.component
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,10 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -26,28 +32,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.tourify.tourifyapp.R
-import com.tourify.tourifyapp.constants.Constants
 import com.tourify.tourifyapp.ui.theme.ColorDanger
 import com.tourify.tourifyapp.ui.theme.ColorSecondary
 import com.tourify.tourifyapp.ui.theme.ColorWhite
 import com.tourify.tourifyapp.ui.theme.Shapes
 import com.tourify.tourifyapp.ui.theme.StyleText
+import com.tourify.tourifyapp.ui.theme.TextLight
 import com.tourify.tourifyapp.ui.theme.TextPrimary
 import com.tourify.tourifyapp.ui.theme.fonts
 
 @Composable
 fun GreetingBar(
     context: Context,
+    navController: NavController,
     onShowListProvince: (Boolean) -> Unit,
     onShowNotice: () -> Unit,
     onShowFavorite: () -> Unit,
-    firstProvince: String = Constants.ACEH
+    firstProvince: String
 ){
+    var showListProvince by rememberSaveable { mutableStateOf(false) }
+    
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 18.dp, end = 18.dp, top = 36.dp, bottom = 18.dp),
+            .padding(18.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         content =  {
@@ -62,6 +72,7 @@ fun GreetingBar(
                             .height(35.dp)
                             .background(ColorWhite)
                             .clickable {
+                                showListProvince = true
                                 onShowListProvince(true)
                             },
                         content = {
@@ -137,9 +148,10 @@ fun GreetingBarPreview() {
     val context = LocalContext.current
     GreetingBar(
         context = context,
+        navController = NavController(context),
         onShowListProvince = {},
         onShowNotice = {},
         onShowFavorite = {},
-        firstProvince = Constants.ACEH
+        firstProvince = "Sumatra Barat"
     )
 }

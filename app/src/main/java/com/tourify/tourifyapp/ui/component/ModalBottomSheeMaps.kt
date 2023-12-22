@@ -1,7 +1,6 @@
 package com.tourify.tourifyapp.ui.component
 
 import android.Manifest
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionsRequired
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -48,12 +50,10 @@ import com.tourify.tourifyapp.utils.bitmapDescriptorFromVector
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ModalBottomSheetMaps(
-    context: Context,
     modifier: Modifier = Modifier,
     lon: Double,
     lat: Double,
-    name: String,
-    location: String
+    onBack: (Boolean) -> Unit
 ) {
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(lat, lon), 15f)
@@ -70,72 +70,79 @@ fun ModalBottomSheetMaps(
     Box(
         modifier = modifier,
         content = {
-            GoogleMap(
-                cameraPositionState = cameraPositionState,
-                modifier = Modifier
-                    .fillMaxSize(),
-                properties = MapProperties(isMyLocationEnabled = true),
-            ) {
-                val icon = bitmapDescriptorFromVector(
-                    LocalContext.current, R.drawable.ic_maps_pin
-                )
-                MarkerInfoWindow(
-                    state = MarkerState(position = LatLng(lat, lon)),
-                    icon = icon,
-                ) { _ ->
-                    Box(
+            PermissionsRequired(
+                multiplePermissionsState = multiplePermissionState,
+                permissionsNotGrantedContent = { onBack(false) },
+                permissionsNotAvailableContent = { onBack(false) },
+                content = {
+                    GoogleMap(
+                        cameraPositionState = cameraPositionState,
                         modifier = Modifier
-                            .padding(start = 18.dp, end = 18.dp, bottom = 14.dp)
-                            .clip(Shapes.small)
-                            .background(ColorWhite),
-                        content = {
-                            Column (
+                            .fillMaxSize(),
+                        properties = MapProperties(isMyLocationEnabled = true),
+                    ) {
+                        val icon = bitmapDescriptorFromVector(
+                            LocalContext.current, R.drawable.ic_maps_pin
+                        )
+                        MarkerInfoWindow(
+                            state = MarkerState(position = LatLng(lat, lon)),
+                            icon = icon,
+                        ) { _ ->
+                            Box(
                                 modifier = Modifier
-                                    .padding(8.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
+                                    .padding(start = 18.dp, end = 18.dp, bottom = 14.dp)
+                                    .clip(Shapes.small)
+                                    .background(ColorWhite),
                                 content = {
-                                    Text(
-                                        text = "Wisata Name",
-                                        maxLines = 2,
-                                        style = StyleText.copy(
-                                            color = TextPrimary,
-                                            fontFamily = fonts,
-                                            fontWeight = FontWeight.Medium,
-                                            fontSize = 14.sp,
-                                            lineHeight = 14.sp
-                                        )
-                                    )
-                                    Spacer(modifier = Modifier.height(2.dp))
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
+                                    Column (
+                                        modifier = Modifier
+                                            .padding(8.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
                                         content = {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.ic_location),
-                                                contentDescription = stringResource(id = R.string.choose_location),
-                                                modifier = Modifier
-                                                    .size(13.dp),
-                                                tint = ColorDanger
-                                            )
-                                            Spacer(modifier = Modifier.width(1.dp))
                                             Text(
-                                                text = "Location, Sumatra Barat",
+                                                text = "Wisata Name",
                                                 maxLines = 2,
                                                 style = StyleText.copy(
                                                     color = TextPrimary,
                                                     fontFamily = fonts,
-                                                    fontWeight = FontWeight.Light,
-                                                    fontSize = 12.sp,
-                                                    lineHeight = 12.sp
+                                                    fontWeight = FontWeight.Medium,
+                                                    fontSize = 14.sp,
+                                                    lineHeight = 14.sp
                                                 )
+                                            )
+                                            Spacer(modifier = Modifier.height(2.dp))
+                                            Row(
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                content = {
+                                                    Icon(
+                                                        painter = painterResource(id = R.drawable.ic_location),
+                                                        contentDescription = stringResource(id = R.string.choose_location),
+                                                        modifier = Modifier
+                                                            .size(13.dp),
+                                                        tint = ColorDanger
+                                                    )
+                                                    Spacer(modifier = Modifier.width(1.dp))
+                                                    Text(
+                                                        text = "Location, Sumatra Barat",
+                                                        maxLines = 2,
+                                                        style = StyleText.copy(
+                                                            color = TextPrimary,
+                                                            fontFamily = fonts,
+                                                            fontWeight = FontWeight.Light,
+                                                            fontSize = 12.sp,
+                                                            lineHeight = 12.sp
+                                                        )
+                                                    )
+                                                }
                                             )
                                         }
                                     )
                                 }
                             )
                         }
-                    )
+                    }
                 }
-            }
+            )
         }
     )
 }
@@ -143,12 +150,9 @@ fun ModalBottomSheetMaps(
 @Preview(showBackground = true)
 @Composable
 fun ModalBottomSheetMapsPreview() {
-    val context = LocalContext.current
     ModalBottomSheetMaps(
-        context = context,
         lon = 0.0,
         lat = 0.0,
-        name = "name",
-        location = "location"
+        onBack = {}
     )
 }

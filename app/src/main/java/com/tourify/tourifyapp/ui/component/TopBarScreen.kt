@@ -84,7 +84,7 @@ fun TopBarScreen(
 @Composable
 fun TopBarScreenPreview() {
     TopBarScreen(
-        title = "Title Screen",
+        title = stringResource(id = R.string.title_screen),
         onBack = {}
     )
 }

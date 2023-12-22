@@ -16,9 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.tourify.tourifyapp.R
-import com.tourify.tourifyapp.preference.LoginDataStore
 import com.tourify.tourifyapp.preference.OnBoardingDataStore
 import com.tourify.tourifyapp.route.Routes
 import com.tourify.tourifyapp.ui.theme.ColorBlue
@@ -28,15 +29,12 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     context: Context,
-    navigateTo: (String) -> Unit,
-    loginDataStore: LoginDataStore = LoginDataStore.getInstance(context)
+    navigateTo: (String) -> Unit
 ) {
     val scale = remember { androidx.compose.animation.core.Animatable(0f) }
     val onBoardingPref = remember { OnBoardingDataStore.getInstance(context) }
-    val onBoardingStatus by onBoardingPref.getOnBoardingStatus().collectAsState(initial = false)
-    val loginResponseFlow = loginDataStore.getLoginStatus().collectAsState(initial = null)
-    val loginResponse = loginResponseFlow.value?.data?.email
-    LaunchedEffect(loginResponse) {
+    val onBoardingStatus by onBoardingPref.getOnBoardingStatus().collectAsState( initial = false)
+    LaunchedEffect(key1 = true) {
         scale.animateTo(
             targetValue = 0.7f,
             animationSpec = tween(
@@ -46,16 +44,8 @@ fun SplashScreen(
                 })
         )
         delay(3000L)
-        val statusUser = if (onBoardingStatus) {
-            if (loginResponse == null) {
-                Routes.CheckEmail.routes
-            } else {
-                Routes.Dashboard.routes
-            }
-        } else {
-            Routes.OnBoarding.routes
-        }
-        navigateTo(statusUser)
+        val start = if (onBoardingStatus) Routes.CheckEmail.routes else Routes.OnBoarding.routes
+        navigateTo(start)
     }
     val gradient = Brush.verticalGradient(
         0.5f to ColorBlue,
@@ -76,4 +66,14 @@ fun SplashScreen(
                 .scale(scale.value)
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SplashScreenPreview() {
+    val context = LocalContext.current
+    SplashScreen(
+        context = context,
+        navigateTo = {}
+    )
 }

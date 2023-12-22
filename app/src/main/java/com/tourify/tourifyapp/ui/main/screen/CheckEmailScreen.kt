@@ -2,9 +2,9 @@ package com.tourify.tourifyapp.ui.main.screen
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,24 +19,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -50,12 +45,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tourify.tourifyapp.R
 import com.tourify.tourifyapp.data.factory.ViewModelCheckEmailFactory
 import com.tourify.tourifyapp.data.viewmodels.CheckEmailViewModel
 import com.tourify.tourifyapp.di.Injection
-import com.tourify.tourifyapp.ui.common.UiState
 import com.tourify.tourifyapp.ui.component.ButtonPrimary
 import com.tourify.tourifyapp.ui.component.CircleButton
 import com.tourify.tourifyapp.ui.component.LoadingButtonPrimary
@@ -70,11 +65,11 @@ import com.tourify.tourifyapp.ui.theme.fonts
 import com.tourify.tourifyapp.utils.Toasty
 import com.tourify.tourifyapp.utils.isValidEmail
 
-@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CheckEmailScreen(
     context: Context,
+    navController: NavController,
     navigateToVerifCode: (String) -> Unit,
     navigateToEnterPassword: (String) -> Unit,
     checkEmailViewModel: CheckEmailViewModel = viewModel(
@@ -83,17 +78,15 @@ fun CheckEmailScreen(
         )
     )
 ) {
-    val checkEmailResult by checkEmailViewModel.uiState.collectAsState(initial = UiState.Loading)
+    val systemUiController = rememberSystemUiController()
+    DisposableEffect(systemUiController) {
+        systemUiController.setSystemBarsColor(ColorWhite, darkIcons = true)
+        onDispose {}
+    }
     var email by rememberSaveable { mutableStateOf("") }
     var isLoading by rememberSaveable { mutableStateOf(false) }
     var isError by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    val bringIntoViewRequester = remember { BringIntoViewRequester() }
-    val systemUiController = rememberSystemUiController()
-    DisposableEffect(systemUiController) {
-        systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = false)
-        onDispose {}
-    }
     Scaffold(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets(0.dp)),
@@ -118,7 +111,7 @@ fun CheckEmailScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(0.7f)
+                            .fillMaxHeight(0.73f)
                             .padding(18.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.SpaceBetween,
@@ -129,7 +122,7 @@ fun CheckEmailScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 content = {
                                     Text(
-                                        text = "Masuk/Daftar",
+                                        text = "Login/Daftar",
                                         style = StyleText.copy(
                                             color = TextPrimary,
                                             fontFamily = fonts,
@@ -151,8 +144,6 @@ fun CheckEmailScreen(
                                     )
                                     Spacer(modifier = Modifier.height(21.dp))
                                     TextField(
-                                        modifier = Modifier
-                                            .bringIntoViewRequester(bringIntoViewRequester),
                                         placeholder = stringResource(R.string.email_address),
                                         icon = R.drawable.ic_mail,
                                         iconDescription = R.string.email_address,
@@ -161,23 +152,7 @@ fun CheckEmailScreen(
                                             email = newEmail
                                             isError = false
                                         },
-                                        isError = isError,
-                                        isLastField = true,
-                                        onSend = {
-                                            focusManager.clearFocus()
-                                            if (email.isNotEmpty() && isValidEmail(email)
-                                            ) {
-                                                isLoading = true
-                                                checkEmailViewModel.checkEmail(email)
-                                            } else {
-                                                isError = true
-                                                isLoading = false
-                                                Toasty.show(
-                                                    context,
-                                                    R.string.invalid_email
-                                                )
-                                            }
-                                        }
+                                        isError = isError
                                     )
                                     Spacer(modifier = Modifier.height(30.dp))
                                     Row(
@@ -218,30 +193,7 @@ fun CheckEmailScreen(
                                                 )
                                             }
                                         )
-                                        when (checkEmailResult) {
-                                            is UiState.Loading -> {}
-                                            is UiState.Success -> {
-                                                isLoading = false
-                                                navigateToVerifCode(email)
-                                            }
-
-                                            is UiState.Error -> {
-                                                isLoading = false
-                                                val resultCheck = checkEmailResult as UiState.Error
-                                                when (resultCheck.error) {
-                                                    400 -> navigateToEnterPassword(email)
-                                                    500 -> Toasty.show(
-                                                        context,
-                                                        R.string.internal_server_error
-                                                    )
-
-                                                    else -> Toasty.show(
-                                                        context,
-                                                        R.string.happen_wrong
-                                                    )
-                                                }
-                                            }
-                                        }
+                                        navigateToEnterPassword(email)
                                     } else {
                                         ButtonPrimary(
                                             text = "Lanjutkan",
@@ -249,11 +201,11 @@ fun CheckEmailScreen(
                                             contentColor = ColorWhite,
                                             enabled = true,
                                             onClick = {
-                                                focusManager.clearFocus()
-                                                if (email.isNotEmpty() && isValidEmail(email)
+                                                val emailValue = email
+                                                if (emailValue.isNotEmpty() && isValidEmail(emailValue)
                                                 ) {
                                                     isLoading = true
-                                                    checkEmailViewModel.checkEmail(email)
+
                                                 } else {
                                                     isError = true
                                                     isLoading = false
@@ -307,11 +259,10 @@ fun CheckEmailScreen(
     ) {
         Image(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.34f),
+                .fillMaxWidth(),
             painter = painterResource(id = R.drawable.banner_welcome),
             contentDescription = stringResource(id = R.string.app_name),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Fit
         )
     }
 }
@@ -360,5 +311,17 @@ fun AuthSocialMedia() {
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CheckEmailScreenPreview() {
+    val context = LocalContext.current
+    CheckEmailScreen(
+        context = context,
+        navController = NavController(context),
+        navigateToVerifCode = {},
+        navigateToEnterPassword = {}
+    )
 }
 

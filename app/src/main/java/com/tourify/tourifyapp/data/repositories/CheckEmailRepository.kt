@@ -1,19 +1,16 @@
 package com.tourify.tourifyapp.data.repositories
 
+import com.tourify.tourifyapp.BuildConfig
 import com.tourify.tourifyapp.api.ApiService
+import com.tourify.tourifyapp.constants.Constants
 import com.tourify.tourifyapp.model.RegistrationResponse
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
 
 class CheckEmailRepository(private val apiService: ApiService) {
-    suspend fun checkEmail(email: String): RegistrationResponse {
-        val jsonObject = JSONObject().apply {
-            put("email", email)
-        }
-        val requestBody =
-            jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
-        return apiService.registration(requestBody)
+    suspend fun login(email: String): RegistrationResponse {
+        return apiService.registration(
+            token = BuildConfig.TOKEN,
+            email = email
+        )
     }
 
     companion object {
